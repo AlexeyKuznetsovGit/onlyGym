@@ -1,4 +1,4 @@
-package com.eticon.onlygym.onlygym
+package com.eticon.onlygym
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.eticon.onlygym.onlygym">
+    package="com.eticon.onlygym">
    <application
         android:label="onlygym"
         android:name="${applicationName}"
