@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:onlygym/project_utils/pj_colors.dart';
 
 enum PjTextStyle{
   h1,
@@ -14,11 +15,11 @@ enum PjTextStyle{
 // @todo: Не тестировалось
 class PjText extends StatelessWidget {
   final String text;
-  final Color? color;
+  final Color color;
   final PjTextStyle style;
 
   const PjText(
-      {Key? key, required this.text, required this.style, this.color}) : super(key : key);
+      {Key? key, required this.text, required this.style, this.color=PjColors.black}) : super(key : key);
 
   @override
   Widget build(BuildContext context) {
