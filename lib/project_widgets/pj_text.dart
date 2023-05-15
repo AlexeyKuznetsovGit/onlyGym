@@ -12,14 +12,12 @@ enum PjTextStyle{
   downmenu
 }
 
-// @todo: Не тестировалось
 class PjText extends StatelessWidget {
   final String text;
   final Color color;
   final PjTextStyle style;
 
-  const PjText(
-      {Key? key, required this.text, required this.style, this.color=PjColors.black}) : super(key : key);
+  const PjText(this.text, {Key? key, required this.style, this.color=PjColors.black}) : super(key : key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +50,12 @@ class PjText extends StatelessWidget {
   }
 
   double get height{
-    if(style == PjTextStyle.h1) return 28 / 22;
-    if(style == PjTextStyle.title) return 20 / 22;
-    if(style == PjTextStyle.bold || style == PjTextStyle.regular) return 16 / 22;
-    if(style == PjTextStyle.medium) return 14 / 22;
-    if(style == PjTextStyle.tiny) return 12 / 20;
-    if(style == PjTextStyle.downmenu) return 10 / 12;
+    if(style == PjTextStyle.h1) return 28.w / 22.w;
+    if(style == PjTextStyle.title) return 20.w / 22.w;
+    if(style == PjTextStyle.bold || style == PjTextStyle.regular) return 16.w / 22.w;
+    if(style == PjTextStyle.medium) return 14.w / 22.w;
+    if(style == PjTextStyle.tiny) return 12.w / 20.w;
+    if(style == PjTextStyle.downmenu) return 10.w / 12.w;
     return 14;
   }
 
