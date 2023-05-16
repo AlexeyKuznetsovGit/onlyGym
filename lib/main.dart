@@ -5,10 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:eticon_api/eticon_api.dart';
+import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_filled_button.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_icon_button.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_long_button.dart';
+import 'package:onlygym/project_widgets/pj_buttons/pj_text_button.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_unfilled_button.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 
@@ -47,8 +49,22 @@ class Scr extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: PjColors.white,
       appBar: AppBar(title: Text(""),),
-      body: Center(child: PjLongButton(onPressed: (){}, icon: CustomIcons.edit, text: 'Edit Profile',),)
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            PjUnfilledButton(onPressed: (){}, text: 'Edit Profile',),
+            PjFilledButton(onPressed: (){}, text: 'Edit Profile',),
+            PjLongButton(onPressed: (){}, icon: CustomIcons.edit, text: 'Edit Profile',),
+            PjIconButton(onPressed: (){}, icon: CustomIcons.edit),
+            PjTextButton(text: "Keks", type: PjTextButtonType.center, onPressed: (){},)
+
+
+          ],
+        ),
+      ),
     );
   }
 }

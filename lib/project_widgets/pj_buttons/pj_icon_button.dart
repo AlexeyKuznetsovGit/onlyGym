@@ -13,6 +13,7 @@ class PjIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // @todo: Не отрабатывает эффект нажатия
     return IconButton(
       iconSize: iconSize.w,
       onPressed: onPressed,
@@ -21,6 +22,7 @@ class PjIconButton extends StatelessWidget {
       disabledColor: PjColors.lightGray,
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
+      hoverColor: Colors.transparent,
       icon: Icon(icon),
     );
   }

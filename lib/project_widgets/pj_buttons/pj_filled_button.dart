@@ -16,6 +16,7 @@ class PjFilledButton extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(30.r)),
       clipBehavior: Clip.antiAlias,
       child: MaterialButton(
+        animationDuration:Duration(milliseconds: 25) ,
         onPressed: onPressed,
         color: PjColors.neonBlue,
         focusColor: PjColors.lightBlue,

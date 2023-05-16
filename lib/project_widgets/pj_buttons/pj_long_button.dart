@@ -23,7 +23,7 @@ class PjLongButton extends StatelessWidget {
         iconSize: MaterialStateProperty.resolveWith((states) => 24.w),
         fixedSize:
             MaterialStateProperty.resolveWith((states) => Size(334.w, 52.w)),
-        animationDuration: Duration(milliseconds: 0),
+        animationDuration: Duration(milliseconds: 20),
         shape: MaterialStateProperty.resolveWith((states) {
           if (states.contains(MaterialState.pressed)) {
             return RoundedRectangleBorder(
