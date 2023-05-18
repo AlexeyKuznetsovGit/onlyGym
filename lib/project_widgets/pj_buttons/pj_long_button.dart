@@ -3,8 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 
 
-// Страшная пиздятина
-
 class PjLongButton extends StatelessWidget {
   final String text;
   final Function()? onPressed;

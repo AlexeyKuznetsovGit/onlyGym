@@ -6,9 +6,9 @@ class PjIcons {
   // Пирушка теперь проходит там https://www.fluttericon.com
   // файл конфига лежит в icons
 
-
-
-  // static String get akkCross => 'assets/icons/akk-cross.svg';
+  static String get avatar => 'assets/icons/avatar.svg';
+  static String get check => 'assets/icons/check.svg';
+  static String get notCheck => 'assets/icons/notchek.svg';
   // static String get akkMinus => 'assets/icons/akk-minus.svg';
   // static String get akkOk => 'assets/icons/akk-ok.svg';
   // static String get analytics => 'assets/icons/analytics.svg';
