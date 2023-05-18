@@ -11,15 +11,17 @@ enum PjTextButtonType{
 class PjTextButton extends StatelessWidget {
   final String text;
   final PjTextButtonType type;
-  final Function()? onPressed;
+  final Function onPressed;
 
-  const PjTextButton({Key? key, required this.text, this.onPressed, required this.type})
+   PjTextButton({Key? key, required this.text, required this.onPressed, required this.type})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: onPressed,
+      onPressed: (){
+        onPressed();
+      },
       style: ButtonStyle(
         alignment: type == PjTextButtonType.left ? Alignment.centerLeft : Alignment.center,
         minimumSize: MaterialStateProperty.resolveWith((states){

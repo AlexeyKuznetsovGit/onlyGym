@@ -47,12 +47,12 @@ flutter:
       fonts:
          - asset: assets/fonts/pt-root-ui_bold.ttf
            weight: 700
-         - asset: assets/fonts/pt-root-ui_bold.ttf
-           weight: 700
-         - asset: assets/fonts/pt-root-ui_bold.ttf
-           weight: 700
-         - asset: assets/fonts/pt-root-ui_bold.ttf
-           weight: 700
+         - asset: assets/fonts/pt-root-ui_medium.ttf
+           weight: 600
+         - asset: assets/fonts/pt-root-ui_regular.ttf
+           weight: 500
+         - asset: assets/fonts/pt-root-ui_light.ttf
+           weight: 400
 
     - family: SFPro
       fonts:

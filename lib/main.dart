@@ -8,7 +8,9 @@ import 'package:eticon_api/eticon_api.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_widgets/pj_appbar.dart';
+import 'package:onlygym/project_widgets/pj_text_field.dart';
 import 'package:onlygym/screens/athlets_screen/widgets/avatar_card.dart';
+import 'package:onlygym/screens/auth_screen/auth_screen_provider.dart';
 import 'package:onlygym/screens/exercises_screen/widgets/exercise_card.dart';
 
 void main() async {
@@ -37,7 +39,7 @@ class App extends StatelessWidget {
             ],
           );
         },
-        child: Scr());
+        child: AuthScreenProvider());
   }
 }
 
@@ -59,17 +61,20 @@ class _ScrState extends State<Scr> {
       body: Center(
         child: Column(
           children: [
-            AvatarCard(
-              callback: () {
-              },
-            ),
+            // AvatarCard(
+            //   callback: () {
+            //   },
+            // ),
             SizedBox(height: 50.h,),
-            ExerciseCard(callback: (){}),
+            PjTextField(title: 'Email', controller: TextEditingController(),),
             SizedBox(height: 50.h,),
-            ExerciseCard.delete(callback: (){}, deleteCallback: (){}),
-            SizedBox(height: 50.h,),
-            ExerciseCard.chekbox(callback: (){}),
-            SizedBox(height: 50.h,),
+            PjTextField(title: 'Password', controller: TextEditingController(), isPassword: true,)
+            // ExerciseCard(callback: (){}),
+            // SizedBox(height: 50.h,),
+            // ExerciseCard.delete(callback: (){}, deleteCallback: (){}),
+            // SizedBox(height: 50.h,),
+            // ExerciseCard.chekbox(callback: (){}),
+            // SizedBox(height: 50.h,),
           ],
         ),
       ),
