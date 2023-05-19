@@ -50,7 +50,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
       },
       onPanEnd: (_) {
         setState(() => isTouch = false);
-        if(widget.type == _ExerciseCardType.checkbox) isCheck = !isCheck;
+        if (widget.type == _ExerciseCardType.checkbox) isCheck = !isCheck;
         widget.callback();
       },
       child: Container(
@@ -65,23 +65,31 @@ class _ExerciseCardState extends State<ExerciseCard> {
             children: [
               ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: Image.network("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3DmL_9tM3aFKiBpqYvUmdvEMg105Vg7p0EjjjZxgsjA&s", width: 54.w, height: 54.w, fit: BoxFit.cover,)),
+                  child: Image.network(
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3DmL_9tM3aFKiBpqYvUmdvEMg105Vg7p0EjjjZxgsjA&s",
+                    width: 54.w,
+                    height: 54.w,
+                    fit: BoxFit.cover,
+                    opacity: AlwaysStoppedAnimation(isTouch ? 0.6 : 1),
+                  )),
               SizedBox(
                 width: 10.w,
               ),
               Container(
-                width: 211.w,
+                  width: 211.w,
                   child: PjText("Канаты - чередование волн в полуприседе",
                       style: PjTextStyle.bold,
-                      color: widget.type == _ExerciseCardType.checkbox ? PjColors.black :(isTouch ? PjColors.gray : PjColors.black))),
-
+                      color: widget.type == _ExerciseCardType.checkbox
+                          ? PjColors.black
+                          : (isTouch ? PjColors.gray : PjColors.black))),
               const Spacer(),
-              if(widget.type == _ExerciseCardType.checkbox)...[
+              if (widget.type == _ExerciseCardType.checkbox) ...[
                 SvgPicture.asset(isCheck ? PjIcons.check : PjIcons.notCheck),
               ],
-
-              if(widget.type == _ExerciseCardType.delete)...[
-                Icon(CustomIcons.small_cross, color: isTouch ? PjColors.ultraLightBlue : PjColors.lightBlue)
+              if (widget.type == _ExerciseCardType.delete) ...[
+                Icon(CustomIcons.small_cross,
+                    color:
+                        isTouch ? PjColors.ultraLightBlue : PjColors.lightBlue)
               ]
             ],
           ),

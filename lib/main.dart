@@ -15,6 +15,7 @@ import 'package:onlygym/project_widgets/pj_qr.dart';
 import 'package:onlygym/project_widgets/pj_text_field.dart';
 import 'package:onlygym/screens/athlets_screen/widgets/avatar_card.dart';
 import 'package:onlygym/screens/auth_screen/auth_screen_provider.dart';
+import 'package:onlygym/screens/current_exercises_screen/widget/current_exercise_card.dart';
 import 'package:onlygym/screens/current_exercises_screen/widget/stats_card.dart';
 import 'package:onlygym/screens/exercises_screen/widgets/exercise_card.dart';
 import 'package:onlygym/screens/profile_screen/widgets/info_card.dart';
@@ -87,11 +88,9 @@ class _ScrState extends State<Scr> {
             //   Get.dialog(ErrorAlert(text: 'Пользователь с таким адресом уже существует',),  barrierDismissible: true);
             // }, title: "Возраст", data: "21"),
             SizedBox(height: 40.h),
-            PjQR(),
+            ExerciseCard(callback: (){}),
             SizedBox(height: 40.h,),
-            StatsCard.cardio(round: 1, count: 12),
-            SizedBox(height: 40.h,),
-            StatsCard.static(round: 1, time: 12, weight: 22,),
+            CurrentExerciseCard(title: "Гиперэкстензия", type: "Динамика", callback: (){},),
             SizedBox(height: 40.h,),
             StatsCard.dynamic(round: 1, count: 22, weight: 34),
             SizedBox(height: 40.h,),
