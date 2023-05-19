@@ -44,8 +44,9 @@ class PjAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class PjSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const PjSearchAppBar({Key? key, required this.controller}) : super(key: key);
+  PjSearchAppBar({Key? key, required this.controller}) : super(key: key);
   final TextEditingController controller;
+  final FocusNode node = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -67,27 +68,34 @@ class PjSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
             SizedBox(
               width: 10.w,
             ),
-            Container(
-              width: 290.w,
-              child: TextField(
-                controller: controller,
-                cursorColor: PjColors.neonBlue,
-                style: TextStyle(
-                    fontFamily: "PtRoot",
-                    fontSize: 14.h,
-                    fontWeight: FontWeight.w500,
-                    color: PjColors.black,
-                ),
-                decoration: InputDecoration(
-                  labelText: "Поиск...",
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  labelStyle: TextStyle(
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: (){
+                node.requestFocus();
+              },
+              child: Container(
+                width: 290.w,
+                child: TextField(
+                  focusNode: node,
+                  controller: controller,
+                  cursorColor: PjColors.neonBlue,
+                  style: TextStyle(
                       fontFamily: "PtRoot",
                       fontSize: 14.h,
                       fontWeight: FontWeight.w500,
-                      color: PjColors.gray
+                      color: PjColors.black,
+                  ),
+                  decoration: InputDecoration(
+                    labelText: "Поиск...",
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    labelStyle: TextStyle(
+                        fontFamily: "PtRoot",
+                        fontSize: 14.h,
+                        fontWeight: FontWeight.w500,
+                        color: PjColors.gray
+                    ),
                   ),
                 ),
               ),

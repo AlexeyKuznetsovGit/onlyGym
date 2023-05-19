@@ -21,7 +21,7 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PjSearchAppBar(controller: TextEditingController(),),
+      appBar: PjAppBar(),
       backgroundColor: PjColors.white,
       body: GestureDetector(
         behavior: HitTestBehavior.translucent,

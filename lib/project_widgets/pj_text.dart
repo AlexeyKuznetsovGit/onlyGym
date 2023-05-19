@@ -5,24 +5,27 @@ import 'package:onlygym/project_utils/pj_colors.dart';
 enum PjTextStyle { h1, title, bold, regular, medium, tiny, downmenu }
 
 class PjText extends StatelessWidget {
+  const PjText(this.text,
+      {Key? key, required this.style, this.color = PjColors.black,  this.align = TextAlign.start})
+      : super(key: key);
+
+
   final String text;
   final Color? color;
   final PjTextStyle style;
-
-  const PjText(this.text,
-      {Key? key, required this.style, this.color = PjColors.black})
-      : super(key: key);
+  final TextAlign align;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
+      textAlign: align,
       style: TextStyle(
         fontWeight: fontWeight,
         fontSize: fontSize.w,
         color: color,
         leadingDistribution: TextLeadingDistribution.even,
-        height: height,
+       // height: height,
       ),
     );
   }
