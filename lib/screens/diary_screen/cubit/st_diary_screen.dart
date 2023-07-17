@@ -1,18 +1,8 @@
-abstract class StDiaryScreen{}
+part of 'cb_diary_screen.dart';
 
-class StDiaryScreenInit extends StDiaryScreen{}
-
-class StDiaryScreenLoaded extends StDiaryScreen{}
-
-class StDiaryScreenLoading extends StDiaryScreen{}
-
-class StDiaryScreenNoAuthError extends StDiaryScreen{}
-
-class StDiaryScreenNoInternetError extends StDiaryScreen {}
-
-class StDiaryScreenError extends StDiaryScreen{
-  final int? error;
-  final String? message;
-  StDiaryScreenError({this.error,this.message});
+@freezed
+abstract class StDiaryScreen with _$StDiaryScreen {
+  const factory StDiaryScreen.loading() = _Loading;
+  const factory StDiaryScreen.error(int? error, String? message) = _Error;
+  const factory StDiaryScreen.loaded() = _Loaded;
 }
-    

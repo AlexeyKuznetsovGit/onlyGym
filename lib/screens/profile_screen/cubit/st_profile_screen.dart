@@ -1,18 +1,8 @@
-abstract class StProfileScreen{}
+part of 'cb_profile_screen.dart';
 
-class StProfileScreenInit extends StProfileScreen{}
-
-class StProfileScreenLoaded extends StProfileScreen{}
-
-class StProfileScreenLoading extends StProfileScreen{}
-
-class StProfileScreenNoAuthError extends StProfileScreen{}
-
-class StProfileScreenNoInternetError extends StProfileScreen {}
-
-class StProfileScreenError extends StProfileScreen{
-  final int? error;
-  final String? message;
-  StProfileScreenError({this.error,this.message});
+@freezed
+abstract class StProfileScreen with _$StProfileScreen {
+  const factory StProfileScreen.loading() = _Loading;
+  const factory StProfileScreen.error(int? error, String? message) = _Error;
+  const factory StProfileScreen.loaded() = _Loaded;
 }
-    

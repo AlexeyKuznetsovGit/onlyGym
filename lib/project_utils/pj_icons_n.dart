@@ -37,13 +37,11 @@ class CustomIcons {
   static const IconData exercises = IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData goal = IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData hide = IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData hips = IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData left_hip = IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData left_forearm = IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData left_hip = IconData(0xe812, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData left_shin = IconData(0xe813, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData right_hip = IconData(0xe812, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData left_shoulder = IconData(0xe814, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData my_training = IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData neck = IconData(0xe816, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData notification_off = IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData notification_on = IconData(0xe818, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData notmy_training = IconData(0xe819, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -56,15 +54,18 @@ class CustomIcons {
   static const IconData quit = IconData(0xe820, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData redo = IconData(0xe821, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData right_forearm = IconData(0xe822, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData right_hip = IconData(0xe823, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData right_shin = IconData(0xe824, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData right_shoulder = IconData(0xe825, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData search = IconData(0xe826, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData settings = IconData(0xe827, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData shoulders = IconData(0xe828, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData show = IconData(0xe829, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData small_cross = IconData(0xe82a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData start = IconData(0xe82b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData trash = IconData(0xe82c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData waist = IconData(0xe82d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData avatar = IconData(0xe82e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData hips = IconData(0xe82f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData neck = IconData(0xe830, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData shoulders = IconData(0xe831, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData left_shin = IconData(0xe832, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData right_shin = IconData(0xe833, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

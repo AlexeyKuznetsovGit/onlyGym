@@ -4,7 +4,13 @@ import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 
 class SizeInfoCard extends StatefulWidget {
-  const SizeInfoCard({Key? key, required this.callback,  this.isLong = false, required this.title, required this.icon, required this.data})
+  const SizeInfoCard(
+      {Key? key,
+      required this.callback,
+      this.isLong = false,
+      required this.title,
+      required this.icon,
+      required this.data})
       : super(key: key);
 
   final Function callback;
@@ -29,7 +35,7 @@ class _SizeInfoCardState extends State<SizeInfoCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         // @todo: При подключении BS будет доработана логика
         setState(() {
           isActive = !isActive;
@@ -43,21 +49,36 @@ class _SizeInfoCardState extends State<SizeInfoCard> {
           borderRadius: BorderRadius.circular(20.r),
           color: isActive ? PjColors.neonBlue : PjColors.white,
         ),
-        width: widget.isLong ? 148.w : 100.w,
+        width: widget.isLong ? 147.w : 94.w,
+        height: 72.h,
         child: Padding(
-          padding: EdgeInsets.all(15.w),
+          padding: EdgeInsets.only(top: 15.h, left: 15.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  Icon(widget.icon, size: 24.w, color: isActive ? PjColors.white : PjColors.neonBlue,),
+                  Icon(
+                    widget.icon,
+                    size: 24.w,
+                    color: isActive ? PjColors.white : PjColors.neonBlue,
+                  ),
                   SizedBox(width: 10.w),
-                  PjText(widget.data, style: PjTextStyle.bold, color: isActive ? PjColors.white : PjColors.black,)
+                  PjText(
+                    widget.data,
+                    style: PjTextStyle.bold,
+                    color: isActive ? PjColors.white : PjColors.black,
+                  )
                 ],
               ),
-              SizedBox(height: 10.h,),
-              PjText(widget.title, style: PjTextStyle.tiny, color: isActive ? PjColors.white : PjColors.black,)
+              SizedBox(
+                height: 10.h,
+              ),
+              PjText(
+                widget.title,
+                style: PjTextStyle.tiny,
+                color: isActive ? PjColors.white : PjColors.black,
+              )
             ],
           ),
         ),

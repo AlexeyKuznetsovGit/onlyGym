@@ -5,7 +5,6 @@ class PjIcons {
   // Пример Icon(CustomIcons.diary)
   // Пирушка теперь проходит там https://www.fluttericon.com
   // файл конфига лежит в icons
-
   static String get avatar => 'assets/icons/avatar.svg';
   static String get check => 'assets/icons/check.svg';
   static String get notCheck => 'assets/icons/notchek.svg';

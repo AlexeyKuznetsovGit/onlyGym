@@ -1,5 +1,4 @@
-
-
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -7,51 +6,51 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:eticon_api/eticon_api.dart';
-import 'package:onlygym/project_utils/pj_colors.dart';
-import 'package:onlygym/project_utils/pj_icons_n.dart';
-import 'package:onlygym/project_widgets/error_alert.dart';
-import 'package:onlygym/project_widgets/pj_appbar.dart';
-import 'package:onlygym/project_widgets/pj_qr.dart';
-import 'package:onlygym/project_widgets/pj_text_field.dart';
-import 'package:onlygym/screens/athlets_screen/widgets/avatar_card.dart';
-import 'package:onlygym/screens/auth_screen/auth_screen_provider.dart';
-import 'package:onlygym/screens/current_exercises_screen/widget/current_exercise_card.dart';
-import 'package:onlygym/screens/current_exercises_screen/widget/stats_card.dart';
-import 'package:onlygym/screens/exercises_screen/widgets/exercise_card.dart';
-import 'package:onlygym/screens/profile_screen/widgets/info_card.dart';
-import 'package:onlygym/screens/profile_screen/widgets/size_info_card.dart';
+import 'package:onlygym/router/router.dart';
+import 'package:onlygym/screens/main_screen/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  Api.init(
-      baseUrl:
-          'https://your_api.com/api/v1/'); //Input your URL. Learn more eticon_api on pub.dev
+  Api.init(baseUrl: 'https://your_api.com/api/v1/'); //Input your URL. Learn more eticon_api on pub.dev
   runApp(App());
 }
 
 class App extends StatelessWidget {
+  final _appRouter = AppRouter();
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: const Size(390, 844),
-        builder: (context, child) {
-          return GetCupertinoApp(
+      designSize: const Size(390, 844),
+      builder: (context, child) {
+        return /*MaterialApp.router(
+            routerConfig: _appRouter.config(),
             debugShowCheckedModeBanner: false,
             title: 'First Method',
-            home: child,
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-          );
-        },
-        child: Scr());
+          );*/
+            GetCupertinoApp.router(
+          routerDelegate: AutoRouterDelegate(_appRouter),
+          routeInformationParser: _appRouter.defaultRouteParser(),
+          debugShowCheckedModeBanner: false,
+          title: 'First Method',
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+        );
+      },
+    );
   }
 }
 
-class Scr extends StatefulWidget {
+/*class Scr extends StatefulWidget {
   const Scr({Key? key}) : super(key: key);
 
   @override
@@ -146,4 +145,4 @@ class _ScrState extends State<Scr> {
       ),
     );
   }
-}
+}*/

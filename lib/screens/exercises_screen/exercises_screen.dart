@@ -1,37 +1,48 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onlygym/project_utils/pj_utils.dart';
+import 'package:onlygym/project_widgets/error_dialog.dart';
 import 'package:onlygym/project_widgets/pj_appbar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'cubit/cb_exercises_screen.dart';
-import 'cubit/st_exercises_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-      
+import 'package:onlygym/project_widgets/pj_loader.dart';
+import 'package:onlygym/screens/exercises_screen/cubit/cb_exercises_screen.dart';
 
-class ExercisesScreen extends StatelessWidget {
+@RoutePage()
+class ExercisesScreen extends StatefulWidget implements AutoRouteWrapper {
   const ExercisesScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ExercisesScreen> createState() => _ExercisesScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider<CbExercisesScreen>(
+      create: (context) => CbExercisesScreen(),
+      child: this,
+    );
+  }
+}
+
+class _ExercisesScreenState extends State<ExercisesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const PjAppBar(),
-      body: BlocBuilder<CbExercisesScreen, StExercisesScreen>(
-        builder: (context, state){
-          if(state is StExercisesScreenLoading){
-            return const Center(child: CupertinoActivityIndicator(),);
-          }
-          if(state is StExercisesScreenLoaded){
-            return Container(color: Colors.green);
-          }
-          if(state is StExercisesScreenError){
-            return Container(color: Colors.red);
-          }
-          return Container(color: Colors.grey);
-        },
+      body: BlocConsumer<CbExercisesScreen, StExercisesScreen>(
+        listener: (context, state) =>
+            state.whenOrNull(error: (code, message) => showAlertDialog(context, message ?? '')),
+        builder: (context, state) => state.maybeWhen(
+          orElse: () => Container(),
+          loading: () => const PjLoader(),
+          loaded: () => _buildBodyContent(context),
+        ),
       ),
     );
-      
+  }
+
+  Widget _buildBodyContent(BuildContext context) {
+    return Center(
+      child: Text('Exercises'),
+    );
   }
 }
-    

@@ -43,12 +43,13 @@ class _InfoCardState extends State<InfoCard> {
           color: isActive ? PjColors.neonBlue : PjColors.white,
         ),
         width: widget.isLong ? 334.w : 98.w,
+        height: 65.h,
         child: Padding(
-          padding: EdgeInsets.all(15.w),
+          padding: EdgeInsets.only(top: 15.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              PjText(widget.title, style: PjTextStyle.tiny, color: isActive ? PjColors.white : PjColors.black,),
+              PjText(widget.title, style: PjTextStyle.tiny, color: isActive ? PjColors.white : PjColors.gray,),
               SizedBox(height: 10.h,),
               PjText(widget.data, style: PjTextStyle.bold, color: isActive ? PjColors.white : PjColors.black,),
             ],

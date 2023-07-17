@@ -2,21 +2,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eticon_api/eticon_api.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'st_profile_screen.dart';
+part 'st_athletes_screen.dart';
 
-part 'cb_profile_screen.freezed.dart';
+part 'cb_athletes_screen.freezed.dart';
 
-class CbProfileScreen extends Cubit<StProfileScreen> {
+class CbAthletesScreen extends Cubit<StAthletesScreen> {
 
-  CbProfileScreen() : super(const StProfileScreen.loaded());
+  CbAthletesScreen() : super(const StAthletesScreen.loaded());
 
   Future<void> getData() async {
     try {
       Map<String, dynamic> response =
       await Api.get(method: 'method', testMode: true);
-      emit(StProfileScreen.loaded());
+      emit(StAthletesScreen.loaded());
     } on APIException catch (e) {
-      emit(StProfileScreen.error(e.code, 'Что-то пошло не так!'));
+      emit(StAthletesScreen.error(e.code, 'Что-то пошло не так!'));
     }
   }
 }
