@@ -7,16 +7,18 @@ class PjLongButton extends StatelessWidget {
   final String text;
   final Function()? onPressed;
   final IconData icon;
-
+  final MaterialStatesController controller;
   const PjLongButton(
-      {Key? key, required this.text, this.onPressed, required this.icon})
+      {Key? key, required this.text, this.onPressed, required this.icon, required this.controller})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FilledButton.icon(
       onPressed: onPressed,
+      statesController: controller,
       style: ButtonStyle(
+        padding: MaterialStateProperty.resolveWith((states) => EdgeInsets.only(left: 20.w)),
         alignment: Alignment.centerLeft,
         iconSize: MaterialStateProperty.resolveWith((states) => 24.w),
         fixedSize:

@@ -2,21 +2,19 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
+import 'package:onlygym/project_utils/pj_utils.dart';
 import 'package:onlygym/project_widgets/error_dialog.dart';
 import 'package:onlygym/project_widgets/pj_appbar.dart';
 import 'package:onlygym/project_widgets/pj_loader.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
-import 'package:onlygym/router/router.dart';
 import 'package:onlygym/screens/profile_screen/cubit/cb_profile_screen.dart';
 import 'package:onlygym/screens/profile_screen/widgets/body_parts.dart';
 import 'package:onlygym/screens/profile_screen/widgets/bottom_sheet_settings.dart';
 import 'package:onlygym/screens/profile_screen/widgets/empty_avatar.dart';
 import 'package:onlygym/screens/profile_screen/widgets/info_card.dart';
-import 'package:onlygym/screens/profile_screen/widgets/size_info_card.dart';
 
 @RoutePage()
 class ProfileScreen extends StatefulWidget implements AutoRouteWrapper {
@@ -35,6 +33,7 @@ class ProfileScreen extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,18 +50,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     topRight: Radius.circular(20.r),
                   ),
                 ),
+                barrierColor:PjColors.black.withOpacity(0.5),
                 context: context,
-                builder: (BuildContext context) {
-                  return BottomSheetSettingsWidget();
+                builder: (BuildContext ctx) {
+                  return const BottomSheetSettingsWidget();
                 },
               );
-              /*Get.bottomSheet(
-                BottomSheetSettingsWidget(),
-                persistent: false,
-                isDismissible: true,
-                isScrollControlled: true,
-                // enableDrag: false,
-              );*/
             },
             child: Padding(
               padding: EdgeInsets.only(right: 16.w),

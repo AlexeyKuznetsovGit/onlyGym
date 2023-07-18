@@ -7,7 +7,7 @@ import 'package:onlygym/screens/profile_screen/profile_screen.dart';
 
 part 'router.gr.dart';
 
-@AutoRouterConfig()
+@AutoRouterConfig(replaceInRouteName: 'Widget|Screen,Route')
 class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [

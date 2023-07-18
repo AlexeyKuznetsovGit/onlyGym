@@ -5,6 +5,6 @@ export 'pj_colors.dart';
 ///RU
 ///Добавляйте свои утилиты в данный класс, или используйте export
 class PjUtils{
-
+ static bool offBarrierColor = false;
 }
   
