@@ -1,17 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
+import 'package:onlygym/project_widgets/pj_text.dart';
 
-class PjLongButtonText extends StatelessWidget {
-  final String text;
-  final Function()? onPressed;
-  final MaterialStatesController controller;
+class PjRadioButton extends StatelessWidget {
+  final String option;
+  final Function(String) onChanged;
+  final String selectedOption;
+  final bool isTextField;
 
-  const PjLongButtonText({Key? key, required this.text, this.onPressed, required this.controller}) : super(key: key);
+  const PjRadioButton({Key? key, required this.onChanged, required this.option, required this.selectedOption, this.isTextField = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton(
+    return GestureDetector(
+      onTap: () {
+        onChanged(option);
+      },
+      child: AnimatedContainer(
+        alignment: Alignment.center,
+        width: 334.w,
+        height: 52.h,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30.r),
+            border: Border.all(color: option == selectedOption ? PjColors.neonBlue : PjColors.ultraLightBlue),
+            color: option == selectedOption ? PjColors.neonBlue : Colors.transparent),
+        duration: const Duration(milliseconds: 20),
+        child: PjText(
+          option,
+          style: PjTextStyle.medium,
+          color: option == selectedOption ? PjColors.white : PjColors.black,
+        ),
+      ),
+    );
+    /*FilledButton(
         onPressed: onPressed,
         statesController: controller,
         style: ButtonStyle(
@@ -74,6 +97,6 @@ class PjLongButtonText extends StatelessWidget {
         ),
         child: Center(
           child: Text("$text"),
-        ));
+        ));*/
   }
 }

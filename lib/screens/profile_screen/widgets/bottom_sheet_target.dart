@@ -4,10 +4,11 @@ import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_filled_button.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_text_button.dart';
+import 'package:onlygym/project_widgets/pj_text_filed_fill.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 import 'package:onlygym/project_widgets/pj_text_field.dart';
 
-import '../../../project_widgets/pj_buttons/pj_long_button_text.dart';
+import '../../../project_widgets/pj_buttons/pj_radio_button.dart';
 
 class BottomSheetTargetWidget extends StatefulWidget {
   BottomSheetTargetWidget({Key? key}) : super(key: key);
@@ -18,22 +19,10 @@ class BottomSheetTargetWidget extends StatefulWidget {
 
 class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
   List<String> targets = ['Улучшение формы', 'Здоровый образ жизни', 'Похудение', 'Набор мышечной массы'];
-  List<Set<MaterialState>> buttonState = [
-    {MaterialState.selected},
-    {MaterialState.selected},
-    {MaterialState.selected},
-    {MaterialState.selected},
-    {MaterialState.selected}
-    //так как нету состояния default, то использую то состояние selected, которого нету в кнопке pjLongButton
-  ];
-  List<MaterialStatesController> controllers = [
-    MaterialStatesController(),
-    MaterialStatesController(),
-    MaterialStatesController(),
-    MaterialStatesController(),
-    MaterialStatesController()
-  ];
-  int selectedOption = -1;
+
+  String selectedOption = 'Улучшение формы';
+  String anotherTarget = 'Другое';
+  TextEditingController controller = TextEditingController(text: 'Другое');
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +40,10 @@ class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
             ),
             boxShadow: [BoxShadow(color: PjColors.black.withOpacity(0.2), blurRadius: 8.r, offset: Offset(0, 2))]),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
-              height: 20.h,
+              height: 7.h, // было 20, не влезало из за клавиатуры
             ),
             Container(
               margin: EdgeInsets.only(right: 16.w),
@@ -92,21 +82,37 @@ class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
             ...List.generate(
                 4,
                 (index) => Padding(
-                      padding: EdgeInsets.only(bottom: 20.h),
-                      child: PjLongButtonText(
-                        text: targets[index],
-                        controller: controllers[index],
-                        onPressed: () {
-                            if (!buttonState[index].contains(MaterialState.pressed) && buttonState[index].isNotEmpty) {
-                              buttonState[index] = {MaterialState.pressed};
-                            } else {
-                              buttonState[index] = {MaterialState.selected};
-                            }
-                            controllers[index].value = buttonState[index];
+                    padding: EdgeInsets.only(bottom: 20.h),
+                    child: PjRadioButton(
+                      option: targets[index],
+                      onChanged: (String newOption) {
+                        setState(() {
+                          controller.text = 'Другое';
+                          selectedOption = newOption;
+                        });
+                      },
+                      selectedOption: selectedOption,
+                    ))),
 
-                        },
-                      ),
-                    )),
+            /// Todo После изменения контента в PjTextFeild, и потом если нажать на кнопки выше, то при первом нажатии, цвет в PjTextFeild не меняется
+            PjTextFieldFill(
+              title: anotherTarget,
+              onTap: () {
+                setState(() {
+                  selectedOption = '';
+                });
+              },
+              onChange: (String newOption) {
+                setState(() {
+                  selectedOption = newOption;
+                  print('adadad');
+                });
+              },
+              controller: controller,
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
             PjFilledButton(
               text: 'Применить изменения',
               onPressed: () {},
@@ -116,5 +122,4 @@ class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
       ),
     );
   }
-
 }

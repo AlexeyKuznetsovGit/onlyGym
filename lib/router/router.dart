@@ -3,6 +3,7 @@ import 'package:onlygym/screens/athletes_screen/athletes_screen.dart';
 import 'package:onlygym/screens/diary_screen/diary_screen.dart';
 import 'package:onlygym/screens/exercises_screen/exercises_screen.dart';
 import 'package:onlygym/screens/main_screen/main_screen.dart';
+import 'package:onlygym/screens/profile_image_screen/profile_image_screen.dart';
 import 'package:onlygym/screens/profile_screen/profile_screen.dart';
 
 part 'router.gr.dart';
@@ -16,6 +17,7 @@ class AppRouter extends _$AppRouter {
           AutoRoute(page: ExercisesRoute.page),
           AutoRoute(page: AthletesRoute.page),
           AutoRoute(page: ProfileRoute.page)
-        ])
+        ]),
+    AutoRoute(page: ProfileImageRoute.page)
       ];
 }

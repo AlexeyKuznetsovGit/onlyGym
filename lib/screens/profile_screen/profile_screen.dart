@@ -10,6 +10,7 @@ import 'package:onlygym/project_widgets/pj_appbar.dart';
 import 'package:onlygym/project_widgets/pj_loader.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
+import 'package:onlygym/router/router.dart';
 import 'package:onlygym/screens/profile_screen/cubit/cb_profile_screen.dart';
 import 'package:onlygym/screens/profile_screen/widgets/body_parts.dart';
 import 'package:onlygym/screens/profile_screen/widgets/bottom_sheet_settings.dart';
@@ -33,7 +34,6 @@ class ProfileScreen extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     topRight: Radius.circular(20.r),
                   ),
                 ),
-                barrierColor:PjColors.black.withOpacity(0.5),
+                barrierColor: PjColors.black.withOpacity(0.5),
                 context: context,
                 builder: (BuildContext ctx) {
                   return const BottomSheetSettingsWidget();
@@ -93,8 +93,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SizedBox(
             height: 30.h,
           ),
-          Center(
-            child: EmptyAvatar(),
+          GestureDetector(
+            onTap: () {
+              context.router.push(ProfileImageRoute());
+            },
+            child: Center(
+              child: EmptyAvatar(),
+            ),
           ),
           SizedBox(
             height: 20.h,

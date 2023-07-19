@@ -45,6 +45,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: WrappedRoute(child: const AthletesScreen()),
       );
     },
+    ProfileImageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const ProfileImageScreen()),
+      );
+    },
   };
 }
 
@@ -114,6 +120,20 @@ class AthletesRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AthletesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProfileImageScreen]
+class ProfileImageRoute extends PageRouteInfo<void> {
+  const ProfileImageRoute({List<PageRouteInfo>? children})
+      : super(
+          ProfileImageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileImageRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

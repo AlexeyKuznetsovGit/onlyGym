@@ -40,8 +40,10 @@ class CustomIcons {
   static const IconData left_hip = IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData left_forearm = IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData right_hip = IconData(0xe812, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData add_photo = IconData(0xe813, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData left_shoulder = IconData(0xe814, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData my_training = IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dumbbell = IconData(0xe816, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData notification_off = IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData notification_on = IconData(0xe818, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData notmy_training = IconData(0xe819, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -54,6 +56,7 @@ class CustomIcons {
   static const IconData quit = IconData(0xe820, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData redo = IconData(0xe821, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData right_forearm = IconData(0xe822, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData sports_kettlebell = IconData(0xe823, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData right_shoulder = IconData(0xe825, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData search = IconData(0xe826, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData settings = IconData(0xe827, fontFamily: _kFontFam, fontPackage: _kFontPkg);

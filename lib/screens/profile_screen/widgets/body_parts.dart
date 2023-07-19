@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
+import 'package:onlygym/screens/profile_screen/widgets/bottom_sheet_body_parts.dart';
 import 'package:onlygym/screens/profile_screen/widgets/size_info_card.dart';
 
 class BodyParts extends StatefulWidget {
@@ -46,7 +47,8 @@ class _BodyPartsState extends State<BodyParts> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizeInfoCard(
-                callback: () {},
+                callback: () {
+                },
                 title: "Шея",
                 icon: CustomIcons.neck,
                 data: 144.toString(),
@@ -85,7 +87,7 @@ class _BodyPartsState extends State<BodyParts> {
                   return SizeInfoCard(
                     callback: () {},
                     title: getTitleOrIcon(index),
-                    icon: getTitleOrIcon(index,returnTitle: false),
+                    icon: getTitleOrIcon(index, returnTitle: false),
                     isLong: true,
                     data: 144.toString(),
                   );

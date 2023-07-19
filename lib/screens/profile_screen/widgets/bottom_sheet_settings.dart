@@ -35,6 +35,7 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
     MaterialStatesController(),
     MaterialStatesController()
   ];
+  bool isNotificationsDisabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -92,12 +93,14 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                     padding: EdgeInsets.only(bottom: index == 4 ? 0 : 20.h),
                     child: PjLongButton(
                       onPressed: () async {
-                        if (!buttonState[index].contains(MaterialState.pressed) && buttonState[index].isNotEmpty) {
-                          buttonState[index] = {MaterialState.pressed};
-                        } else {
-                          buttonState[index] = {MaterialState.selected};
+                        if (index != 2) {
+                          if (!buttonState[index].contains(MaterialState.pressed) && buttonState[index].isNotEmpty) {
+                            buttonState[index] = {MaterialState.pressed};
+                          } else {
+                            buttonState[index] = {MaterialState.selected};
+                          }
+                          controllers[index].value = buttonState[index];
                         }
-                        controllers[index].value = buttonState[index];
 
                         /// Todo: При открытии второго ботомщита, у первого необходимо сделать barrierColor = Colors.transpanent
                         switch (index) {
@@ -131,10 +134,14 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                                   ),
                                 ),
                                 isScrollControlled: true,
+                                useSafeArea: true,
                                 barrierColor: PjColors.black.withOpacity(0.5),
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return BottomSheetTargetWidget();
+                                  return Padding(
+                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    child: BottomSheetTargetWidget(),
+                                  );
                                 },
                               );
                               buttonState[index] = {MaterialState.selected};
@@ -143,6 +150,10 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                             }
                           case 2:
                             {
+                              setState(() {
+                                isNotificationsDisabled = !isNotificationsDisabled;
+                              });
+
                               break;
                             }
                           case 3:
@@ -171,8 +182,8 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                             }
                         }
                       },
-                      icon: getTitleOrIcon(index, returnTitle: false),
-                      text: getTitleOrIcon(index),
+                      icon: getTitleOrIcon(index, returnTitle: false, isNotificationsDisabled: isNotificationsDisabled),
+                      text: getTitleOrIcon(index, isNotificationsDisabled: isNotificationsDisabled),
                       controller: controllers[index],
                     ),
                   ))
@@ -181,7 +192,7 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
     );
   }
 
-  dynamic getTitleOrIcon(int index, {bool returnTitle = true}) {
+  dynamic getTitleOrIcon(int index, {bool returnTitle = true, bool isNotificationsDisabled = false}) {
     String title = '';
     late IconData icon;
 
@@ -207,9 +218,9 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
       case 2:
         {
           if (returnTitle) {
-            title = 'Уведомления включены';
+            title = isNotificationsDisabled ? 'Уведомления отключены' : 'Уведомления включены';
           } else {
-            icon = CustomIcons.notification_on;
+            icon = isNotificationsDisabled ? CustomIcons.notification_off : CustomIcons.notification_on;
           }
           break;
         }

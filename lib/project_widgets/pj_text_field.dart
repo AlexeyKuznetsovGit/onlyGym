@@ -6,9 +6,9 @@ import 'package:onlygym/project_utils/pj_icons_n.dart';
 class PjTextField extends StatefulWidget {
   const PjTextField(
       {Key? key,
-      required this.title,
-      required this.controller,
-      this.isPassword = false})
+        required this.title,
+        required this.controller,
+        this.isPassword = false})
       : super(key: key);
 
   final bool isPassword;
@@ -45,10 +45,10 @@ class _PjTextFieldState extends State<PjTextField> {
           floatingLabelBehavior: FloatingLabelBehavior.never,
           isDense: true,
           labelStyle: TextStyle(
-            fontFamily: "PtRoot",
-            fontSize: 14.h,
-            fontWeight: FontWeight.w500,
-            color: PjColors.gray
+              fontFamily: "PtRoot",
+              fontSize: 14.h,
+              fontWeight: FontWeight.w500,
+              color: PjColors.gray
           ),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.r),
@@ -59,17 +59,17 @@ class _PjTextFieldState extends State<PjTextField> {
           contentPadding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
           suffixIcon: widget.isPassword
               ? GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isShow = !isShow;
-                    });
-                  },
-                  behavior: HitTestBehavior.translucent,
-                  child: Icon(
-                    isShow ? CustomIcons.show : CustomIcons.hide,
-                    color: PjColors.lightBlue,
-                  ),
-                )
+            onTap: () {
+              setState(() {
+                isShow = !isShow;
+              });
+            },
+            behavior: HitTestBehavior.translucent,
+            child: Icon(
+              isShow ? CustomIcons.show : CustomIcons.hide,
+              color: PjColors.lightBlue,
+            ),
+          )
               : SizedBox(),
         ),
         controller: widget.controller,

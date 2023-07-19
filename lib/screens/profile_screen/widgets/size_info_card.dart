@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
+import 'package:onlygym/screens/profile_screen/widgets/bottom_sheet_body_parts.dart';
 
 class SizeInfoCard extends StatefulWidget {
   const SizeInfoCard(
@@ -35,8 +36,29 @@ class _SizeInfoCardState extends State<SizeInfoCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         // @todo: При подключении BS будет доработана логика
+        setState(() {
+          isActive = !isActive;
+        });
+        await showModalBottomSheet(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.r),
+              topRight: Radius.circular(20.r),
+            ),
+          ),
+          isScrollControlled: true,
+          barrierColor: PjColors.black.withOpacity(0.5),
+          context: context,
+          builder: (BuildContext context) {
+            return BottomSheetBodyPartsWidget(
+              title: widget.title,
+              height: 270.h,
+              type: BottomSheetType.init,
+            );
+          },
+        );
         setState(() {
           isActive = !isActive;
         });
