@@ -1,18 +1,14 @@
-abstract class StAuthScreen{}
+part of 'cb_auth_screen.dart';
 
-class StAuthScreenInit extends StAuthScreen{}
+@freezed
+abstract class StAuthScreen with _$StAuthScreen {
+  const factory StAuthScreen.loading() = _Loading;
+  const factory StAuthScreen.error(int? error, String? message) = _Error;
 
-class StAuthScreenLoaded extends StAuthScreen{}
 
-class StAuthScreenLoading extends StAuthScreen{}
+  const factory StAuthScreen.signIn() = _SignIn;
+  const factory StAuthScreen.signUp() = _SignUp;
 
-class StAuthScreenNoAuthError extends StAuthScreen{}
-
-class StAuthScreenNoInternetError extends StAuthScreen {}
-
-class StAuthScreenError extends StAuthScreen{
-  final int? error;
-  final String? message;
-  StAuthScreenError({this.error,this.message});
+  const factory StAuthScreen.signInSuccessful() = _SignInSuccessful;
+  const factory StAuthScreen.signUpSuccessful() = _SignUpSuccessful;
 }
-    

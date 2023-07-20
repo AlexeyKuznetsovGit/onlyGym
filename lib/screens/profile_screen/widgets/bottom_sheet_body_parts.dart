@@ -6,6 +6,7 @@ import 'package:onlygym/project_widgets/pj_buttons/pj_filled_button.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_long_button.dart';
 import 'package:onlygym/project_widgets/pj_qr.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
+import 'package:onlygym/screens/profile_screen/widgets/volumeDiagram.dart';
 
 import '../../../project_widgets/pj_text_field.dart';
 
@@ -32,6 +33,19 @@ class _BottomSheetBodyPartsWidgetState extends State<BottomSheetBodyPartsWidget>
 
   TextEditingController controllerVolume = TextEditingController(text: '144 см');
   TextEditingController controllerDate = TextEditingController(text: '24.04.2023');
+
+  List<int> counts = [45,25,30,10,20,35,15];
+  int max = 0;
+  List<String> weeks = ['пн','вт','ср','чт','пт','сб','вс'];
+
+  @override
+  void initState() {
+    max = counts.reduce((curr, next) => curr > next ? curr: next);
+    if(max == 0){
+      max = 1;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,12 +196,41 @@ class _BottomSheetBodyPartsWidgetState extends State<BottomSheetBodyPartsWidget>
             Container(
               height: 191.h,
               width: 334.w,
+              padding: EdgeInsets.only(top: 30.h, left: 20.w, right: 20.w),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.r), border: Border.all(color: PjColors.ultraLightBlue)),
-            )
+              child: Container(
+                width: 294.w,
+                height: 161.h,
+                padding: EdgeInsets.only(bottom: 30.h),
+                child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                        });
+                      },
+                      behavior: HitTestBehavior.translucent,
+                      child: VolumeDiagram(
+                        height: 87 / (max / counts[index]), //87 это максимальная высота одного элемента диаграммы
+                        count: counts[index],
+                        weekDay: weeks[index],
+                      ),
+                    );
+                  },
+                  itemCount: weeks.length,
+                  scrollDirection: Axis.horizontal,
+                ),
+              ),
+            ),
+
           ],
         ],
       ),
     );
   }
 }
+
+
+

@@ -39,6 +39,14 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const MainScreen(),
       );
     },
+    AuthRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<AuthRouteArgs>(orElse: () => const AuthRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: AuthScreen(key: args.key)),
+      );
+    },
     AthletesRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -46,9 +54,21 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     ProfileImageRoute.name: (routeData) {
+      final args = routeData.argsAs<ProfileImageRouteArgs>(
+          orElse: () => const ProfileImageRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const ProfileImageScreen()),
+        child: WrappedRoute(
+            child: ProfileImageScreen(
+          key: args.key,
+          isRegistration: args.isRegistration,
+        )),
+      );
+    },
+    IdConfirmationRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const IdConfirmationScreen()),
       );
     },
   };
@@ -111,6 +131,34 @@ class MainRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [AuthScreen]
+class AuthRoute extends PageRouteInfo<AuthRouteArgs> {
+  AuthRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AuthRoute.name,
+          args: AuthRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'AuthRoute';
+
+  static const PageInfo<AuthRouteArgs> page = PageInfo<AuthRouteArgs>(name);
+}
+
+class AuthRouteArgs {
+  const AuthRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AuthRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
 /// [AthletesScreen]
 class AthletesRoute extends PageRouteInfo<void> {
   const AthletesRoute({List<PageRouteInfo>? children})
@@ -126,14 +174,52 @@ class AthletesRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ProfileImageScreen]
-class ProfileImageRoute extends PageRouteInfo<void> {
-  const ProfileImageRoute({List<PageRouteInfo>? children})
-      : super(
+class ProfileImageRoute extends PageRouteInfo<ProfileImageRouteArgs> {
+  ProfileImageRoute({
+    Key? key,
+    bool isRegistration = false,
+    List<PageRouteInfo>? children,
+  }) : super(
           ProfileImageRoute.name,
+          args: ProfileImageRouteArgs(
+            key: key,
+            isRegistration: isRegistration,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'ProfileImageRoute';
+
+  static const PageInfo<ProfileImageRouteArgs> page =
+      PageInfo<ProfileImageRouteArgs>(name);
+}
+
+class ProfileImageRouteArgs {
+  const ProfileImageRouteArgs({
+    this.key,
+    this.isRegistration = false,
+  });
+
+  final Key? key;
+
+  final bool isRegistration;
+
+  @override
+  String toString() {
+    return 'ProfileImageRouteArgs{key: $key, isRegistration: $isRegistration}';
+  }
+}
+
+/// generated route for
+/// [IdConfirmationScreen]
+class IdConfirmationRoute extends PageRouteInfo<void> {
+  const IdConfirmationRoute({List<PageRouteInfo>? children})
+      : super(
+          IdConfirmationRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'IdConfirmationRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

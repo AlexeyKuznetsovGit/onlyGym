@@ -23,7 +23,7 @@ class PjText extends StatelessWidget {
       style: TextStyle(
         height: height.h,
         fontWeight: fontWeight,
-        fontSize: fontSize.sp,
+        fontSize: fontSize,
         color: color,
         leadingDistribution: TextLeadingDistribution.even,
        // height: height,

@@ -12,8 +12,10 @@ class PjTextButton extends StatelessWidget {
   final String text;
   final PjTextButtonType type;
   final Function onPressed;
+  final PjTextStyle textStyle;
+  final Color textColor;
 
-   PjTextButton({Key? key, required this.text, required this.onPressed, required this.type})
+   PjTextButton({Key? key,required this.textStyle, required this.textColor ,required this.text, required this.onPressed, required this.type})
       : super(key: key);
 
   @override
@@ -25,8 +27,8 @@ class PjTextButton extends StatelessWidget {
       style: ButtonStyle(
         alignment: type == PjTextButtonType.left ? Alignment.centerLeft : Alignment.center,
         minimumSize: MaterialStateProperty.resolveWith((states){
-          if(type == PjTextButtonType.center)  return Size(294.w, 22.w);
-          return Size(30.w, 22.w);
+          if(type == PjTextButtonType.center)  return Size(232.w, 52.h);
+          return Size(30.w, 22.h);
         }),
         animationDuration: Duration(milliseconds: 15),
         overlayColor: MaterialStateProperty.resolveWith<Color>(
@@ -42,9 +44,10 @@ class PjTextButton extends StatelessWidget {
           },
         ),
       ),
-      child: Text(
+      child: PjText(
         text,
-        style: TextStyle(fontSize: 16.w, fontFamily: "PtRoot", fontWeight: FontWeight.w500),
+        style: textStyle,
+        color: textColor,
       ),
     );
   }

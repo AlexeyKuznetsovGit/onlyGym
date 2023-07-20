@@ -1,18 +1,22 @@
-import 'st_auth_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eticon_api/eticon_api.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'st_auth_screen.dart';
+
+part 'cb_auth_screen.freezed.dart';
 
 class CbAuthScreen extends Cubit<StAuthScreen> {
-  CbAuthScreen() : super(StAuthScreenLoading());
-  
+
+  CbAuthScreen() : super(const StAuthScreen.signIn());
+
   Future<void> getData() async {
-  try {
+    try {
       Map<String, dynamic> response =
-          await Api.get(method: 'method', testMode: true);
-      emit(StAuthScreenLoaded());
+      await Api.get(method: 'method', testMode: true);
+      //emit(StAuthScreen.loaded());
     } on APIException catch (e) {
-      emit(StAuthScreenError(error: e.code));
+      emit(StAuthScreen.error(e.code, 'Что-то пошло не так!'));
     }
   }
 }
-    

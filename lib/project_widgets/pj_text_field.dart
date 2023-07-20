@@ -32,7 +32,13 @@ class _PjTextFieldState extends State<PjTextField> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 334.w,
-      child: TextField(
+      child: TextFormField(
+        autovalidateMode: AutovalidateMode.disabled,
+        validator: (value){
+          if (value == null || value.isEmpty) {
+            return '';
+          }
+        },
         cursorColor: PjColors.neonBlue,
         style: TextStyle(
             fontFamily: "PtRoot",
@@ -41,6 +47,7 @@ class _PjTextFieldState extends State<PjTextField> {
             color: PjColors.black
         ),
         decoration: InputDecoration(
+          errorStyle: TextStyle(height: 0, color: Colors.transparent),
           labelText: widget.title,
           floatingLabelBehavior: FloatingLabelBehavior.never,
           isDense: true,
@@ -50,6 +57,12 @@ class _PjTextFieldState extends State<PjTextField> {
               fontWeight: FontWeight.w500,
               color: PjColors.gray
           ),
+          focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.r),
+              borderSide: BorderSide(color: Colors.red)),
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.r),
+              borderSide: BorderSide(color: Colors.red)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.r),
               borderSide: BorderSide(color: PjColors.ultraLightBlue)),
