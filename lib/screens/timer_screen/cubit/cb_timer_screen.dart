@@ -8,7 +8,7 @@ class CbTimerScreen extends Cubit<StTimerScreen> {
   Future<void> getData() async {
   try {
       Map<String, dynamic> response =
-          await Api.get(method: 'method', testMode: true);
+          await Api.get( 'method', testMode: true);
       emit(StTimerScreenLoaded());
     } on APIException catch (e) {
       emit(StTimerScreenError(error: e.code));

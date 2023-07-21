@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:onlygym/project_utils/pj_utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:onlygym/project_utils/singletons/sg_app_data.dart';
 import 'package:onlygym/project_widgets/error_dialog.dart';
 import 'package:onlygym/project_widgets/pj_appbar.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_filled_button.dart';
@@ -37,6 +39,8 @@ class _AuthScreenState extends State<AuthScreen> {
   final _formKeySignUp = GlobalKey<FormState>();
 
   bool isPressed = false;
+
+  String repeatPassword = '';
 
   TextEditingController nameController = TextEditingController();
 
@@ -113,32 +117,47 @@ class _AuthScreenState extends State<AuthScreen> {
               SizedBox(
                 height: 50.h,
               ),
-              PjTextField(title: "Имя", controller: nameController),
+              PjTextField(title: "Имя", controller: nameController, type: PjTextFieldStyle.text),
               SizedBox(
                 height: 20.h,
               ),
-              PjTextField(title: "Фамилия", controller: lastNameController),
-              SizedBox(
-                height: 20.h,
-              ),
-              PjTextField(title: "Email", controller: emailController),
+              PjTextField(title: "Фамилия", controller: lastNameController, type: PjTextFieldStyle.text),
               SizedBox(
                 height: 20.h,
               ),
               PjTextField(
+                title: "Email",
+                controller: emailController,
+                type: PjTextFieldStyle.email,
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              PjTextField(
+                repeatPassword: repeatPasswordController.text,
                 title: "Пароль",
                 controller: passwordController,
-                isPassword: true,
+                type: PjTextFieldStyle.password,
+                onChanged: (value) {
+                  setState(() {
+                    repeatPassword = repeatPasswordController.text;
+                  });
+                },
               ),
               SizedBox(
                 height: 20.h,
               ),
               PjTextField(
-                title: "Повторение пароля",
-                controller: repeatPasswordController,
-                isPassword: true,
-              ),
-              if (isPressed && _formKeySignUp.currentState != null && !_formKeySignUp.currentState!.validate())
+                  onChanged: (value) {
+                    setState(() {
+                      repeatPassword = passwordController.text;
+                    });
+                  },
+                  repeatPassword: repeatPassword,
+                  title: "Повторение пароля",
+                  controller: repeatPasswordController,
+                  type: PjTextFieldStyle.password),
+              if (isPressed && _formKeySignUp.currentState != null && !_formKeySignUp.currentState!.validate()) ...[
                 Padding(
                   padding: EdgeInsets.only(top: 10.h),
                   child: Text(
@@ -146,14 +165,45 @@ class _AuthScreenState extends State<AuthScreen> {
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
+                if (!GetUtils.isEmail(emailController.text) && emailController.text.isNotEmpty) ...[
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.h),
+                    child: Text(
+                      'Email указан неверно',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ],
+                if (passwordController.text.isNotEmpty && passwordController.text.length < 6 ||
+                    passwordController.text != repeatPasswordController.text) ...[
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.h),
+                    child: Text(
+                      passwordController.text.length < 6 && passwordController.text != repeatPasswordController.text
+                          ? 'Пароль должен содержать более 6 символов\nи совпадать с веденным ранее'
+                          : passwordController.text.length < 6
+                              ? 'Пароль должен содержать более 6 символов'
+                              : passwordController.text != repeatPasswordController.text
+                                  ? 'Пароль должен совпадать с веденным ранее'
+                                  : '',
+                      style: TextStyle(color: Colors.red),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ]
+              ],
               SizedBox(
                 height: 30.h,
               ),
               PjFilledButton(
-                  text: "Зарегистрироваться",
+                  text: "Продолжить",
                   onPressed: () {
                     if (_formKeySignUp.currentState!.validate()) {
-                      context.router.push(IdConfirmationRoute());
+                      SgAppData.instance.user.email = emailController.text;
+                      SgAppData.instance.user.firstName = nameController.text;
+                      SgAppData.instance.user.lastName = lastNameController.text;
+                      SgAppData.instance.password = emailController.text;
+                      context.router.push(ProfileImageRoute(isRegistration: true));
                     } else {
                       setState(() {
                         isPressed = true;
@@ -212,14 +262,14 @@ class _AuthScreenState extends State<AuthScreen> {
               SizedBox(
                 height: 50.h,
               ),
-              PjTextField(title: "Email", controller: emailController),
+              PjTextField(title: "Email", controller: emailController, type: PjTextFieldStyle.email),
               SizedBox(
                 height: 20.h,
               ),
               PjTextField(
                 title: "Пароль",
                 controller: passwordController,
-                isPassword: true,
+                type: PjTextFieldStyle.password,
               ),
               if (isPressed && _formKeySignIn.currentState != null && !_formKeySignIn.currentState!.validate())
                 Padding(
@@ -229,6 +279,25 @@ class _AuthScreenState extends State<AuthScreen> {
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
+              if (!GetUtils.isEmail(emailController.text) && emailController.text.isNotEmpty) ...[
+                Padding(
+                  padding: EdgeInsets.only(top: 10.h),
+                  child: Text(
+                    'Email указан неверно',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              ],
+              if (passwordController.text.isNotEmpty && passwordController.text.length < 6) ...[
+                Padding(
+                  padding: EdgeInsets.only(top: 10.h),
+                  child: Text(
+                    'Пароль должен содержать более 6 символов',
+                    style: TextStyle(color: Colors.red),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
               SizedBox(
                 height: 10.h,
               ),
@@ -246,19 +315,20 @@ class _AuthScreenState extends State<AuthScreen> {
                       onPressed: () {})
                 ],
               ),
-
               SizedBox(
                 height: 30.h,
               ),
-              PjFilledButton(text: "Войти", onPressed: () {
-                if (_formKeySignIn.currentState!.validate()) {
-                  context.router.replace(MainRoute());
-                } else {
-                  setState(() {
-                    isPressed = true;
-                  });
-                }
-              }),
+              PjFilledButton(
+                  text: "Войти",
+                  onPressed: () {
+                    if (_formKeySignIn.currentState!.validate()) {
+                      context.router.replace(MainRoute());
+                    } else {
+                      setState(() {
+                        isPressed = true;
+                      });
+                    }
+                  }),
               SizedBox(
                 height: 10.h,
               ),
@@ -275,7 +345,6 @@ class _AuthScreenState extends State<AuthScreen> {
                     passwordController = TextEditingController();
                     context.read<CbAuthScreen>().emit(StAuthScreen.signUp());
                   });
-
                 },
               ),
             ],

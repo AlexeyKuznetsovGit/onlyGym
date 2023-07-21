@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
+import 'package:onlygym/project_utils/pj_date_input_formatter.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 
-class PjTextField extends StatefulWidget {
-  const PjTextField(
-      {Key? key,
-        required this.title,
-        required this.controller,
-        this.isPassword = false})
-      : super(key: key);
+enum PjTextFieldStyle { password, email, date, text, number, params }
 
-  final bool isPassword;
+class PjTextField extends StatefulWidget {
+  const PjTextField({
+    Key? key,
+    required this.title,
+    this.onChanged,
+    required this.type,
+    this.repeatPassword = '',
+    required this.controller,
+  }) : super(key: key);
+
+  final PjTextFieldStyle type;
+
+  final Function(String)? onChanged;
   final String title;
+  final String repeatPassword;
   final TextEditingController controller;
 
   @override
@@ -33,61 +44,101 @@ class _PjTextFieldState extends State<PjTextField> {
     return SizedBox(
       width: 334.w,
       child: TextFormField(
+        onChanged: widget.onChanged,
         autovalidateMode: AutovalidateMode.disabled,
-        validator: (value){
+        validator: (value) {
           if (value == null || value.isEmpty) {
+            return '';
+          }
+          if (widget.type == PjTextFieldStyle.email && !GetUtils.isEmail(value)) {
+            return '';
+          }
+          if (widget.type == PjTextFieldStyle.password &&
+              widget.repeatPassword.isNotEmpty &&
+              (value.length < 6 || value != widget.repeatPassword)) {
+            return '';
+          }
+          if (widget.type == PjTextFieldStyle.password && widget.repeatPassword.isEmpty && value.length < 6) {
+            return '';
+          }
+          if (widget.type == PjTextFieldStyle.date && !_validateDate(value)) {
+            return '';
+          }
+          if(widget.type == PjTextFieldStyle.params && (value.length > 3 || value == '0')){
             return '';
           }
         },
         cursorColor: PjColors.neonBlue,
-        style: TextStyle(
-            fontFamily: "PtRoot",
-            fontSize: 14.h,
-            fontWeight: FontWeight.w500,
-            color: PjColors.black
-        ),
+        inputFormatters: widget.type == PjTextFieldStyle.date
+            ? [
+                DateTextFormatter(),
+              ]
+            : null,
+        keyboardType: getTextInputType(widget.type),
+        style: TextStyle(fontFamily: "PtRoot", fontSize: 14.h, fontWeight: FontWeight.w500, color: PjColors.black),
         decoration: InputDecoration(
           errorStyle: TextStyle(height: 0, color: Colors.transparent),
           labelText: widget.title,
           floatingLabelBehavior: FloatingLabelBehavior.never,
           isDense: true,
-          labelStyle: TextStyle(
-              fontFamily: "PtRoot",
-              fontSize: 14.h,
-              fontWeight: FontWeight.w500,
-              color: PjColors.gray
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.r),
-              borderSide: BorderSide(color: Colors.red)),
-          errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.r),
-              borderSide: BorderSide(color: Colors.red)),
+          labelStyle:
+              TextStyle(fontFamily: "PtRoot", fontSize: 14.h, fontWeight: FontWeight.w500, color: PjColors.gray),
+          focusedErrorBorder:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(30.r), borderSide: BorderSide(color: Colors.red)),
+          errorBorder:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(30.r), borderSide: BorderSide(color: Colors.red)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.r),
-              borderSide: BorderSide(color: PjColors.ultraLightBlue)),
+              borderRadius: BorderRadius.circular(30.r), borderSide: BorderSide(color: PjColors.ultraLightBlue)),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.r),
-              borderSide: BorderSide(color: PjColors.ultraLightBlue)),
+              borderRadius: BorderRadius.circular(30.r), borderSide: BorderSide(color: PjColors.ultraLightBlue)),
           contentPadding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
-          suffixIcon: widget.isPassword
+          suffixIcon: widget.type == PjTextFieldStyle.password
               ? GestureDetector(
-            onTap: () {
-              setState(() {
-                isShow = !isShow;
-              });
-            },
-            behavior: HitTestBehavior.translucent,
-            child: Icon(
-              isShow ? CustomIcons.show : CustomIcons.hide,
-              color: PjColors.lightBlue,
-            ),
-          )
+                  onTap: () {
+                    setState(() {
+                      isShow = !isShow;
+                    });
+                  },
+                  behavior: HitTestBehavior.translucent,
+                  child: Icon(
+                    isShow ? CustomIcons.show : CustomIcons.hide,
+                    color: PjColors.lightBlue,
+                  ),
+                )
               : SizedBox(),
         ),
         controller: widget.controller,
-        obscureText: widget.isPassword ? isShow : false,
+        obscureText: widget.type == PjTextFieldStyle.password ? isShow : false,
       ),
     );
+  }
+
+  TextInputType getTextInputType(PjTextFieldStyle type) {
+    switch (type) {
+      case PjTextFieldStyle.number:
+        return TextInputType.number;
+      case PjTextFieldStyle.email:
+        return TextInputType.emailAddress;
+      case PjTextFieldStyle.date:
+        return TextInputType.number;
+      case PjTextFieldStyle.params:
+        return TextInputType.number;
+      default:
+        return TextInputType.text;
+    }
+  }
+
+  bool _validateDate(String date) {
+    DateFormat _dateFormat = DateFormat("dd.MM.yyyy");
+    try {
+      DateTime parsedDate = _dateFormat.parseStrict(date);
+      if (parsedDate.isBefore(DateTime.now())) {
+        return true; // Дата в прошлом или настоящем - допустимая дата рождения
+      } else {
+        return false; //Дата рождения должна быть в прошлом
+      }
+    } catch (e) {
+      return false; //Некорректный формат даты
+    }
   }
 }

@@ -81,13 +81,17 @@ class _BottomSheetEditingWidgetState extends State<BottomSheetEditingWidget> {
             ...List.generate(
                 6,
                 (index) => Padding(
-                      padding: EdgeInsets.only(bottom:  20.h),
+                      padding: EdgeInsets.only(bottom: 20.h),
                       child: PjTextField(
+                        type: PjTextFieldStyle.text,
                         title: data[index],
                         controller: controllers[index],
                       ),
                     )),
-            PjFilledButton(text: 'Применить изменения', onPressed: (){},)
+            PjFilledButton(
+              text: 'Применить изменения',
+              onPressed: () {},
+            )
           ],
         ),
       ),

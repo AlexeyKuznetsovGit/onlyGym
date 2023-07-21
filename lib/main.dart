@@ -6,13 +6,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:eticon_api/eticon_api.dart';
+import 'package:onlygym/repositories/auth_repository.dart';
+import 'package:onlygym/repositories/get_it.dart';
+import 'package:onlygym/repositories/user_repository.dart';
 import 'package:onlygym/router/router.dart';
 import 'package:onlygym/screens/main_screen/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  Api.init(baseUrl: 'https://your_api.com/api/v1/'); //Input your URL. Learn more eticon_api on pub.dev
+  Api.init(urls: ['http://88.204.74.60:33333/v1/api/users', 'http://88.204.74.60:33333/v1/auth']);
+  getIt.registerLazySingleton(() => UserRepository());
+  getIt.registerLazySingleton(() => AuthRepository());
   runApp(App());
 }
 
@@ -48,6 +53,11 @@ class App extends StatelessWidget {
       },
     );
   }
+}
+
+class ApiUrls{
+  static int users = 0;
+  static int auth = 1;
 }
 
 /*class Scr extends StatefulWidget {

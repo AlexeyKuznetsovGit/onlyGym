@@ -8,7 +8,7 @@ class CbTrainScreen extends Cubit<StTrainScreen> {
   Future<void> getData() async {
   try {
       Map<String, dynamic> response =
-          await Api.get(method: 'method', testMode: true);
+          await Api.get( 'method', testMode: true);
       emit(StTrainScreenLoaded());
     } on APIException catch (e) {
       emit(StTrainScreenError(error: e.code));

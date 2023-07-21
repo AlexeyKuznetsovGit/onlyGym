@@ -8,7 +8,7 @@ class CbMainScreen extends Cubit<StMainScreen> {
   Future<void> getData() async {
   try {
       Map<String, dynamic> response =
-          await Api.get(method: 'method', testMode: true);
+          await Api.get( 'method', testMode: true);
       emit(StMainScreenLoaded());
     } on APIException catch (e) {
       emit(StMainScreenError(error: e.code));

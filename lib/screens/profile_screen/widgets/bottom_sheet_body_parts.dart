@@ -175,6 +175,7 @@ class _BottomSheetBodyPartsWidgetState extends State<BottomSheetBodyPartsWidget>
             )
           ] else if (widget.type == BottomSheetType.edit) ...[
             PjTextField(
+              type: PjTextFieldStyle.number,
               title: '144 см',
               controller: controllerVolume,
             ),
@@ -182,6 +183,7 @@ class _BottomSheetBodyPartsWidgetState extends State<BottomSheetBodyPartsWidget>
               height: 20.h,
             ),
             PjTextField(
+              type: PjTextFieldStyle.date,
               title: '24.04.2023',
               controller: controllerDate,
             ),

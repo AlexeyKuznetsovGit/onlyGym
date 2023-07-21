@@ -13,7 +13,7 @@ class CbAuthScreen extends Cubit<StAuthScreen> {
   Future<void> getData() async {
     try {
       Map<String, dynamic> response =
-      await Api.get(method: 'method', testMode: true);
+      await Api.get('method', testMode: true);
       //emit(StAuthScreen.loaded());
     } on APIException catch (e) {
       emit(StAuthScreen.error(e.code, 'Что-то пошло не так!'));

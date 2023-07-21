@@ -9,6 +9,7 @@ import 'package:onlygym/project_widgets/pj_appbar.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_filled_button.dart';
 import 'package:onlygym/project_widgets/pj_loader.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
+import 'package:onlygym/router/router.dart';
 import 'package:onlygym/screens/profile_image_screen/cubit/cb_profile_image_screen.dart';
 
 @RoutePage()
@@ -109,7 +110,9 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
           ),
           PjFilledButton(
             text: widget.isRegistration ? 'Продолжить' : 'Сохранить изменения',
-            onPressed: () {},
+            onPressed: widget.isRegistration ? () {
+              context.router.push(BirthdayRoute());
+            } : (){},
           )
         ],
       ),

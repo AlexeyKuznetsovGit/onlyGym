@@ -8,7 +8,7 @@ class CbCurrentExercisesScreen extends Cubit<StCurrentExercisesScreen> {
   Future<void> getData() async {
   try {
       Map<String, dynamic> response =
-          await Api.get(method: 'method', testMode: true);
+          await Api.get( 'method', testMode: true);
       emit(StCurrentExercisesScreenLoaded());
     } on APIException catch (e) {
       emit(StCurrentExercisesScreenError(error: e.code));

@@ -67,7 +67,7 @@ class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
                       Padding(
                         padding: EdgeInsets.only(left: 16.w),
                         child: PjText(
-                          'Редактирование',
+                          'Моя цель',
                           style: PjTextStyle.title,
                         ),
                       ),

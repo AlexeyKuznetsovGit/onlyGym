@@ -13,7 +13,7 @@ class CbIdConfirmationScreen extends Cubit<StIdConfirmationScreen> {
   Future<void> getData() async {
     try {
       Map<String, dynamic> response =
-      await Api.get(method: 'method', testMode: true);
+      await Api.get('method', testMode: true);
       emit(StIdConfirmationScreen.loaded());
     } on APIException catch (e) {
       emit(StIdConfirmationScreen.error(e.code, 'Что-то пошло не так!'));
