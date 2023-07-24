@@ -17,10 +17,11 @@ class PjTextField extends StatefulWidget {
     required this.type,
     this.repeatPassword = '',
     required this.controller,
+    this.checkCode,
   }) : super(key: key);
 
   final PjTextFieldStyle type;
-
+  final int? checkCode;
   final Function(String)? onChanged;
   final String title;
   final String repeatPassword;
@@ -64,7 +65,11 @@ class _PjTextFieldState extends State<PjTextField> {
           if (widget.type == PjTextFieldStyle.date && !_validateDate(value)) {
             return '';
           }
-          if(widget.type == PjTextFieldStyle.params && (value.length > 3 || value == '0')){
+          if (widget.type == PjTextFieldStyle.params && (value.length > 3 || value == '0')) {
+            return '';
+          }
+          if (widget.type == PjTextFieldStyle.number &&
+              (widget.checkCode != null && widget.checkCode != int.parse(widget.controller.text))) {
             return '';
           }
         },
@@ -73,7 +78,11 @@ class _PjTextFieldState extends State<PjTextField> {
             ? [
                 DateTextFormatter(),
               ]
-            : null,
+            : widget.checkCode != null
+                ? [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                  ]
+                : null,
         keyboardType: getTextInputType(widget.type),
         style: TextStyle(fontFamily: "PtRoot", fontSize: 14.h, fontWeight: FontWeight.w500, color: PjColors.black),
         decoration: InputDecoration(

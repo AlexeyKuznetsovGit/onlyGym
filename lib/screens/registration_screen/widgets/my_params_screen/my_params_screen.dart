@@ -4,7 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
+import 'package:onlygym/models/user_model.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/singletons/sg_app_data.dart';
 import 'package:onlygym/project_widgets/error_dialog.dart';
@@ -15,29 +15,28 @@ import 'package:onlygym/project_widgets/pj_loader.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 import 'package:onlygym/project_widgets/pj_text_field.dart';
 import 'package:onlygym/router/router.dart';
-import 'package:onlygym/screens/auth_screen/widgets/Id_confirmation_screen/cubit/cb_id_confirmation_screen.dart';
-import 'package:onlygym/screens/auth_screen/widgets/birthday_screen/cubit/cb_birthday_screen.dart';
+import 'package:onlygym/screens/registration_screen/widgets/my_params_screen/cubit/cb_my_params_screen.dart';
 
 @RoutePage()
-class BirthdayScreen extends StatefulWidget implements AutoRouteWrapper {
-  const BirthdayScreen({Key? key}) : super(key: key);
+class MyParamsScreen extends StatefulWidget implements AutoRouteWrapper {
+  const MyParamsScreen({Key? key}) : super(key: key);
 
   @override
-  State<BirthdayScreen> createState() => _BirthdayScreenState();
+  State<MyParamsScreen> createState() => _MyParamsScreenState();
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<CbBirthdayScreen>(
-      create: (context) => CbBirthdayScreen(),
+    return BlocProvider<CbMyParamsScreen>(
+      create: (context) => CbMyParamsScreen(),
       child: this,
     );
   }
 }
 
-class _BirthdayScreenState extends State<BirthdayScreen> {
-
-  final _formKeyBirthday = GlobalKey<FormState>();
-  TextEditingController birthdayController = TextEditingController();
+class _MyParamsScreenState extends State<MyParamsScreen> {
+  final _formKeyParams = GlobalKey<FormState>();
+  TextEditingController heightController = TextEditingController();
+  TextEditingController weightController = TextEditingController();
   bool isPressed = false;
 
   @override
@@ -66,7 +65,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: BlocConsumer<CbBirthdayScreen, StBirthdayScreen>(
+        child: BlocConsumer<CbMyParamsScreen, StMyParamsScreen>(
           listener: (context, state) {
             state.maybeWhen(
                 orElse: () {},
@@ -75,9 +74,8 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                 });
           },
           builder: (context, state) => state.maybeWhen(
-            orElse: () => Container(),
+            orElse: () => _buildBodyContent(context),
             loading: () => const PjLoader(),
-            loaded: () => _buildBodyContent(context),
           ),
         ),
       ),
@@ -91,7 +89,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
         child: Column(
           children: [
             const PjText(
-              "Дата рождения",
+              "Мои параметры",
               style: PjTextStyle.h1,
               color: PjColors.neonBlue,
             ),
@@ -99,7 +97,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
               height: 10.h,
             ),
             const PjText(
-              "Введите дату своего рождения",
+              "Укажите свои настоящие рост и вес",
               align: TextAlign.center,
               style: PjTextStyle.regular,
             ),
@@ -107,29 +105,48 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
               height: 50.h,
             ),
             Form(
-                key: _formKeyBirthday,
-                child: PjTextField(type: PjTextFieldStyle.date,title: "Дата рождения", controller: birthdayController)),
-            if (isPressed &&
-                _formKeyBirthday.currentState != null &&
-                !_formKeyBirthday.currentState!.validate())
+                key: _formKeyParams,
+                child: Column(
+                  children: [
+                    PjTextField(type: PjTextFieldStyle.params, title: "Рост", controller: heightController),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    PjTextField(type: PjTextFieldStyle.params, title: "Вес", controller: weightController),
+                  ],
+                )),
+            if (isPressed && _formKeyParams.currentState != null && !_formKeyParams.currentState!.validate()) ...[
               Padding(
                 padding: EdgeInsets.only(top: 10.h),
                 child: Text(
-                  birthdayController.text.isEmpty ? 'Пожалуйста, заполните поле' : 'Введена некорректная дата',
+                  'Пожалуйста, заполните отмеченные поля',
                   style: TextStyle(color: Colors.red),
                 ),
               ),
-
+              if ((weightController.text.length > 3 || weightController.text == '0') ||
+                  heightController.text.length > 3 ||
+                  heightController.text == '0') ...[
+                Padding(
+                  padding: EdgeInsets.only(top: 10.h),
+                  child: Text(
+                    'Введены некорректные значения',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              ],
+            ],
             SizedBox(
               height: 30.h,
             ),
             PjFilledButton(
                 text: "Продолжить",
                 onPressed: () {
-                  if (_formKeyBirthday.currentState!.validate()) {
-                    SgAppData.instance.user.dateBirth = formatDateToISO(birthdayController.text);
-                    print(SgAppData.instance.user.dateBirth);
-                    context.router.push(MyParamsRoute());
+                  if (_formKeyParams.currentState!.validate()) {
+                    SgAppData.instance.user.parameters = [
+                      ParametersModel(name: "Рост", value: double.parse(heightController.text), unit: 'см'),
+                      ParametersModel(name: "Вес", value: double.parse(weightController.text), unit: 'кг')
+                    ];
+                    context.router.push(const MyTargetRoute());
                   } else {
                     setState(() {
                       isPressed = true;
@@ -140,18 +157,5 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
         ),
       ),
     );
-  }
-  String formatDateToISO(String inputDate) {
-    DateFormat inputDateFormat = DateFormat("dd.MM.yyyy");
-    DateFormat outputDateFormat = DateFormat("yyyy-MM-dd");
-
-    try {
-      DateTime date = inputDateFormat.parseStrict(inputDate);
-      String formattedDate = outputDateFormat.format(date);
-      return formattedDate;
-    } catch (e) {
-      print('Ошибка при преобразовании даты: $e');
-      return '';
-    }
   }
 }

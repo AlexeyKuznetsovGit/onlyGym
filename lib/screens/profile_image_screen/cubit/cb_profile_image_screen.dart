@@ -14,6 +14,7 @@ class CbProfileImageScreen extends Cubit<StProfileImageScreen> {
     try {
       Map<String, dynamic> response =
       await Api.get( 'method', testMode: true);
+      /*await photoRepository.sendPhoto(name: photo.split('/').last, imagePath: photo);*/
       emit(StProfileImageScreen.loaded());
     } on APIException catch (e) {
       emit(StProfileImageScreen.error(e.code, 'Что-то пошло не так!'));

@@ -1,6 +1,5 @@
 import 'package:eticon_api/eticon_api.dart';
 import 'package:onlygym/main.dart';
-import 'package:onlygym/models/user_model.dart';
 
 class AuthRepository {
   Future<int> registration(
@@ -9,12 +8,11 @@ class AuthRepository {
       required String firstName,
       required String lastName,
       required String dateBirthday,
-      required String height,
-      required String weight,
+      required double height,
+      required double weight,
       required String target,
       String? pathPhoto,
       String? namePhoto}) async {
-    int code = -1;
 
     var formData = pathPhoto != null
         ? FormData.fromMap({
@@ -23,7 +21,7 @@ class AuthRepository {
             'first_name': firstName,
             'last_name': lastName,
             'date_birth': dateBirthday,
-            'contacts': '',
+            'contacts': 'Гена сказал что я могу сюда что угодно вставить',
             'height': height,
             'weight': weight,
             'target': target,
@@ -38,14 +36,22 @@ class AuthRepository {
             'first_name': firstName,
             'last_name': lastName,
             'date_birth': dateBirthday,
-            'contacts': '',
+            'contacts': 'Гена сказал что я могу сюда что угодно вставить',
             'height': height,
             'weight': weight,
             'target': target,
           });
 
     Map<String, dynamic> response = await Api.post('register', body: formData, urlIndex: ApiUrls.auth, testMode: true);
-    code = response['code'];
-    return code;
+    return response['code'];
   }
+
+  Future<void> login ({required String email, required String password}) async{
+    Map<String, dynamic> response = await Api.post('sign-in', body: {
+      "email": email,
+      "password": password
+    }, urlIndex: ApiUrls.auth, testMode: true);
+    Api.setToken(response['access_token']);
+  }
+
 }

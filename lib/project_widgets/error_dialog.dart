@@ -7,7 +7,7 @@ import 'package:onlygym/project_widgets/pj_text.dart';
 
 import '../project_utils/pj_colors.dart';
 
-void showAlertDialog(BuildContext context, String message, [Function()? onTap]) {
+void showAlertDialog(BuildContext context, String message, [bool back = false]) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
@@ -18,7 +18,11 @@ void showAlertDialog(BuildContext context, String message, [Function()? onTap]) 
       ),
 
     ),
-  );
+  ).then((value) {
+    if(back){
+      Navigator.pop(context);
+    }
+  });
   /*Get.dialog(
       DialogError(
         message: message,

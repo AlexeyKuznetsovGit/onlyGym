@@ -75,9 +75,8 @@ class _MyTargetScreenState extends State<MyTargetScreen> {
                 });
           },
           builder: (context, state) => state.maybeWhen(
-            orElse: () => Container(),
+            orElse: () => _buildBodyContent(context),
             loading: () => const PjLoader(),
-            loaded: () => _buildBodyContent(context),
           ),
         ),
       ),
@@ -142,7 +141,6 @@ class _MyTargetScreenState extends State<MyTargetScreen> {
               onPressed: () {
                 if(selectedOption != ''){
                   SgAppData.instance.user.goal = selectedOption;
-                  log(SgAppData.instance.user.toString(),name: 'user');
                   context.router.push(IdConfirmationRoute());
                 }
               }),

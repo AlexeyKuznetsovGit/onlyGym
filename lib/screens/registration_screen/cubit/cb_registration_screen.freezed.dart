@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'cb_auth_screen.dart';
+part of 'cb_registration_screen.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,13 +15,12 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$StAuthScreen {
+mixin _$StRegistrationScreen {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
     required TResult Function() loaded,
-    required TResult Function() signInSuccessful,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -29,7 +28,6 @@ mixin _$StAuthScreen {
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
     TResult? Function()? loaded,
-    TResult? Function()? signInSuccessful,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -37,7 +35,6 @@ mixin _$StAuthScreen {
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
     TResult Function()? loaded,
-    TResult Function()? signInSuccessful,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -46,7 +43,6 @@ mixin _$StAuthScreen {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
-    required TResult Function(_SignInSuccessful value) signInSuccessful,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,7 +50,6 @@ mixin _$StAuthScreen {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_SignInSuccessful value)? signInSuccessful,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,23 +57,23 @@ mixin _$StAuthScreen {
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
-    TResult Function(_SignInSuccessful value)? signInSuccessful,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $StAuthScreenCopyWith<$Res> {
-  factory $StAuthScreenCopyWith(
-          StAuthScreen value, $Res Function(StAuthScreen) then) =
-      _$StAuthScreenCopyWithImpl<$Res, StAuthScreen>;
+abstract class $StRegistrationScreenCopyWith<$Res> {
+  factory $StRegistrationScreenCopyWith(StRegistrationScreen value,
+          $Res Function(StRegistrationScreen) then) =
+      _$StRegistrationScreenCopyWithImpl<$Res, StRegistrationScreen>;
 }
 
 /// @nodoc
-class _$StAuthScreenCopyWithImpl<$Res, $Val extends StAuthScreen>
-    implements $StAuthScreenCopyWith<$Res> {
-  _$StAuthScreenCopyWithImpl(this._value, this._then);
+class _$StRegistrationScreenCopyWithImpl<$Res,
+        $Val extends StRegistrationScreen>
+    implements $StRegistrationScreenCopyWith<$Res> {
+  _$StRegistrationScreenCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -95,7 +90,7 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$StAuthScreenCopyWithImpl<$Res, _$_Loading>
+    extends _$StRegistrationScreenCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
       : super(_value, _then);
@@ -108,7 +103,7 @@ class _$_Loading implements _Loading {
 
   @override
   String toString() {
-    return 'StAuthScreen.loading()';
+    return 'StRegistrationScreen.loading()';
   }
 
   @override
@@ -126,7 +121,6 @@ class _$_Loading implements _Loading {
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
     required TResult Function() loaded,
-    required TResult Function() signInSuccessful,
   }) {
     return loading();
   }
@@ -137,7 +131,6 @@ class _$_Loading implements _Loading {
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
     TResult? Function()? loaded,
-    TResult? Function()? signInSuccessful,
   }) {
     return loading?.call();
   }
@@ -148,7 +141,6 @@ class _$_Loading implements _Loading {
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
     TResult Function()? loaded,
-    TResult Function()? signInSuccessful,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -163,7 +155,6 @@ class _$_Loading implements _Loading {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
-    required TResult Function(_SignInSuccessful value) signInSuccessful,
   }) {
     return loading(this);
   }
@@ -174,7 +165,6 @@ class _$_Loading implements _Loading {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_SignInSuccessful value)? signInSuccessful,
   }) {
     return loading?.call(this);
   }
@@ -185,7 +175,6 @@ class _$_Loading implements _Loading {
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
-    TResult Function(_SignInSuccessful value)? signInSuccessful,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -195,7 +184,7 @@ class _$_Loading implements _Loading {
   }
 }
 
-abstract class _Loading implements StAuthScreen {
+abstract class _Loading implements StRegistrationScreen {
   const factory _Loading() = _$_Loading;
 }
 
@@ -209,7 +198,7 @@ abstract class _$$_ErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$StAuthScreenCopyWithImpl<$Res, _$_Error>
+    extends _$StRegistrationScreenCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
       : super(_value, _then);
@@ -245,7 +234,7 @@ class _$_Error implements _Error {
 
   @override
   String toString() {
-    return 'StAuthScreen.error(error: $error, message: $message)';
+    return 'StRegistrationScreen.error(error: $error, message: $message)';
   }
 
   @override
@@ -272,7 +261,6 @@ class _$_Error implements _Error {
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
     required TResult Function() loaded,
-    required TResult Function() signInSuccessful,
   }) {
     return error(this.error, message);
   }
@@ -283,7 +271,6 @@ class _$_Error implements _Error {
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
     TResult? Function()? loaded,
-    TResult? Function()? signInSuccessful,
   }) {
     return error?.call(this.error, message);
   }
@@ -294,7 +281,6 @@ class _$_Error implements _Error {
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
     TResult Function()? loaded,
-    TResult Function()? signInSuccessful,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -309,7 +295,6 @@ class _$_Error implements _Error {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
-    required TResult Function(_SignInSuccessful value) signInSuccessful,
   }) {
     return error(this);
   }
@@ -320,7 +305,6 @@ class _$_Error implements _Error {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_SignInSuccessful value)? signInSuccessful,
   }) {
     return error?.call(this);
   }
@@ -331,7 +315,6 @@ class _$_Error implements _Error {
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
-    TResult Function(_SignInSuccessful value)? signInSuccessful,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -341,7 +324,7 @@ class _$_Error implements _Error {
   }
 }
 
-abstract class _Error implements StAuthScreen {
+abstract class _Error implements StRegistrationScreen {
   const factory _Error(final int? error, final String? message) = _$_Error;
 
   int? get error;
@@ -359,7 +342,7 @@ abstract class _$$_LoadedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadedCopyWithImpl<$Res>
-    extends _$StAuthScreenCopyWithImpl<$Res, _$_Loaded>
+    extends _$StRegistrationScreenCopyWithImpl<$Res, _$_Loaded>
     implements _$$_LoadedCopyWith<$Res> {
   __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
       : super(_value, _then);
@@ -372,7 +355,7 @@ class _$_Loaded implements _Loaded {
 
   @override
   String toString() {
-    return 'StAuthScreen.loaded()';
+    return 'StRegistrationScreen.loaded()';
   }
 
   @override
@@ -390,7 +373,6 @@ class _$_Loaded implements _Loaded {
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
     required TResult Function() loaded,
-    required TResult Function() signInSuccessful,
   }) {
     return loaded();
   }
@@ -401,7 +383,6 @@ class _$_Loaded implements _Loaded {
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
     TResult? Function()? loaded,
-    TResult? Function()? signInSuccessful,
   }) {
     return loaded?.call();
   }
@@ -412,7 +393,6 @@ class _$_Loaded implements _Loaded {
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
     TResult Function()? loaded,
-    TResult Function()? signInSuccessful,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -427,7 +407,6 @@ class _$_Loaded implements _Loaded {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
-    required TResult Function(_SignInSuccessful value) signInSuccessful,
   }) {
     return loaded(this);
   }
@@ -438,7 +417,6 @@ class _$_Loaded implements _Loaded {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_SignInSuccessful value)? signInSuccessful,
   }) {
     return loaded?.call(this);
   }
@@ -449,7 +427,6 @@ class _$_Loaded implements _Loaded {
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
-    TResult Function(_SignInSuccessful value)? signInSuccessful,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -459,120 +436,6 @@ class _$_Loaded implements _Loaded {
   }
 }
 
-abstract class _Loaded implements StAuthScreen {
+abstract class _Loaded implements StRegistrationScreen {
   const factory _Loaded() = _$_Loaded;
-}
-
-/// @nodoc
-abstract class _$$_SignInSuccessfulCopyWith<$Res> {
-  factory _$$_SignInSuccessfulCopyWith(
-          _$_SignInSuccessful value, $Res Function(_$_SignInSuccessful) then) =
-      __$$_SignInSuccessfulCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_SignInSuccessfulCopyWithImpl<$Res>
-    extends _$StAuthScreenCopyWithImpl<$Res, _$_SignInSuccessful>
-    implements _$$_SignInSuccessfulCopyWith<$Res> {
-  __$$_SignInSuccessfulCopyWithImpl(
-      _$_SignInSuccessful _value, $Res Function(_$_SignInSuccessful) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$_SignInSuccessful implements _SignInSuccessful {
-  const _$_SignInSuccessful();
-
-  @override
-  String toString() {
-    return 'StAuthScreen.signInSuccessful()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_SignInSuccessful);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function(int? error, String? message) error,
-    required TResult Function() loaded,
-    required TResult Function() signInSuccessful,
-  }) {
-    return signInSuccessful();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
-    TResult? Function(int? error, String? message)? error,
-    TResult? Function()? loaded,
-    TResult? Function()? signInSuccessful,
-  }) {
-    return signInSuccessful?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(int? error, String? message)? error,
-    TResult Function()? loaded,
-    TResult Function()? signInSuccessful,
-    required TResult orElse(),
-  }) {
-    if (signInSuccessful != null) {
-      return signInSuccessful();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Error value) error,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_SignInSuccessful value) signInSuccessful,
-  }) {
-    return signInSuccessful(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_SignInSuccessful value)? signInSuccessful,
-  }) {
-    return signInSuccessful?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_SignInSuccessful value)? signInSuccessful,
-    required TResult orElse(),
-  }) {
-    if (signInSuccessful != null) {
-      return signInSuccessful(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SignInSuccessful implements StAuthScreen {
-  const factory _SignInSuccessful() = _$_SignInSuccessful;
 }

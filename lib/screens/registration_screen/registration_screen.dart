@@ -15,33 +15,43 @@ import 'package:onlygym/project_widgets/pj_loader.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 import 'package:onlygym/project_widgets/pj_text_field.dart';
 import 'package:onlygym/router/router.dart';
-import 'cubit/cb_auth_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:onlygym/screens/registration_screen/cubit/cb_registration_screen.dart';
 
 @RoutePage()
-class AuthScreen extends StatefulWidget implements AutoRouteWrapper {
-  AuthScreen({Key? key}) : super(key: key);
+class RegistrationScreen extends StatefulWidget implements AutoRouteWrapper {
+  RegistrationScreen({Key? key}) : super(key: key);
 
   @override
-  State<AuthScreen> createState() => _AuthScreenState();
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<CbAuthScreen>(
-      create: (context) => CbAuthScreen(),
+    return BlocProvider<CbRegistrationScreen>(
+      create: (context) => CbRegistrationScreen(),
       child: this,
     );
   }
 }
 
-class _AuthScreenState extends State<AuthScreen> {
-  final _formKeySignIn = GlobalKey<FormState>();
+class _RegistrationScreenState extends State<RegistrationScreen> {
+  final _formKeySignUp = GlobalKey<FormState>();
 
   bool isPressed = false;
+
+  String _repeatPassword = '';
+
+  final TextEditingController _nameController = TextEditingController();
+
+  final TextEditingController _lastNameController = TextEditingController();
 
   final TextEditingController _emailController = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
+
+  final TextEditingController _repeatPasswordController = TextEditingController();
+
+
 
   // @todo Доработать недостающие виджеты
   @override
@@ -66,56 +76,88 @@ class _AuthScreenState extends State<AuthScreen> {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: BlocConsumer<CbAuthScreen, StAuthScreen>(
+        child: BlocConsumer<CbRegistrationScreen, StRegistrationScreen>(
           listener: (context, state) {
             state.maybeWhen(
                 orElse: () {},
-                signInSuccessful: () {
-                  context.router.replace(MainRoute());
-                },
                 error: (code, message) {
                   showAlertDialog(context, message!);
                 });
           },
           builder: (context, state) => state.maybeWhen(
-            orElse: () => _buildSignInContent(context),
-            loading: () => const PjLoader(),
+              orElse: () => _buildSignUpContent(context),
+              loading: () => const PjLoader(),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildSignInContent(BuildContext context) {
+  Widget _buildSignUpContent(BuildContext context) {
     return Center(
       child: SingleChildScrollView(
         physics: ClampingScrollPhysics(),
         child: Form(
-          key: _formKeySignIn,
+          key: _formKeySignUp,
           child: Column(
             children: [
               const PjText(
-                "C возвращением!",
+                "Создать аккаунт",
                 style: PjTextStyle.h1,
                 color: PjColors.neonBlue,
               ),
               SizedBox(
                 height: 10.h,
               ),
-              const PjText("Выполните вход в Only Gym", style: PjTextStyle.regular),
+              const PjText(
+                "Зарегистрируйтесь в Only Gym и начинайте\n\nтренироваться",
+                align: TextAlign.center,
+                style: PjTextStyle.regular,
+              ),
               SizedBox(
                 height: 50.h,
               ),
-              PjTextField(title: "Email", controller: _emailController, type: PjTextFieldStyle.email),
+              PjTextField(title: "Имя", controller: _nameController, type: PjTextFieldStyle.text),
+              SizedBox(
+                height: 20.h,
+              ),
+              PjTextField(title: "Фамилия", controller: _lastNameController, type: PjTextFieldStyle.text),
               SizedBox(
                 height: 20.h,
               ),
               PjTextField(
+                title: "Email",
+                controller: _emailController,
+                type: PjTextFieldStyle.email,
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              PjTextField(
+                repeatPassword: _repeatPasswordController.text,
                 title: "Пароль",
                 controller: _passwordController,
                 type: PjTextFieldStyle.password,
+                onChanged: (value) {
+                  setState(() {
+                    _repeatPassword = _repeatPasswordController.text;
+                  });
+                },
               ),
-              if (isPressed && _formKeySignIn.currentState != null && !_formKeySignIn.currentState!.validate()) ...[
+              SizedBox(
+                height: 20.h,
+              ),
+              PjTextField(
+                  onChanged: (value) {
+                    setState(() {
+                      _repeatPassword = _passwordController.text;
+                    });
+                  },
+                  repeatPassword: _repeatPassword,
+                  title: "Повторение пароля",
+                  controller: _repeatPasswordController,
+                  type: PjTextFieldStyle.password),
+              if (isPressed && _formKeySignUp.currentState != null && !_formKeySignUp.currentState!.validate()) ...[
                 Padding(
                   padding: EdgeInsets.only(top: 10.h),
                   child: Text(
@@ -132,44 +174,36 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                   ),
                 ],
-                if (_passwordController.text.isNotEmpty && _passwordController.text.length < 6) ...[
+                if (_passwordController.text.isNotEmpty && _passwordController.text.length < 6 ||
+                    _passwordController.text != _repeatPasswordController.text) ...[
                   Padding(
                     padding: EdgeInsets.only(top: 10.h),
                     child: Text(
-                      'Пароль должен содержать более 6 символов',
+                      _passwordController.text.length < 6 && _passwordController.text != _repeatPasswordController.text
+                          ? 'Пароль должен содержать более 6 символов\nи совпадать с веденным ранее'
+                          : _passwordController.text.length < 6
+                          ? 'Пароль должен содержать более 6 символов'
+                          : _passwordController.text != _repeatPasswordController.text
+                          ? 'Пароль должен совпадать с веденным ранее'
+                          : '',
                       style: TextStyle(color: Colors.red),
                       textAlign: TextAlign.center,
                     ),
                   ),
-                ],
+                ]
               ],
-              SizedBox(
-                height: 10.h,
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 48.w,
-                  ),
-                  const PjText("Забыли пароль?", style: PjTextStyle.medium),
-                  PjTextButton(
-                      textColor: PjColors.neonBlue,
-                      textStyle: PjTextStyle.medium,
-                      text: "Нажмите сюда",
-                      type: PjTextButtonType.left,
-                      onPressed: () {})
-                ],
-              ),
               SizedBox(
                 height: 30.h,
               ),
               PjFilledButton(
-                  text: "Войти",
+                  text: "Продолжить",
                   onPressed: () {
-                    if (_formKeySignIn.currentState!.validate()) {
-                      context
-                          .read<CbAuthScreen>()
-                          .login(email: _emailController.text, password: _passwordController.text);
+                    if (_formKeySignUp.currentState!.validate()) {
+                      SgAppData.instance.user.email = _emailController.text;
+                      SgAppData.instance.user.firstName = _nameController.text;
+                      SgAppData.instance.user.lastName = _lastNameController.text;
+                      SgAppData.instance.password = _emailController.text;
+                      context.router.push(ProfileImageRoute(isRegistration: true));
                     } else {
                       setState(() {
                         isPressed = true;
@@ -181,17 +215,24 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
               PjTextButton(
                 textColor: PjColors.lightBlue,
-                text: "Зарегистрироваться",
+                text: "Войти",
                 textStyle: PjTextStyle.bold,
                 type: PjTextButtonType.center,
                 onPressed: () {
                   setState(() {
                     isPressed = false;
-                    context.router.push(RegistrationRoute());
-                    /* _emailController = TextEditingController();
+                    context.router.pop();
+                    /*_nameController = TextEditingController();
+
+                    _lastNameController = TextEditingController();
+
+                    _emailController = TextEditingController();
 
                     _passwordController = TextEditingController();
-                    context.read<CbAuthScreen>().emit(StAuthScreen.signUp());*/
+
+                    _repeatPasswordController = TextEditingController();
+
+                    context.read<CbAuthScreen>().emit(StAuthScreen.signIn());*/
                   });
                 },
               ),
@@ -201,4 +242,6 @@ class _AuthScreenState extends State<AuthScreen> {
       ),
     );
   }
+
+
 }

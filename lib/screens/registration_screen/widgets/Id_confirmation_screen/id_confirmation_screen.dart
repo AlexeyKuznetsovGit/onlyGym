@@ -14,7 +14,7 @@ import 'package:onlygym/project_widgets/pj_loader.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 import 'package:onlygym/project_widgets/pj_text_field.dart';
 import 'package:onlygym/router/router.dart';
-import 'package:onlygym/screens/auth_screen/widgets/Id_confirmation_screen/cubit/cb_id_confirmation_screen.dart';
+import 'package:onlygym/screens/registration_screen/widgets/Id_confirmation_screen/cubit/cb_id_confirmation_screen.dart';
 
 @RoutePage()
 class IdConfirmationScreen extends StatefulWidget implements AutoRouteWrapper {
@@ -37,10 +37,30 @@ class _IdConfirmationScreenState extends State<IdConfirmationScreen> {
   final _formKeyConfirmation = GlobalKey<FormState>();
   Timer _timer = Timer(Duration(), () {});
   TextEditingController confirmationController = TextEditingController();
-  bool isSuccess = true;
 
   @override
   void initState() {
+    SgAppData.instance.localAvatar != null
+        ? context.read<CbIdConfirmationScreen>().registration(
+            email: SgAppData.instance.user.email!,
+            password: SgAppData.instance.password!,
+            firstName: SgAppData.instance.user.firstName!,
+            lastName: SgAppData.instance.user.lastName!,
+            dateBirthday: SgAppData.instance.user.dateBirth!,
+            height: SgAppData.instance.user.parameters![0].value!,
+            weight: SgAppData.instance.user.parameters![1].value!,
+            target: SgAppData.instance.user.goal!)
+        : context.read<CbIdConfirmationScreen>().registration(
+            email: SgAppData.instance.user.email!,
+            password: SgAppData.instance.password!,
+            firstName: SgAppData.instance.user.firstName!,
+            lastName: SgAppData.instance.user.lastName!,
+            dateBirthday: SgAppData.instance.user.dateBirth!,
+            height: SgAppData.instance.user.parameters![0].value!,
+            weight: SgAppData.instance.user.parameters![1].value!,
+            target: SgAppData.instance.user.goal!,
+            pathPhoto: SgAppData.instance.avatar,
+            namePhoto: SgAppData.instance.avatar!.split('/').last);
     _timer.cancel();
     super.initState();
   }
@@ -83,21 +103,25 @@ class _IdConfirmationScreenState extends State<IdConfirmationScreen> {
           listener: (context, state) {
             state.maybeWhen(
                 orElse: () {},
+                signUpSuccessful: (){
+                  context.router.replace(MainRoute());
+                  SgAppData.instance.password = null;
+                },
                 error: (code, message) {
-                  showAlertDialog(context, message!);
+                  showAlertDialog(context, message!, true);
                 });
           },
           builder: (context, state) => state.maybeWhen(
             orElse: () => Container(),
             loading: () => const PjLoader(),
-            loaded: () => _buildBodyContent(context),
+            loaded: (code) => _buildBodyContent(context, code!),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildBodyContent(BuildContext context) {
+  Widget _buildBodyContent(BuildContext context, int code) {
     return Center(
       child: SingleChildScrollView(
         physics: ClampingScrollPhysics(),
@@ -111,7 +135,7 @@ class _IdConfirmationScreenState extends State<IdConfirmationScreen> {
             SizedBox(
               height: 10.h,
             ),
-             PjText(
+            PjText(
               "Введите код, отправленный на почту\n\n${SgAppData.instance.user.email}",
               align: TextAlign.center,
               style: PjTextStyle.regular,
@@ -121,14 +145,18 @@ class _IdConfirmationScreenState extends State<IdConfirmationScreen> {
             ),
             Form(
                 key: _formKeyConfirmation,
-                child: PjTextField(type: PjTextFieldStyle.number,title: "Код подтверждения", controller: confirmationController)),
+                child: PjTextField(
+                    checkCode: code,
+                    type: PjTextFieldStyle.number,
+                    title: "Код подтверждения",
+                    controller: confirmationController)),
             if (isPressed &&
                 _formKeyConfirmation.currentState != null &&
                 !_formKeyConfirmation.currentState!.validate())
               Padding(
                 padding: EdgeInsets.only(top: 10.h),
                 child: Text(
-                  'Пожалуйста, заполните поле',
+                  confirmationController.text.isEmpty ? 'Пожалуйста, заполните поле' : 'Введен неправильный код',
                   style: TextStyle(color: Colors.red),
                 ),
               ),
@@ -161,8 +189,8 @@ class _IdConfirmationScreenState extends State<IdConfirmationScreen> {
             PjFilledButton(
                 text: "Завершить регистрацию",
                 onPressed: () {
-                  if (isSuccess && _formKeyConfirmation.currentState!.validate()) {
-                    context.router.push(MainRoute());
+                  if (_formKeyConfirmation.currentState!.validate()) {
+                   context.read<CbIdConfirmationScreen>().finishRegistration();
                   } else {
                     setState(() {
                       isPressed = true;

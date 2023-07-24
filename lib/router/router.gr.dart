@@ -15,6 +15,24 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    MyTargetRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const MyTargetScreen()),
+      );
+    },
+    ProfileImageRoute.name: (routeData) {
+      final args = routeData.argsAs<ProfileImageRouteArgs>(
+          orElse: () => const ProfileImageRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: ProfileImageScreen(
+          key: args.key,
+          isRegistration: args.isRegistration,
+        )),
+      );
+    },
     DiaryRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -47,22 +65,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: WrappedRoute(child: AuthScreen(key: args.key)),
       );
     },
-    AthletesRoute.name: (routeData) {
+    RegistrationRoute.name: (routeData) {
+      final args = routeData.argsAs<RegistrationRouteArgs>(
+          orElse: () => const RegistrationRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const AthletesScreen()),
-      );
-    },
-    ProfileImageRoute.name: (routeData) {
-      final args = routeData.argsAs<ProfileImageRouteArgs>(
-          orElse: () => const ProfileImageRouteArgs());
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: WrappedRoute(
-            child: ProfileImageScreen(
-          key: args.key,
-          isRegistration: args.isRegistration,
-        )),
+        child: WrappedRoute(child: RegistrationScreen(key: args.key)),
       );
     },
     MyParamsRoute.name: (routeData) {
@@ -83,13 +91,65 @@ abstract class _$AppRouter extends RootStackRouter {
         child: WrappedRoute(child: const IdConfirmationScreen()),
       );
     },
-    MyTargetRoute.name: (routeData) {
+    AthletesRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const MyTargetScreen()),
+        child: WrappedRoute(child: const AthletesScreen()),
       );
     },
   };
+}
+
+/// generated route for
+/// [MyTargetScreen]
+class MyTargetRoute extends PageRouteInfo<void> {
+  const MyTargetRoute({List<PageRouteInfo>? children})
+      : super(
+          MyTargetRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MyTargetRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProfileImageScreen]
+class ProfileImageRoute extends PageRouteInfo<ProfileImageRouteArgs> {
+  ProfileImageRoute({
+    Key? key,
+    bool isRegistration = false,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ProfileImageRoute.name,
+          args: ProfileImageRouteArgs(
+            key: key,
+            isRegistration: isRegistration,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileImageRoute';
+
+  static const PageInfo<ProfileImageRouteArgs> page =
+      PageInfo<ProfileImageRouteArgs>(name);
+}
+
+class ProfileImageRouteArgs {
+  const ProfileImageRouteArgs({
+    this.key,
+    this.isRegistration = false,
+  });
+
+  final Key? key;
+
+  final bool isRegistration;
+
+  @override
+  String toString() {
+    return 'ProfileImageRouteArgs{key: $key, isRegistration: $isRegistration}';
+  }
 }
 
 /// generated route for
@@ -177,54 +237,31 @@ class AuthRouteArgs {
 }
 
 /// generated route for
-/// [AthletesScreen]
-class AthletesRoute extends PageRouteInfo<void> {
-  const AthletesRoute({List<PageRouteInfo>? children})
-      : super(
-          AthletesRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'AthletesRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [ProfileImageScreen]
-class ProfileImageRoute extends PageRouteInfo<ProfileImageRouteArgs> {
-  ProfileImageRoute({
+/// [RegistrationScreen]
+class RegistrationRoute extends PageRouteInfo<RegistrationRouteArgs> {
+  RegistrationRoute({
     Key? key,
-    bool isRegistration = false,
     List<PageRouteInfo>? children,
   }) : super(
-          ProfileImageRoute.name,
-          args: ProfileImageRouteArgs(
-            key: key,
-            isRegistration: isRegistration,
-          ),
+          RegistrationRoute.name,
+          args: RegistrationRouteArgs(key: key),
           initialChildren: children,
         );
 
-  static const String name = 'ProfileImageRoute';
+  static const String name = 'RegistrationRoute';
 
-  static const PageInfo<ProfileImageRouteArgs> page =
-      PageInfo<ProfileImageRouteArgs>(name);
+  static const PageInfo<RegistrationRouteArgs> page =
+      PageInfo<RegistrationRouteArgs>(name);
 }
 
-class ProfileImageRouteArgs {
-  const ProfileImageRouteArgs({
-    this.key,
-    this.isRegistration = false,
-  });
+class RegistrationRouteArgs {
+  const RegistrationRouteArgs({this.key});
 
   final Key? key;
 
-  final bool isRegistration;
-
   @override
   String toString() {
-    return 'ProfileImageRouteArgs{key: $key, isRegistration: $isRegistration}';
+    return 'RegistrationRouteArgs{key: $key}';
   }
 }
 
@@ -271,15 +308,15 @@ class IdConfirmationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [MyTargetScreen]
-class MyTargetRoute extends PageRouteInfo<void> {
-  const MyTargetRoute({List<PageRouteInfo>? children})
+/// [AthletesScreen]
+class AthletesRoute extends PageRouteInfo<void> {
+  const AthletesRoute({List<PageRouteInfo>? children})
       : super(
-          MyTargetRoute.name,
+          AthletesRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'MyTargetRoute';
+  static const String name = 'AthletesRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

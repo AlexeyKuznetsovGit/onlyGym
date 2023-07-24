@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:onlygym/models/user_model.dart';
 
@@ -14,7 +15,16 @@ class SgAppData {
   static UserModel _user = UserModel();
   static int? _userId;
   static String? _password;
+  static String? _avatar;
+  static IconData? _localAvatar;
 
+  set localAvatar(IconData? v) => _localAvatar = v;
+
+  IconData? get localAvatar => _localAvatar;
+
+  set avatar(String? v) => _avatar = v;
+
+  String? get avatar => _avatar;
 
   set user(UserModel v) => _user = v;
 
