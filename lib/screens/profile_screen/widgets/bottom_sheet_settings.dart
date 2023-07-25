@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -7,13 +8,15 @@ import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_utils/pj_utils.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_long_button.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
+import 'package:onlygym/screens/profile_screen/cubit/cb_profile_screen.dart';
 import 'package:onlygym/screens/profile_screen/widgets/bottom_sheet_editing.dart';
 
 import 'package:onlygym/screens/profile_screen/widgets/bottom_sheet_qr.dart';
 import 'package:onlygym/screens/profile_screen/widgets/bottom_sheet_target.dart';
 
 class BottomSheetSettingsWidget extends StatefulWidget {
-  const BottomSheetSettingsWidget({Key? key}) : super(key: key);
+  final CbProfileScreen cubit;
+  const BottomSheetSettingsWidget({Key? key, required this.cubit}) : super(key: key);
 
   @override
   State<BottomSheetSettingsWidget> createState() => _BottomSheetSettingsWidgetState();
@@ -36,6 +39,7 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
     MaterialStatesController()
   ];
   bool isNotificationsDisabled = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +97,7 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                     padding: EdgeInsets.only(bottom: index == 4 ? 0 : 20.h),
                     child: PjLongButton(
                       onPressed: () async {
+                        print(widget.cubit.isSubmitted);
                         if (index != 2) {
                           if (!buttonState[index].contains(MaterialState.pressed) && buttonState[index].isNotEmpty) {
                             buttonState[index] = {MaterialState.pressed};
@@ -103,6 +108,7 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                         }
 
                         /// Todo: При открытии второго ботомщита, у первого необходимо сделать barrierColor = Colors.transpanent
+                        /// Не могу прокинуть context для того чтоб юзать кубит
                         switch (index) {
                           case 0:
                             {
@@ -114,9 +120,10 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                                   ),
                                 ),
                                 isScrollControlled: true,
+                                useSafeArea: true,
                                 barrierColor: PjColors.black.withOpacity(0.5),
                                 context: context,
-                                builder: (BuildContext context) {
+                                builder: (context) {
                                   return BottomSheetEditingWidget();
                                 },
                               );
@@ -137,7 +144,7 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                                 useSafeArea: true,
                                 barrierColor: PjColors.black.withOpacity(0.5),
                                 context: context,
-                                builder: (BuildContext context) {
+                                builder: (context) {
                                   return Padding(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: BottomSheetTargetWidget(),

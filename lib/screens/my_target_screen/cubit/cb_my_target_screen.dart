@@ -9,7 +9,8 @@ part 'cb_my_target_screen.freezed.dart';
 class CbMyTargetScreen extends Cubit<StMyTargetScreen> {
 
   CbMyTargetScreen() : super(const StMyTargetScreen.loaded());
-
+  bool isSubmitted = false;
+  String selectedOption = 'Улучшение формы';
   Future<void> getData() async {
     try {
       Map<String, dynamic> response =

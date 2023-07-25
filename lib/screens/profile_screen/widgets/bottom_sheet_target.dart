@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
@@ -7,6 +8,7 @@ import 'package:onlygym/project_widgets/pj_buttons/pj_text_button.dart';
 import 'package:onlygym/project_widgets/pj_text_filed_fill.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 import 'package:onlygym/project_widgets/pj_text_field.dart';
+import 'package:onlygym/screens/profile_screen/cubit/cb_profile_screen.dart';
 
 import '../../../project_widgets/pj_buttons/pj_radio_button.dart';
 
@@ -40,7 +42,6 @@ class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
             ),
             boxShadow: [BoxShadow(color: PjColors.black.withOpacity(0.2), blurRadius: 8.r, offset: Offset(0, 2))]),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
               height: 7.h, // было 20, не влезало из за клавиатуры
@@ -87,7 +88,7 @@ class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
                       option: targets[index],
                       onChanged: (String newOption) {
                         setState(() {
-                          controller.text = 'Другое';
+                          context.read<CbProfileScreen>().isSubmitted = false;
                           selectedOption = newOption;
                         });
                       },
@@ -96,16 +97,16 @@ class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
 
             /// Todo После изменения контента в PjTextFeild, и потом если нажать на кнопки выше, то при первом нажатии, цвет в PjTextFeild не меняется
             PjTextFieldFill(
+              selectedOption: selectedOption,
               title: anotherTarget,
               onTap: () {
                 setState(() {
-                  selectedOption = '';
+                  selectedOption = controller.text;
                 });
               },
               onChange: (String newOption) {
                 setState(() {
                   selectedOption = newOption;
-                  print('adadad');
                 });
               },
               controller: controller,
@@ -115,7 +116,9 @@ class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
             ),
             PjFilledButton(
               text: 'Применить изменения',
-              onPressed: () {},
+              onPressed: () {
+                print(selectedOption);
+              },
             )
           ],
         ),

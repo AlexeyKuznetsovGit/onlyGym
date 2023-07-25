@@ -17,12 +17,4 @@ class CbRegistrationScreen extends Cubit<StRegistrationScreen> {
 
   CbRegistrationScreen() : super(const StRegistrationScreen.loaded());
 
-  Future<void> login({required String email, required String password}) async {
-    try {
-
-
-    } on APIException catch (e) {
-      emit(StRegistrationScreen.error(e.code, 'Что-то пошло не так!'));
-    }
-  }
 }

@@ -17,6 +17,7 @@ import 'package:onlygym/project_widgets/pj_text.dart';
 import 'package:onlygym/project_widgets/pj_text_filed_fill.dart';
 import 'package:onlygym/router/router.dart';
 import 'package:onlygym/screens/my_target_screen/cubit/cb_my_target_screen.dart';
+import 'package:onlygym/screens/my_target_screen/widgets/text_field_fill.dart';
 
 @RoutePage()
 class MyTargetScreen extends StatefulWidget implements AutoRouteWrapper {
@@ -36,7 +37,6 @@ class MyTargetScreen extends StatefulWidget implements AutoRouteWrapper {
 
 class _MyTargetScreenState extends State<MyTargetScreen> {
   List<String> targets = ['Улучшение формы', 'Здоровый образ жизни', 'Похудение', 'Набор мышечной массы'];
-
   String selectedOption = 'Улучшение формы';
   String anotherTarget = 'Другое';
   TextEditingController controller = TextEditingController(text: 'Другое');
@@ -85,66 +85,71 @@ class _MyTargetScreenState extends State<MyTargetScreen> {
 
   Widget _buildBodyContent(BuildContext context) {
     return  Center(
-      child: Column(
-        children: [
-          const PjText(
-            "Моя цель",
-            style: PjTextStyle.h1,
-            color: PjColors.neonBlue,
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          const PjText(
-            "Выберите свою основную цель",
-            align: TextAlign.center,
-            style: PjTextStyle.regular,
-          ),
-          SizedBox(
-            height: 50.h,
-          ),
+      child: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
+        child: Column(
+          children: [
+            const PjText(
+              "Моя цель",
+              style: PjTextStyle.h1,
+              color: PjColors.neonBlue,
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            const PjText(
+              "Выберите свою основную цель",
+              align: TextAlign.center,
+              style: PjTextStyle.regular,
+            ),
+            SizedBox(
+              height: 50.h,
+            ),
 
-          ...List.generate(
-              4,
-                  (index) => Padding(
-                  padding: EdgeInsets.only(bottom: 20.h),
-                  child: PjRadioButton(
-                    option: targets[index],
-                    onChanged: (String newOption) {
-                      setState(() {
-                        controller.text = 'Другое';
-                        selectedOption = newOption;
-                      });
-                    },
-                    selectedOption: selectedOption,
-                  ))),
-          PjTextFieldFill(
-            title: anotherTarget,
-            onTap: () {
-              setState(() {
-                selectedOption = '';
-              });
-            },
-            onChange: (String newOption) {
-              setState(() {
-                selectedOption = newOption;
-              });
-            },
-            controller: controller,
-          ),
+            ...List.generate(
+                4,
+                    (index) => Padding(
+                    padding: EdgeInsets.only(bottom: 20.h),
+                    child: PjRadioButton(
+                      option: targets[index],
+                      onChanged: (String newOption) {
+                        setState(() {
+                          context.read<CbMyTargetScreen>().isSubmitted = false;
+                          selectedOption = newOption;
+                        });
+                      },
+                      selectedOption: selectedOption,
+                    ))),
+            TextFieldFill(
+              title: anotherTarget,
+              onTap: () {
+                setState(() {
+                  selectedOption = controller.text;
+                });
+              },
+              onChange: (String newOption) {
+                setState(() {
+                  selectedOption = newOption;
+                });
+              },
+              selectedOption: selectedOption,
+              controller: controller,
+            ),
 
-          SizedBox(
-            height: 30.h,
-          ),
-          PjFilledButton(
-              text: "Зарегистрироваться",
-              onPressed: () {
-                if(selectedOption != ''){
-                  SgAppData.instance.user.goal = selectedOption;
-                  context.router.push(IdConfirmationRoute());
-                }
-              }),
-        ],
+            SizedBox(
+              height: 30.h,
+            ),
+            PjFilledButton(
+                text: "Зарегистрироваться",
+                onPressed: () {
+                  if(selectedOption != ''){
+                    SgAppData.instance.user.goal = selectedOption;
+                    log(selectedOption, name: 'selectedOption');
+                    context.router.push(IdConfirmationRoute());
+                  }
+                }),
+          ],
+        ),
       ),
     );
   }

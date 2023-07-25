@@ -5,6 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_utils/singletons/sg_app_data.dart';
@@ -210,6 +211,7 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
                       log(SgAppData.instance.localAvatar.toString(), name: 'LocalAvatar');
                     } else {
                       print('Загружаем локальный аватар');
+                      GetStorage().write('localAvatar', SgAppData.instance.localAvatar?.codePoint.toRadixString(16));
                       log(SgAppData.instance.avatar.toString(), name: 'avatar');
                       log(SgAppData.instance.localAvatar.toString(), name: 'LocalAvatar');
                     }

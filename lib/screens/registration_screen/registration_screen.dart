@@ -202,7 +202,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       SgAppData.instance.user.email = _emailController.text;
                       SgAppData.instance.user.firstName = _nameController.text;
                       SgAppData.instance.user.lastName = _lastNameController.text;
-                      SgAppData.instance.password = _emailController.text;
+                      SgAppData.instance.password = _passwordController.text;
                       context.router.push(ProfileImageRoute(isRegistration: true));
                     } else {
                       setState(() {

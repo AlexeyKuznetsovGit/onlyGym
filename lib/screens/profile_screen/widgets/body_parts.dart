@@ -3,11 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
-import 'package:onlygym/screens/profile_screen/widgets/bottom_sheet_body_parts.dart';
 import 'package:onlygym/screens/profile_screen/widgets/size_info_card.dart';
 
 class BodyParts extends StatefulWidget {
   BodyParts({
+
     super.key,
   });
 

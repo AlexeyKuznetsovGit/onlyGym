@@ -9,7 +9,7 @@ export 'pj_colors.dart';
 ///RU
 ///Добавляйте свои утилиты в данный класс, или используйте export
 class PjUtils{
- static bool offBarrierColor = false;
+ static String imageUrl = "http://88.204.74.60:33333";
 }
 Future<bool> getCameraPermission()async{
  if(Platform.isAndroid){

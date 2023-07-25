@@ -123,9 +123,14 @@ class _MyParamsScreenState extends State<MyParamsScreen> {
                   style: TextStyle(color: Colors.red),
                 ),
               ),
-              if ((weightController.text.length > 3 || weightController.text == '0') ||
-                  heightController.text.length > 3 ||
-                  heightController.text == '0') ...[
+              if ((
+                      weightController.text == '0' ||
+                      weightController.text == '0.0' ||
+                      weightController.text.endsWith('.')) ||
+
+                  heightController.text == '0' ||
+                  heightController.text == '0.0' ||
+                  heightController.text.endsWith('.')) ...[
                 Padding(
                   padding: EdgeInsets.only(top: 10.h),
                   child: Text(

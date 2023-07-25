@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
+import 'package:onlygym/screens/my_target_screen/cubit/cb_my_target_screen.dart';
 
-class PjTextFieldFill extends StatefulWidget {
-  PjTextFieldFill(
-      {Key? key, this.onTap, required this.selectedOption, this.onChange, required this.title, required this.controller, this.isPassword = false})
+class TextFieldFill extends StatefulWidget {
+  TextFieldFill(
+      {Key? key,
+      this.onTap,
+      required this.selectedOption,
+      this.onChange,
+      required this.title,
+      required this.controller,
+      this.isPassword = false})
       : super(key: key);
 
   final bool isPassword;
@@ -16,20 +24,20 @@ class PjTextFieldFill extends StatefulWidget {
   final String selectedOption;
 
   @override
-  State<PjTextFieldFill> createState() => _PjTextFieldFillState();
+  State<TextFieldFill> createState() => _TextFieldFillState();
 }
 
-class _PjTextFieldFillState extends State<PjTextFieldFill> {
+class _TextFieldFillState extends State<TextFieldFill> {
   late bool isShow;
   bool _isTextCentered = true;
-
-  bool isSubmitted= false; //Если юзать cubit, то все работает хорошо
 
   @override
   void initState() {
     isShow = false;
     super.initState();
   }
+
+  //Todo Если сделать без использования конкретного кубита, то можно вынести в PjWidgets
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +51,14 @@ class _PjTextFieldFillState extends State<PjTextFieldFill> {
             setState(() {
               FocusScope.of(context).unfocus();
               _isTextCentered = true;
-             isSubmitted = true;
+              context.read<CbMyTargetScreen>().isSubmitted = true;
             });
           } else {
             setState(() {
               FocusScope.of(context).unfocus();
               _isTextCentered = true;
-             isSubmitted = false;
-             /* widget.title = 'Другое';
+              context.read<CbMyTargetScreen>().isSubmitted = false;
+              /* widget.title = 'Другое';
               widget.controller.text = 'Другое';*/
             });
           }
@@ -60,12 +68,12 @@ class _PjTextFieldFillState extends State<PjTextFieldFill> {
           if (widget.controller.text.isNotEmpty && widget.controller.text != 'Другое') {
             setState(() {
               _isTextCentered = true;
-              isSubmitted = true;
+              context.read<CbMyTargetScreen>().isSubmitted = true;
             });
           } else {
             setState(() {
               _isTextCentered = true;
-              isSubmitted = false;
+              context.read<CbMyTargetScreen>().isSubmitted = false;
               /*widget.title = 'Другое';
               widget.controller.text = 'Другое';*/
             });
@@ -74,7 +82,7 @@ class _PjTextFieldFillState extends State<PjTextFieldFill> {
         onTap: () {
           if (widget.controller.text != 'Другое') {
             setState(() {
-             isSubmitted = false;
+              context.read<CbMyTargetScreen>().isSubmitted = false;
             });
           }
           setState(() {
@@ -94,11 +102,11 @@ class _PjTextFieldFillState extends State<PjTextFieldFill> {
             fontFamily: "PtRoot",
             fontSize: 14.h,
             fontWeight: FontWeight.w500,
-            color: isSubmitted ? PjColors.white : PjColors.black),
+            color: context.read<CbMyTargetScreen>().isSubmitted ? PjColors.white : PjColors.black),
         decoration: InputDecoration(
           labelText: widget.title,
           fillColor: PjColors.neonBlue,
-          filled:  isSubmitted,
+          filled: context.read<CbMyTargetScreen>().isSubmitted,
           floatingLabelBehavior: FloatingLabelBehavior.never,
           isDense: true,
           labelStyle:

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
+import 'package:onlygym/project_utils/singletons/sg_app_data.dart';
 
 class EmptyAvatar extends StatelessWidget {
   const EmptyAvatar({
@@ -14,7 +15,7 @@ class EmptyAvatar extends StatelessWidget {
       alignment: Alignment.bottomRight,
       children: [
         Icon(
-          CustomIcons.avatar,
+          SgAppData.instance.localAvatar,
           size: 98.w,
           color: PjColors.neonBlue,
         ),

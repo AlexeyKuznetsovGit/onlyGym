@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
-import 'package:onlygym/project_utils/pj_date_input_formatter.dart';
+import 'package:onlygym/project_utils/pj_input_formatter.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 
 enum PjTextFieldStyle { password, email, date, text, number, params }
@@ -17,6 +17,7 @@ class PjTextField extends StatefulWidget {
     required this.type,
     this.repeatPassword = '',
     required this.controller,
+    this.suffixText,
     this.checkCode,
   }) : super(key: key);
 
@@ -26,6 +27,7 @@ class PjTextField extends StatefulWidget {
   final String title;
   final String repeatPassword;
   final TextEditingController controller;
+  final String? suffixText;
 
   @override
   State<PjTextField> createState() => _PjTextFieldState();
@@ -65,7 +67,7 @@ class _PjTextFieldState extends State<PjTextField> {
           if (widget.type == PjTextFieldStyle.date && !_validateDate(value)) {
             return '';
           }
-          if (widget.type == PjTextFieldStyle.params && (value.length > 3 || value == '0')) {
+          if (widget.type == PjTextFieldStyle.params && (value == '0' || value == '0.0' || value.endsWith('.'))) {
             return '';
           }
           if (widget.type == PjTextFieldStyle.number &&
@@ -78,14 +80,16 @@ class _PjTextFieldState extends State<PjTextField> {
             ? [
                 DateTextFormatter(),
               ]
-            : widget.checkCode != null
+            : widget.type == PjTextFieldStyle.params
                 ? [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+          DecimalInputFormatter(),//FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                   ]
                 : null,
         keyboardType: getTextInputType(widget.type),
         style: TextStyle(fontFamily: "PtRoot", fontSize: 14.h, fontWeight: FontWeight.w500, color: PjColors.black),
         decoration: InputDecoration(
+          suffixText: widget.suffixText,
+          suffixStyle: TextStyle(fontFamily: "PtRoot", fontSize: 14.h, fontWeight: FontWeight.w500, color: PjColors.black),
           errorStyle: TextStyle(height: 0, color: Colors.transparent),
           labelText: widget.title,
           floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -131,7 +135,7 @@ class _PjTextFieldState extends State<PjTextField> {
       case PjTextFieldStyle.date:
         return TextInputType.number;
       case PjTextFieldStyle.params:
-        return TextInputType.number;
+        return TextInputType.datetime;
       default:
         return TextInputType.text;
     }

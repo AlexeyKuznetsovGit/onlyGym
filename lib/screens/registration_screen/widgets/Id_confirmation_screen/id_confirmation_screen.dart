@@ -40,27 +40,7 @@ class _IdConfirmationScreenState extends State<IdConfirmationScreen> {
 
   @override
   void initState() {
-    SgAppData.instance.localAvatar != null
-        ? context.read<CbIdConfirmationScreen>().registration(
-            email: SgAppData.instance.user.email!,
-            password: SgAppData.instance.password!,
-            firstName: SgAppData.instance.user.firstName!,
-            lastName: SgAppData.instance.user.lastName!,
-            dateBirthday: SgAppData.instance.user.dateBirth!,
-            height: SgAppData.instance.user.parameters![0].value!,
-            weight: SgAppData.instance.user.parameters![1].value!,
-            target: SgAppData.instance.user.goal!)
-        : context.read<CbIdConfirmationScreen>().registration(
-            email: SgAppData.instance.user.email!,
-            password: SgAppData.instance.password!,
-            firstName: SgAppData.instance.user.firstName!,
-            lastName: SgAppData.instance.user.lastName!,
-            dateBirthday: SgAppData.instance.user.dateBirth!,
-            height: SgAppData.instance.user.parameters![0].value!,
-            weight: SgAppData.instance.user.parameters![1].value!,
-            target: SgAppData.instance.user.goal!,
-            pathPhoto: SgAppData.instance.avatar,
-            namePhoto: SgAppData.instance.avatar!.split('/').last);
+    context.read<CbIdConfirmationScreen>().sendCode(email: SgAppData.instance.user.email!);
     _timer.cancel();
     super.initState();
   }
@@ -103,7 +83,7 @@ class _IdConfirmationScreenState extends State<IdConfirmationScreen> {
           listener: (context, state) {
             state.maybeWhen(
                 orElse: () {},
-                signUpSuccessful: (){
+                signUpSuccessful: () {
                   context.router.replace(MainRoute());
                   SgAppData.instance.password = null;
                 },
@@ -178,6 +158,7 @@ class _IdConfirmationScreenState extends State<IdConfirmationScreen> {
                       if (!_timer.isActive) {
                         setState(() {
                           _startTimer();
+                          context.read<CbIdConfirmationScreen>().sendCode(email: SgAppData.instance.user.email!);
                         });
                       }
                     })
@@ -190,7 +171,27 @@ class _IdConfirmationScreenState extends State<IdConfirmationScreen> {
                 text: "Завершить регистрацию",
                 onPressed: () {
                   if (_formKeyConfirmation.currentState!.validate()) {
-                   context.read<CbIdConfirmationScreen>().finishRegistration();
+                    SgAppData.instance.localAvatar != null
+                        ? context.read<CbIdConfirmationScreen>().finishRegistration(
+                            email: SgAppData.instance.user.email!,
+                            password: SgAppData.instance.password!,
+                            firstName: SgAppData.instance.user.firstName!,
+                            lastName: SgAppData.instance.user.lastName!,
+                            dateBirthday: SgAppData.instance.user.dateBirth!,
+                            height: SgAppData.instance.user.parameters![0].value!,
+                            weight: SgAppData.instance.user.parameters![1].value!,
+                            target: SgAppData.instance.user.goal!)
+                        : context.read<CbIdConfirmationScreen>().finishRegistration(
+                            email: SgAppData.instance.user.email!,
+                            password: SgAppData.instance.password!,
+                            firstName: SgAppData.instance.user.firstName!,
+                            lastName: SgAppData.instance.user.lastName!,
+                            dateBirthday: SgAppData.instance.user.dateBirth!,
+                            height: SgAppData.instance.user.parameters![0].value!,
+                            weight: SgAppData.instance.user.parameters![1].value!,
+                            target: SgAppData.instance.user.goal!,
+                            pathPhoto: SgAppData.instance.avatar,
+                            namePhoto: SgAppData.instance.avatar!.split('/').last);
                   } else {
                     setState(() {
                       isPressed = true;
