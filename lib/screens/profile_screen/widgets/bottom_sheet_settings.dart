@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:eticon_api/eticon_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,6 +10,7 @@ import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_utils/pj_utils.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_long_button.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
+import 'package:onlygym/router/router.dart';
 import 'package:onlygym/screens/profile_screen/cubit/cb_profile_screen.dart';
 import 'package:onlygym/screens/profile_screen/widgets/bottom_sheet_editing.dart';
 
@@ -97,7 +100,6 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                     padding: EdgeInsets.only(bottom: index == 4 ? 0 : 20.h),
                     child: PjLongButton(
                       onPressed: () async {
-                        print(widget.cubit.isSubmitted);
                         if (index != 2) {
                           if (!buttonState[index].contains(MaterialState.pressed) && buttonState[index].isNotEmpty) {
                             buttonState[index] = {MaterialState.pressed};
@@ -108,7 +110,6 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                         }
 
                         /// Todo: При открытии второго ботомщита, у первого необходимо сделать barrierColor = Colors.transpanent
-                        /// Не могу прокинуть context для того чтоб юзать кубит
                         switch (index) {
                           case 0:
                             {
@@ -147,7 +148,7 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                                 builder: (context) {
                                   return Padding(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: BottomSheetTargetWidget(),
+                                    child: BottomSheetTargetWidget(cubit: widget.cubit,),
                                   );
                                 },
                               );
@@ -185,6 +186,8 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                             }
                           case 4:
                             {
+                              Api.setToken('');
+                              context.router.replace(AuthRoute());
                               break;
                             }
                         }

@@ -48,7 +48,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
     super.initState();
   }
+
   bool isExpanded = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           GestureDetector(
             onTap: () {
-            context.read<CbProfileScreen>().isSubmitted;
+              context.read<CbProfileScreen>().isSubmitted;
 
               showModalBottomSheet(
                 shape: RoundedRectangleBorder(
@@ -71,7 +73,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 context: context,
                 builder: (ctx) {
                   CbProfileScreen cubit = BlocProvider.of<CbProfileScreen>(context); //Еще не пробовал
-                  return BottomSheetSettingsWidget(cubit: cubit,);
+                  return BottomSheetSettingsWidget(
+                    cubit: cubit,
+                  );
                 },
               );
             },
@@ -89,8 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: BlocConsumer<CbProfileScreen, StProfileScreen>(
         listener: (context, state) {
           state.maybeWhen(
-              orElse: () {
-              },
+              orElse: () {},
               error: (code, message) {
                 showAlertDialog(context, message!);
               });
@@ -176,7 +179,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SizedBox(
             height: 20.h,
           ),
-          BodyParts()
+          BodyParts(),
         ],
       ),
     );

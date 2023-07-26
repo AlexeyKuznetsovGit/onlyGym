@@ -1,45 +1,44 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/singletons/sg_app_data.dart';
 import 'package:onlygym/project_widgets/error_dialog.dart';
 import 'package:onlygym/project_widgets/pj_appbar.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_filled_button.dart';
-import 'package:onlygym/project_widgets/pj_buttons/pj_radio_button.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_text_button.dart';
 import 'package:onlygym/project_widgets/pj_loader.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
-import 'package:onlygym/screens/profile_screen/widgets/bs_text_filed_fill.dart';
+import 'package:onlygym/project_widgets/pj_text_field.dart';
 import 'package:onlygym/router/router.dart';
-import 'package:onlygym/screens/my_target_screen/cubit/cb_my_target_screen.dart';
-import 'package:onlygym/screens/my_target_screen/widgets/text_field_fill.dart';
+import 'package:onlygym/screens/recover_password_screen/cubit/cb_recover_password_screen.dart';
+import 'package:onlygym/screens/registration_screen/widgets/birthday_screen/cubit/cb_birthday_screen.dart';
 
 @RoutePage()
-class MyTargetScreen extends StatefulWidget implements AutoRouteWrapper {
-  const MyTargetScreen({Key? key}) : super(key: key);
+class RecoverPasswordScreen extends StatefulWidget implements AutoRouteWrapper {
+  const RecoverPasswordScreen({Key? key}) : super(key: key);
 
   @override
-  State<MyTargetScreen> createState() => _MyTargetScreenState();
+  State<RecoverPasswordScreen> createState() => _RecoverPasswordScreenState();
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<CbMyTargetScreen>(
-      create: (context) => CbMyTargetScreen(),
+    return BlocProvider<CbRecoverPasswordScreen>(
+      create: (context) => CbRecoverPasswordScreen(),
       child: this,
     );
   }
 }
 
-class _MyTargetScreenState extends State<MyTargetScreen> {
-  List<String> targets = ['Улучшение формы', 'Здоровый образ жизни', 'Похудение', 'Набор мышечной массы'];
-  String selectedOption = 'Улучшение формы';
-  String anotherTarget = 'Другое';
-  TextEditingController controller = TextEditingController(text: 'Другое');
+class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  bool isPressed = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,10 +65,13 @@ class _MyTargetScreenState extends State<MyTargetScreen> {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: BlocConsumer<CbMyTargetScreen, StMyTargetScreen>(
+        child: BlocConsumer<CbRecoverPasswordScreen, StRecoverPasswordScreen>(
           listener: (context, state) {
             state.maybeWhen(
                 orElse: () {},
+                recoverSuccess: () {
+                  context.router.pop();
+                },
                 error: (code, message) {
                   showAlertDialog(context, message!);
                 });
@@ -84,13 +86,13 @@ class _MyTargetScreenState extends State<MyTargetScreen> {
   }
 
   Widget _buildBodyContent(BuildContext context) {
-    return  Center(
+    return Center(
       child: SingleChildScrollView(
         physics: ClampingScrollPhysics(),
         child: Column(
           children: [
             const PjText(
-              "Моя цель",
+              "Забыли пароль?",
               style: PjTextStyle.h1,
               color: PjColors.neonBlue,
             ),
@@ -98,54 +100,36 @@ class _MyTargetScreenState extends State<MyTargetScreen> {
               height: 10.h,
             ),
             const PjText(
-              "Выберите свою основную цель",
+              "Мы отправим инструкции по восставлению\n\nпароля на вашу почту",
               align: TextAlign.center,
               style: PjTextStyle.regular,
             ),
             SizedBox(
               height: 50.h,
             ),
-
-            ...List.generate(
-                4,
-                    (index) => Padding(
-                    padding: EdgeInsets.only(bottom: 20.h),
-                    child: PjRadioButton(
-                      option: targets[index],
-                      onChanged: (String newOption) {
-                        setState(() {
-                          context.read<CbMyTargetScreen>().isSubmitted = false;
-                          selectedOption = newOption;
-                        });
-                      },
-                      selectedOption: selectedOption,
-                    ))),
-            TextFieldFill(
-              title: anotherTarget,
-              onTap: () {
-                setState(() {
-                  selectedOption = controller.text;
-                });
-              },
-              onChange: (String newOption) {
-                setState(() {
-                  selectedOption = newOption;
-                });
-              },
-              selectedOption: selectedOption,
-              controller: controller,
-            ),
-
+            Form(
+                key: _formKey,
+                child: PjTextField(type: PjTextFieldStyle.email, title: "Email", controller: emailController)),
+            if (isPressed && _formKey.currentState != null && !_formKey.currentState!.validate())
+              Padding(
+                padding: EdgeInsets.only(top: 10.h),
+                child: Text(
+                  emailController.text.isEmpty ? 'Пожалуйста, заполните поле' : 'Email указан неверно',
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
             SizedBox(
               height: 30.h,
             ),
             PjFilledButton(
-                text: "Зарегистрироваться",
+                text: "Восстановить пароль",
                 onPressed: () {
-                  if(selectedOption != ''){
-                    SgAppData.instance.user.goal = selectedOption;
-                    log(selectedOption, name: 'selectedOption');
-                    context.router.push(IdConfirmationRoute());
+                  if (_formKey.currentState!.validate()) {
+                    context.read<CbRecoverPasswordScreen>().recoverPassword(email: emailController.text);
+                  } else {
+                    setState(() {
+                      isPressed = true;
+                    });
                   }
                 }),
           ],

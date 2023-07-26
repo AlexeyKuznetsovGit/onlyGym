@@ -5,7 +5,7 @@ import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_filled_button.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_text_button.dart';
-import 'package:onlygym/project_widgets/pj_text_filed_fill.dart';
+import 'package:onlygym/screens/profile_screen/widgets/bs_text_filed_fill.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 import 'package:onlygym/project_widgets/pj_text_field.dart';
 import 'package:onlygym/screens/profile_screen/cubit/cb_profile_screen.dart';
@@ -13,7 +13,8 @@ import 'package:onlygym/screens/profile_screen/cubit/cb_profile_screen.dart';
 import '../../../project_widgets/pj_buttons/pj_radio_button.dart';
 
 class BottomSheetTargetWidget extends StatefulWidget {
-  BottomSheetTargetWidget({Key? key}) : super(key: key);
+  final CbProfileScreen cubit;
+  BottomSheetTargetWidget({Key? key,required this.cubit}) : super(key: key);
 
   @override
   State<BottomSheetTargetWidget> createState() => _BottomSheetTargetWidgetState();
@@ -88,7 +89,7 @@ class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
                       option: targets[index],
                       onChanged: (String newOption) {
                         setState(() {
-                          context.read<CbProfileScreen>().isSubmitted = false;
+                          widget.cubit.isSubmitted = false;
                           selectedOption = newOption;
                         });
                       },
@@ -96,7 +97,8 @@ class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
                     ))),
 
             /// Todo После изменения контента в PjTextFeild, и потом если нажать на кнопки выше, то при первом нажатии, цвет в PjTextFeild не меняется
-            PjTextFieldFill(
+            BsTextFieldFill(
+              cubit: widget.cubit,
               selectedOption: selectedOption,
               title: anotherTarget,
               onTap: () {

@@ -157,7 +157,9 @@ class _AuthScreenState extends State<AuthScreen> {
                       textStyle: PjTextStyle.medium,
                       text: "Нажмите сюда",
                       type: PjTextButtonType.left,
-                      onPressed: () {})
+                      onPressed: () {
+                        context.router.push(RecoverPasswordRoute());
+                      })
                 ],
               ),
               SizedBox(

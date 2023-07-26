@@ -54,7 +54,7 @@ abstract class _$AppRouter extends RootStackRouter {
     MainRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const MainScreen(),
+        child: WrappedRoute(child: const MainScreen()),
       );
     },
     AuthRoute.name: (routeData) {
@@ -95,6 +95,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(child: const AthletesScreen()),
+      );
+    },
+    RecoverPasswordRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const RecoverPasswordScreen()),
       );
     },
   };
@@ -317,6 +323,20 @@ class AthletesRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AthletesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [RecoverPasswordScreen]
+class RecoverPasswordRoute extends PageRouteInfo<void> {
+  const RecoverPasswordRoute({List<PageRouteInfo>? children})
+      : super(
+          RecoverPasswordRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RecoverPasswordRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

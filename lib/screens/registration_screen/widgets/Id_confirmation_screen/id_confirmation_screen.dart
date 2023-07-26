@@ -107,22 +107,20 @@ class _IdConfirmationScreenState extends State<IdConfirmationScreen> {
         physics: ClampingScrollPhysics(),
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 28.w),
-              child:  Text(
-                "Подтверждение личности",
-                style: TextStyle(
-                 /* letterSpacing: -0.5,*/
-                  fontFamily: "PtRoot",
-                  letterSpacing: -0.5,
-                  fontSize: 28.sp,
-                  fontWeight: FontWeight.w700,
-                  height: 28 / 22,
-                  color: PjColors.neonBlue,
-                  leadingDistribution: TextLeadingDistribution.even,
-                ),
-                textAlign: TextAlign.center,
+
+            ///Todo потом заменить на pjtext
+            Text(
+              "Подтверждение личности",
+              style: TextStyle(
+               /* letterSpacing: -0.5,*/
+                fontFamily: "PtRoot",
+                fontSize: 28.sp,
+                fontWeight: FontWeight.w700,
+                height: 28 / 22,
+                color: PjColors.neonBlue,
+                leadingDistribution: TextLeadingDistribution.even,
               ),
+              textAlign: TextAlign.center,
             ),
             SizedBox(
               height: 10.h,
