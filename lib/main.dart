@@ -16,7 +16,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   await Api.init(urls: ['http://88.204.74.60:33333/v1/api/users', 'http://88.204.74.60:33333/v1/auth']);
-  Api.setToken('');
   getIt.registerLazySingleton(() => UserRepository());
   getIt.registerLazySingleton(() => AuthRepository());
   runApp(App());

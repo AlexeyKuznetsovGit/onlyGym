@@ -69,7 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 barrierColor: PjColors.black.withOpacity(0.5),
                 context: context,
-                builder: (context) {
+                builder: (ctx) {
                   CbProfileScreen cubit = BlocProvider.of<CbProfileScreen>(context); //Еще не пробовал
                   return BottomSheetSettingsWidget(cubit: cubit,);
                 },
