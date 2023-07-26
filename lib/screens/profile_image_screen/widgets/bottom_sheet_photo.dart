@@ -87,7 +87,7 @@ class _BottomSheetPhotoWidgetState extends State<BottomSheetPhotoWidget> {
                   }
                   final XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
                   if (image != null) {
-                    Navigator.of(context).pop(image.path);
+                    Navigator.pop(context, image.path);
                     //Get.back(result: image.path);
                   }
                 },

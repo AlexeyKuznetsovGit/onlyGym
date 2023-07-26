@@ -12,10 +12,16 @@ import 'package:onlygym/repositories/user_repository.dart';
 import 'package:onlygym/router/router.dart';
 import 'package:onlygym/screens/main_screen/main_screen.dart';
 
+BuildContext? contextForGlobalError;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  Api.init(urls: ['http://88.204.74.60:33333/v1/api/users', 'http://88.204.74.60:33333/v1/auth']);
+  await Api.init(urls: ['http://88.204.74.60:33333/v1/api/users', 'http://88.204.74.60:33333/v1/auth'], onAllError: (e){
+    if(e.code == 401 && contextForGlobalError != null){
+      AutoRouter.of(contextForGlobalError!).pushAndPopUntil(AuthRoute(), predicate: (e)=>false);
+    }
+  });
   getIt.registerLazySingleton(() => UserRepository());
   getIt.registerLazySingleton(() => AuthRepository());
   runApp(App());

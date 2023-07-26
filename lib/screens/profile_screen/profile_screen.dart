@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     if (SgAppData.instance.user.photos!.isEmpty) {
-      String codePoint = GetStorage().read('localAvatar') ?? "0xe82e";
+      String codePoint = GetStorage().read('localAvatar') ?? 'e82e';
       SgAppData.instance.localAvatar =
           IconData(int.parse(codePoint, radix: 16), fontFamily: 'CustomIcons', fontPackage: null);
     }
@@ -69,7 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 barrierColor: PjColors.black.withOpacity(0.5),
                 context: context,
-                builder: (context) {
+                builder: (ctx) {
                   CbProfileScreen cubit = BlocProvider.of<CbProfileScreen>(context); //Еще не пробовал
                   return BottomSheetSettingsWidget(cubit: cubit,);
                 },

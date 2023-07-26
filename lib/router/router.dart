@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:eticon_api/eticon_api.dart';
 import 'package:flutter/material.dart';
 import 'package:onlygym/screens/athletes_screen/athletes_screen.dart';
 import 'package:onlygym/screens/auth_screen/auth_screen.dart';
@@ -19,18 +20,18 @@ part 'router.gr.dart';
 class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(page: AuthRoute.page, initial: true),
+        AutoRoute(page: AuthRoute.page, initial: Api.tokenIsEmpty),
         AutoRoute(page: RegistrationRoute.page),
         AutoRoute(page: ProfileImageRoute.page),
         AutoRoute(page: BirthdayRoute.page),
         AutoRoute(page: MyParamsRoute.page),
         AutoRoute(page: MyTargetRoute.page),
         AutoRoute(page: IdConfirmationRoute.page),
-        AutoRoute(page: MainRoute.page, children: [
+        AutoRoute(page: MainRoute.page, initial: Api.tokenIsNotEmpty, children: [
           AutoRoute(page: DiaryRoute.page),
           AutoRoute(page: ExercisesRoute.page),
           AutoRoute(page: AthletesRoute.page),
-          AutoRoute(page: ProfileRoute.page)
+          AutoRoute(page: ProfileRoute.page, initial: true)
         ]),
       ];
 }

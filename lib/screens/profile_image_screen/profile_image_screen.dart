@@ -211,6 +211,7 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
                       log(SgAppData.instance.localAvatar.toString(), name: 'LocalAvatar');
                     } else {
                       print('Загружаем локальный аватар');
+                      print('AVATAR: ${SgAppData.instance.localAvatar?.codePoint.toRadixString(16)}');
                       GetStorage().write('localAvatar', SgAppData.instance.localAvatar?.codePoint.toRadixString(16));
                       log(SgAppData.instance.avatar.toString(), name: 'avatar');
                       log(SgAppData.instance.localAvatar.toString(), name: 'LocalAvatar');
