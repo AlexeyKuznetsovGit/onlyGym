@@ -15,7 +15,8 @@ import 'package:onlygym/screens/main_screen/main_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  Api.init(urls: ['http://88.204.74.60:33333/v1/api/users', 'http://88.204.74.60:33333/v1/auth']);
+  await Api.init(urls: ['http://88.204.74.60:33333/v1/api/users', 'http://88.204.74.60:33333/v1/auth']);
+  Api.setToken('');
   getIt.registerLazySingleton(() => UserRepository());
   getIt.registerLazySingleton(() => AuthRepository());
   runApp(App());
