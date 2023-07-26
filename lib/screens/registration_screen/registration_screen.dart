@@ -109,10 +109,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               SizedBox(
                 height: 10.h,
               ),
-              const PjText(
-                "Зарегистрируйтесь в Only Gym и начинайте\n\nтренироваться",
-                align: TextAlign.center,
-                style: PjTextStyle.regular,
+
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 28.w),
+                child:  Text(
+                  "Зарегистрируйтесь в Only Gym и начинайте\n\nтренироваться",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontFamily: "PtRoot",
+                    letterSpacing: 0,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w400,
+                    height: 16 / 22,
+                    color: PjColors.black,
+                    leadingDistribution: TextLeadingDistribution.even,),
+                ),
               ),
               SizedBox(
                 height: 50.h,

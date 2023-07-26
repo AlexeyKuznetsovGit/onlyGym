@@ -34,19 +34,15 @@ class PjTextField extends StatefulWidget {
 }
 
 class _PjTextFieldState extends State<PjTextField> {
-  late bool isShow;
-
-  @override
-  void initState() {
-    isShow = false;
-    super.initState();
-  }
+  bool isShow = true;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 334.w,
       child: TextFormField(
+        textCapitalization:
+            widget.type == PjTextFieldStyle.text ? TextCapitalization.sentences : TextCapitalization.none,
         onChanged: widget.onChanged,
         autovalidateMode: AutovalidateMode.disabled,
         validator: (value) {
@@ -82,14 +78,15 @@ class _PjTextFieldState extends State<PjTextField> {
               ]
             : widget.type == PjTextFieldStyle.params
                 ? [
-          DecimalInputFormatter(),//FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    DecimalInputFormatter(), //FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                   ]
                 : null,
         keyboardType: getTextInputType(widget.type),
         style: TextStyle(fontFamily: "PtRoot", fontSize: 14.h, fontWeight: FontWeight.w500, color: PjColors.black),
         decoration: InputDecoration(
           suffixText: widget.suffixText,
-          suffixStyle: TextStyle(fontFamily: "PtRoot", fontSize: 14.h, fontWeight: FontWeight.w500, color: PjColors.black),
+          suffixStyle:
+              TextStyle(fontFamily: "PtRoot", fontSize: 14.h, fontWeight: FontWeight.w500, color: PjColors.black),
           errorStyle: TextStyle(height: 0, color: Colors.transparent),
           labelText: widget.title,
           floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -141,7 +138,7 @@ class _PjTextFieldState extends State<PjTextField> {
     }
   }
 
-  bool _validateDate(String date) {
+  /*bool _validateDate(String date) {
     DateFormat _dateFormat = DateFormat("dd.MM.yyyy");
     try {
       DateTime parsedDate = _dateFormat.parseStrict(date);
@@ -153,5 +150,25 @@ class _PjTextFieldState extends State<PjTextField> {
     } catch (e) {
       return false; //Некорректный формат даты
     }
+  }*/
+  bool _validateDate(String date) {
+    DateFormat _dateFormat = DateFormat("dd.MM.yyyy");
+    try {
+      DateTime parsedDate = _dateFormat.parseLoose(date);
+
+      // Проверяем, что год рождения не позднее 1900
+      if (parsedDate.year >= 1900) {
+        if (parsedDate.isBefore(DateTime.now())) {
+          return true; // Дата в прошлом или настоящем - допустимая дата рождения
+        } else {
+          return false; // Дата рождения должна быть в прошлом
+        }
+      } else {
+        return false; // Недопустимый год рождения
+      }
+    } catch (e) {
+      return false; // Некорректный формат даты
+    }
   }
 }
+
