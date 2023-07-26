@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     if (SgAppData.instance.user.photos!.isEmpty) {
-      String codePoint = GetStorage().read('localAvatar');
+      String codePoint = GetStorage().read('localAvatar') ?? 'e82e';
       SgAppData.instance.localAvatar =
           IconData(int.parse(codePoint, radix: 16), fontFamily: 'CustomIcons', fontPackage: null);
     }

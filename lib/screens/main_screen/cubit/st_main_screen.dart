@@ -1,18 +1,9 @@
-abstract class StMainScreen{}
+part of 'cb_main_screen.dart';
 
-class StMainScreenInit extends StMainScreen{}
-
-class StMainScreenLoaded extends StMainScreen{}
-
-class StMainScreenLoading extends StMainScreen{}
-
-class StMainScreenNoAuthError extends StMainScreen{}
-
-class StMainScreenNoInternetError extends StMainScreen {}
-
-class StMainScreenError extends StMainScreen{
-  final int? error;
-  final String? message;
-  StMainScreenError({this.error,this.message});
+@freezed
+abstract class StMainScreen with _$StMainScreen {
+  const factory StMainScreen.loading() = _Loading;
+  const factory StMainScreen.error(int? error, String? message) = _Error;
+  const factory StMainScreen.loaded(UserModel user) = _Loaded;
 }
     
