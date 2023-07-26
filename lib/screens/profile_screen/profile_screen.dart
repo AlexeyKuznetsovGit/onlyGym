@@ -4,12 +4,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_utils/pj_utils.dart';
 import 'package:onlygym/project_utils/singletons/sg_app_data.dart';
 import 'package:onlygym/project_widgets/error_dialog.dart';
+import 'package:onlygym/project_widgets/loader_dialog.dart';
 import 'package:onlygym/project_widgets/pj_appbar.dart';
 import 'package:onlygym/project_widgets/pj_loader.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,6 +52,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   bool isExpanded = false;
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -92,15 +95,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: BlocConsumer<CbProfileScreen, StProfileScreen>(
         listener: (context, state) {
-          state.maybeWhen(
-              orElse: () {},
-              error: (code, message) {
-                showAlertDialog(context, message!);
-              });
+          state.when(loaded: () {
+            if(loading){
+                  Navigator.pop(context);
+                  loading = false;
+                }
+          }, loading: ()  {
+            loading = true;
+            showLoader(context, true);
+
+          }, error: (code, message) {
+            showAlertDialog(context, message!);
+          });
         },
         builder: (context, state) => state.maybeWhen(
           orElse: () => _buildBodyContent(context),
-          loading: () => const PjLoader(),
         ),
       ),
     );

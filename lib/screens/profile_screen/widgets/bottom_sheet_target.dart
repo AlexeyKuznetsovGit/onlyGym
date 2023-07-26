@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
+import 'package:onlygym/project_utils/singletons/sg_app_data.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_filled_button.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_text_button.dart';
 import 'package:onlygym/screens/profile_screen/widgets/bs_text_filed_fill.dart';
@@ -14,7 +15,8 @@ import '../../../project_widgets/pj_buttons/pj_radio_button.dart';
 
 class BottomSheetTargetWidget extends StatefulWidget {
   final CbProfileScreen cubit;
-  BottomSheetTargetWidget({Key? key,required this.cubit}) : super(key: key);
+
+  BottomSheetTargetWidget({Key? key, required this.cubit}) : super(key: key);
 
   @override
   State<BottomSheetTargetWidget> createState() => _BottomSheetTargetWidgetState();
@@ -24,8 +26,21 @@ class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
   List<String> targets = ['Улучшение формы', 'Здоровый образ жизни', 'Похудение', 'Набор мышечной массы'];
 
   String selectedOption = 'Улучшение формы';
-  String anotherTarget = 'Другое';
   TextEditingController controller = TextEditingController(text: 'Другое');
+
+  @override
+  void initState() {
+    if (!targets.contains(SgAppData.instance.user.goal)) {
+      controller.text = SgAppData.instance.user.goal!;
+      selectedOption = SgAppData.instance.user.goal!;
+      widget.cubit.isSubmitted = true;
+    } else {
+      int index = targets.indexOf(SgAppData.instance.user.goal!);
+      selectedOption = targets[index];
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +115,7 @@ class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
             BsTextFieldFill(
               cubit: widget.cubit,
               selectedOption: selectedOption,
-              title: anotherTarget,
+              title: 'Другое',
               onTap: () {
                 setState(() {
                   selectedOption = controller.text;
@@ -120,6 +135,9 @@ class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
               text: 'Применить изменения',
               onPressed: () {
                 print(selectedOption);
+                if (SgAppData.instance.user.goal != selectedOption) {
+                  widget.cubit.changeGoal(goal: selectedOption);
+                }
               },
             )
           ],

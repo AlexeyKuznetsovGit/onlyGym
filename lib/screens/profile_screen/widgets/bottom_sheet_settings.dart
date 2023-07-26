@@ -19,6 +19,7 @@ import 'package:onlygym/screens/profile_screen/widgets/bottom_sheet_target.dart'
 
 class BottomSheetSettingsWidget extends StatefulWidget {
   final CbProfileScreen cubit;
+
   const BottomSheetSettingsWidget({Key? key, required this.cubit}) : super(key: key);
 
   @override
@@ -42,7 +43,6 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
     MaterialStatesController()
   ];
   bool isNotificationsDisabled = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +125,9 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                                 barrierColor: PjColors.black.withOpacity(0.5),
                                 context: context,
                                 builder: (context) {
-                                  return BottomSheetEditingWidget();
+                                  return BottomSheetEditingWidget(
+                                    cubit: widget.cubit,
+                                  );
                                 },
                               );
                               buttonState[index] = {MaterialState.selected};
@@ -148,7 +150,9 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                                 builder: (context) {
                                   return Padding(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: BottomSheetTargetWidget(cubit: widget.cubit,),
+                                    child: BottomSheetTargetWidget(
+                                      cubit: widget.cubit,
+                                    ),
                                   );
                                 },
                               );
