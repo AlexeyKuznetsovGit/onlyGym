@@ -41,7 +41,7 @@ class ProfileScreen extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  @override
+/*  @override
   void initState() {
     if (SgAppData.instance.user.photos!.isEmpty) {
       String codePoint = GetStorage().read('localAvatar') ?? 'e82e';
@@ -49,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           IconData(int.parse(codePoint, radix: 16), fontFamily: 'CustomIcons', fontPackage: null);
     }
     super.initState();
-  }
+  }*/
 
   bool isExpanded = false;
   bool loading = false;
@@ -63,7 +63,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           GestureDetector(
             onTap: () {
-              context.read<CbProfileScreen>().isSubmitted;
 
               showModalBottomSheet(
                 shape: RoundedRectangleBorder(
@@ -75,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 barrierColor: PjColors.black.withOpacity(0.5),
                 context: context,
                 builder: (ctx) {
-                  CbProfileScreen cubit = BlocProvider.of<CbProfileScreen>(context); //Еще не пробовал
+                  CbProfileScreen cubit = BlocProvider.of<CbProfileScreen>(context);
                   return BottomSheetSettingsWidget(
                     cubit: cubit,
                   );
@@ -125,16 +124,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
             height: 30.h,
           ),
           GestureDetector(
-            onTap: () {
-              context.router.push(ProfileImageRoute());
+            onTap: () async {
+             await context.router.push(ProfileImageRoute());
+             setState(() {
+
+             });
             },
             child: Center(
-              child: SgAppData.instance.user.photos!.isEmpty
+              child: SgAppData.instance.localAvatar != null
                   ? EmptyAvatar()
                   : ClipRRect(
                       borderRadius: BorderRadius.circular(100.r),
                       child: Image.network(
-                        "${PjUtils.imageUrl}${SgAppData.instance.user.photos![0].url!}",
+                        "${PjUtils.imageUrl}${SgAppData.instance.avatar!}",
                         height: 98.h,
                         width: 98.w,
                         fit: BoxFit.cover,

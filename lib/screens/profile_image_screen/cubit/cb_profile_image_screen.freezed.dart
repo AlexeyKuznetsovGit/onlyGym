@@ -21,6 +21,7 @@ mixin _$StProfileImageScreen {
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
     required TResult Function() loaded,
+    required TResult Function() addPhotoSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +29,7 @@ mixin _$StProfileImageScreen {
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
     TResult? Function()? loaded,
+    TResult? Function()? addPhotoSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +37,7 @@ mixin _$StProfileImageScreen {
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
     TResult Function()? loaded,
+    TResult Function()? addPhotoSuccess,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -43,6 +46,7 @@ mixin _$StProfileImageScreen {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_AddPhotoSuccess value) addPhotoSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +54,7 @@ mixin _$StProfileImageScreen {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_AddPhotoSuccess value)? addPhotoSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +62,7 @@ mixin _$StProfileImageScreen {
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_AddPhotoSuccess value)? addPhotoSuccess,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -121,6 +127,7 @@ class _$_Loading implements _Loading {
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
     required TResult Function() loaded,
+    required TResult Function() addPhotoSuccess,
   }) {
     return loading();
   }
@@ -131,6 +138,7 @@ class _$_Loading implements _Loading {
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
     TResult? Function()? loaded,
+    TResult? Function()? addPhotoSuccess,
   }) {
     return loading?.call();
   }
@@ -141,6 +149,7 @@ class _$_Loading implements _Loading {
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
     TResult Function()? loaded,
+    TResult Function()? addPhotoSuccess,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -155,6 +164,7 @@ class _$_Loading implements _Loading {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_AddPhotoSuccess value) addPhotoSuccess,
   }) {
     return loading(this);
   }
@@ -165,6 +175,7 @@ class _$_Loading implements _Loading {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_AddPhotoSuccess value)? addPhotoSuccess,
   }) {
     return loading?.call(this);
   }
@@ -175,6 +186,7 @@ class _$_Loading implements _Loading {
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_AddPhotoSuccess value)? addPhotoSuccess,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -261,6 +273,7 @@ class _$_Error implements _Error {
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
     required TResult Function() loaded,
+    required TResult Function() addPhotoSuccess,
   }) {
     return error(this.error, message);
   }
@@ -271,6 +284,7 @@ class _$_Error implements _Error {
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
     TResult? Function()? loaded,
+    TResult? Function()? addPhotoSuccess,
   }) {
     return error?.call(this.error, message);
   }
@@ -281,6 +295,7 @@ class _$_Error implements _Error {
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
     TResult Function()? loaded,
+    TResult Function()? addPhotoSuccess,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -295,6 +310,7 @@ class _$_Error implements _Error {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_AddPhotoSuccess value) addPhotoSuccess,
   }) {
     return error(this);
   }
@@ -305,6 +321,7 @@ class _$_Error implements _Error {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_AddPhotoSuccess value)? addPhotoSuccess,
   }) {
     return error?.call(this);
   }
@@ -315,6 +332,7 @@ class _$_Error implements _Error {
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_AddPhotoSuccess value)? addPhotoSuccess,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -373,6 +391,7 @@ class _$_Loaded implements _Loaded {
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
     required TResult Function() loaded,
+    required TResult Function() addPhotoSuccess,
   }) {
     return loaded();
   }
@@ -383,6 +402,7 @@ class _$_Loaded implements _Loaded {
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
     TResult? Function()? loaded,
+    TResult? Function()? addPhotoSuccess,
   }) {
     return loaded?.call();
   }
@@ -393,6 +413,7 @@ class _$_Loaded implements _Loaded {
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
     TResult Function()? loaded,
+    TResult Function()? addPhotoSuccess,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -407,6 +428,7 @@ class _$_Loaded implements _Loaded {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_AddPhotoSuccess value) addPhotoSuccess,
   }) {
     return loaded(this);
   }
@@ -417,6 +439,7 @@ class _$_Loaded implements _Loaded {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_AddPhotoSuccess value)? addPhotoSuccess,
   }) {
     return loaded?.call(this);
   }
@@ -427,6 +450,7 @@ class _$_Loaded implements _Loaded {
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_AddPhotoSuccess value)? addPhotoSuccess,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -438,4 +462,118 @@ class _$_Loaded implements _Loaded {
 
 abstract class _Loaded implements StProfileImageScreen {
   const factory _Loaded() = _$_Loaded;
+}
+
+/// @nodoc
+abstract class _$$_AddPhotoSuccessCopyWith<$Res> {
+  factory _$$_AddPhotoSuccessCopyWith(
+          _$_AddPhotoSuccess value, $Res Function(_$_AddPhotoSuccess) then) =
+      __$$_AddPhotoSuccessCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_AddPhotoSuccessCopyWithImpl<$Res>
+    extends _$StProfileImageScreenCopyWithImpl<$Res, _$_AddPhotoSuccess>
+    implements _$$_AddPhotoSuccessCopyWith<$Res> {
+  __$$_AddPhotoSuccessCopyWithImpl(
+      _$_AddPhotoSuccess _value, $Res Function(_$_AddPhotoSuccess) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_AddPhotoSuccess implements _AddPhotoSuccess {
+  const _$_AddPhotoSuccess();
+
+  @override
+  String toString() {
+    return 'StProfileImageScreen.addPhotoSuccess()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_AddPhotoSuccess);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function(int? error, String? message) error,
+    required TResult Function() loaded,
+    required TResult Function() addPhotoSuccess,
+  }) {
+    return addPhotoSuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loading,
+    TResult? Function(int? error, String? message)? error,
+    TResult? Function()? loaded,
+    TResult? Function()? addPhotoSuccess,
+  }) {
+    return addPhotoSuccess?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(int? error, String? message)? error,
+    TResult Function()? loaded,
+    TResult Function()? addPhotoSuccess,
+    required TResult orElse(),
+  }) {
+    if (addPhotoSuccess != null) {
+      return addPhotoSuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_AddPhotoSuccess value) addPhotoSuccess,
+  }) {
+    return addPhotoSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_AddPhotoSuccess value)? addPhotoSuccess,
+  }) {
+    return addPhotoSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_AddPhotoSuccess value)? addPhotoSuccess,
+    required TResult orElse(),
+  }) {
+    if (addPhotoSuccess != null) {
+      return addPhotoSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AddPhotoSuccess implements StProfileImageScreen {
+  const factory _AddPhotoSuccess() = _$_AddPhotoSuccess;
 }

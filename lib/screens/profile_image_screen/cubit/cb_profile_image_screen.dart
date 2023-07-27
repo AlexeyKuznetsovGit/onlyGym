@@ -1,21 +1,51 @@
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eticon_api/eticon_api.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:onlygym/models/photos_model.dart';
+import 'package:onlygym/models/user_model.dart';
+import 'package:onlygym/project_utils/singletons/sg_app_data.dart';
+import 'package:onlygym/repositories/athlete_repository.dart';
+import 'package:onlygym/repositories/get_it.dart';
+import 'package:onlygym/repositories/user_repository.dart';
 
 part 'st_profile_image_screen.dart';
 
 part 'cb_profile_image_screen.freezed.dart';
 
 class CbProfileImageScreen extends Cubit<StProfileImageScreen> {
-
   CbProfileImageScreen() : super(const StProfileImageScreen.loaded());
 
-  Future<void> getData() async {
+  Future<void> addAvatar({
+    required List<String> images
+  }) async {
     try {
-      Map<String, dynamic> response =
-      await Api.get( 'method', testMode: true);
-      /*await photoRepository.sendPhoto(name: photo.split('/').last, imagePath: photo);*/
-      emit(StProfileImageScreen.loaded());
+      emit(StProfileImageScreen.loading());
+      for(String image in images){
+        if(!image.contains("http")){
+          await (getIt<AthleteRepository>().addPhoto(pathPhoto: image, namePhoto: image.split('/').last));
+        }
+      }
+
+      UserModel user = await (getIt<UserRepository>().getMe());
+      SgAppData.instance.user = user;
+      if (GetStorage().read('localAvatar') == null) {
+        if (user.photos!.isNotEmpty) {
+          for (PhotosModel photo in user.photos!) {
+            if (photo.isAvatar!) {
+              SgAppData.instance.avatar = photo.url;
+            }
+          }
+        }
+      } else {
+        String codePoint = GetStorage().read('localAvatar');
+        SgAppData.instance.localAvatar =
+            IconData(int.parse(codePoint, radix: 16), fontFamily: 'CustomIcons', fontPackage: null);
+      }
+      emit(StProfileImageScreen.addPhotoSuccess());
     } on APIException catch (e) {
       emit(StProfileImageScreen.error(e.code, 'Что-то пошло не так!'));
     }

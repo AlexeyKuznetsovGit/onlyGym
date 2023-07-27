@@ -118,8 +118,7 @@ class _BottomSheetPhotoWidgetState extends State<BottomSheetPhotoWidget> {
                 icon: CustomIcons.trash,
                 controller: firstBtnController,
                 onPressed: () {
-                  SgAppData.instance.avatar = null;
-                  Navigator.pop(context);
+                  Navigator.of(context).pop(true);
                 },
               ),
               SizedBox(

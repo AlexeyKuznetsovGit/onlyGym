@@ -110,8 +110,6 @@ class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
                       },
                       selectedOption: selectedOption,
                     ))),
-
-            /// Todo После изменения контента в PjTextFeild, и потом если нажать на кнопки выше, то при первом нажатии, цвет в PjTextFeild не меняется
             BsTextFieldFill(
               cubit: widget.cubit,
               selectedOption: selectedOption,
@@ -134,7 +132,6 @@ class _BottomSheetTargetWidgetState extends State<BottomSheetTargetWidget> {
             PjFilledButton(
               text: 'Применить изменения',
               onPressed: () {
-                print(selectedOption);
                 if (SgAppData.instance.user.goal != selectedOption) {
                   widget.cubit.changeGoal(goal: selectedOption);
                 }

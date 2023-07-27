@@ -58,4 +58,18 @@ class AthleteRepository {
     Map<String, dynamic> response =
         await Api.post('addParams', query: body, urlIndex: ApiUrls.athlete, testMode: true, isAuth: true);
   }
+  Future<void> addPhoto({
+    required String pathPhoto,
+    required String namePhoto,
+  }) async {
+    var formData =  FormData.fromMap({
+      'avatar': await MultipartFile.fromFile(
+        pathPhoto,
+        filename: namePhoto,
+      )
+    });
+
+    Map<String, dynamic> response =
+    await Api.post('avatar', body: formData, urlIndex: ApiUrls.athlete, testMode: true, isAuth: true);
+  }
 }
