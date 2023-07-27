@@ -9,6 +9,7 @@ import 'package:onlygym/screens/main_screen/main_screen.dart';
 import 'package:onlygym/screens/my_target_screen/my_target_screen.dart';
 import 'package:onlygym/screens/profile_image_screen/profile_image_screen.dart';
 import 'package:onlygym/screens/profile_screen/profile_screen.dart';
+import 'package:onlygym/screens/recover_password_screen/recover_password_screen.dart';
 import 'package:onlygym/screens/registration_screen/registration_screen.dart';
 import 'package:onlygym/screens/registration_screen/widgets/Id_confirmation_screen/id_confirmation_screen.dart';
 import 'package:onlygym/screens/registration_screen/widgets/birthday_screen/birthday_screen.dart';
@@ -21,6 +22,7 @@ class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(page: AuthRoute.page, initial: Api.tokenIsEmpty),
+        AutoRoute(page: RecoverPasswordRoute.page),
         AutoRoute(page: RegistrationRoute.page),
         AutoRoute(page: ProfileImageRoute.page),
         AutoRoute(page: BirthdayRoute.page),

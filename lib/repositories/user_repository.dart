@@ -7,4 +7,5 @@ class UserRepository {
     Map<String, dynamic> response = await Api.get('me', urlIndex: ApiUrls.users, testMode: true, isAuth: true);
     return UserModel.fromJson(response);
   }
+
 }

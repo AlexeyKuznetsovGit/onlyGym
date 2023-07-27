@@ -2,28 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
+import 'package:onlygym/screens/profile_screen/cubit/cb_profile_screen.dart';
 
-class PjTextFieldFill extends StatefulWidget {
-  PjTextFieldFill(
-      {Key? key, this.onTap, required this.selectedOption, this.onChange, required this.title, required this.controller, this.isPassword = false})
+class BsTextFieldFill extends StatefulWidget {
+  BsTextFieldFill(
+      {Key? key, this.onTap, required this.cubit , required this.selectedOption, this.onChange, required this.title, required this.controller, this.isPassword = false})
       : super(key: key);
 
   final bool isPassword;
   final Function()? onTap;
+  final CbProfileScreen cubit;
   final Function(String text)? onChange;
   final String title;
   final TextEditingController controller;
   final String selectedOption;
 
   @override
-  State<PjTextFieldFill> createState() => _PjTextFieldFillState();
+  State<BsTextFieldFill> createState() => _BsTextFieldFillState();
 }
 
-class _PjTextFieldFillState extends State<PjTextFieldFill> {
+class _BsTextFieldFillState extends State<BsTextFieldFill> {
   late bool isShow;
   bool _isTextCentered = true;
 
-  bool isSubmitted= false; //Если юзать cubit, то все работает хорошо
+  /*bool isSubmitted= false;*/ //Если юзать cubit, то все работает хорошо
 
   @override
   void initState() {
@@ -43,13 +45,13 @@ class _PjTextFieldFillState extends State<PjTextFieldFill> {
             setState(() {
               FocusScope.of(context).unfocus();
               _isTextCentered = true;
-             isSubmitted = true;
+             widget.cubit.isSubmitted = true;
             });
           } else {
             setState(() {
               FocusScope.of(context).unfocus();
               _isTextCentered = true;
-             isSubmitted = false;
+              widget.cubit.isSubmitted = false;
              /* widget.title = 'Другое';
               widget.controller.text = 'Другое';*/
             });
@@ -60,12 +62,12 @@ class _PjTextFieldFillState extends State<PjTextFieldFill> {
           if (widget.controller.text.isNotEmpty && widget.controller.text != 'Другое') {
             setState(() {
               _isTextCentered = true;
-              isSubmitted = true;
+              widget.cubit.isSubmitted = true;
             });
           } else {
             setState(() {
               _isTextCentered = true;
-              isSubmitted = false;
+              widget.cubit.isSubmitted = false;
               /*widget.title = 'Другое';
               widget.controller.text = 'Другое';*/
             });
@@ -74,7 +76,7 @@ class _PjTextFieldFillState extends State<PjTextFieldFill> {
         onTap: () {
           if (widget.controller.text != 'Другое') {
             setState(() {
-             isSubmitted = false;
+              widget.cubit.isSubmitted = false;
             });
           }
           setState(() {
@@ -94,11 +96,11 @@ class _PjTextFieldFillState extends State<PjTextFieldFill> {
             fontFamily: "PtRoot",
             fontSize: 14.h,
             fontWeight: FontWeight.w500,
-            color: isSubmitted ? PjColors.white : PjColors.black),
+            color:  widget.cubit.isSubmitted ? PjColors.white : PjColors.black),
         decoration: InputDecoration(
           labelText: widget.title,
           fillColor: PjColors.neonBlue,
-          filled:  isSubmitted,
+          filled:  widget.cubit.isSubmitted,
           floatingLabelBehavior: FloatingLabelBehavior.never,
           isDense: true,
           labelStyle:

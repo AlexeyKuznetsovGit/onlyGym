@@ -41,7 +41,7 @@ class _IdConfirmationScreenState extends State<IdConfirmationScreen> {
   @override
   void initState() {
     context.read<CbIdConfirmationScreen>().sendCode(email: SgAppData.instance.user.email!);
-    _timer.cancel();
+    _startTimer();
     super.initState();
   }
 
@@ -51,7 +51,7 @@ class _IdConfirmationScreenState extends State<IdConfirmationScreen> {
     super.dispose();
   }
 
-  int _secondsRemaining = 120;
+  int _secondsRemaining = 60;
 
   @override
   Widget build(BuildContext context) {
@@ -107,10 +107,20 @@ class _IdConfirmationScreenState extends State<IdConfirmationScreen> {
         physics: ClampingScrollPhysics(),
         child: Column(
           children: [
-            const PjText(
+
+            ///Todo потом заменить на pjtext
+            Text(
               "Подтверждение личности",
-              style: PjTextStyle.h1,
-              color: PjColors.neonBlue,
+              style: TextStyle(
+               /* letterSpacing: -0.5,*/
+                fontFamily: "PtRoot",
+                fontSize: 28.sp,
+                fontWeight: FontWeight.w700,
+                height: 28 / 22,
+                color: PjColors.neonBlue,
+                leadingDistribution: TextLeadingDistribution.even,
+              ),
+              textAlign: TextAlign.center,
             ),
             SizedBox(
               height: 10.h,
@@ -158,7 +168,9 @@ class _IdConfirmationScreenState extends State<IdConfirmationScreen> {
                       if (!_timer.isActive) {
                         setState(() {
                           _startTimer();
-                          context.read<CbIdConfirmationScreen>().sendCode(email: SgAppData.instance.user.email!);
+                          context
+                              .read<CbIdConfirmationScreen>()
+                              .sendCode(email: SgAppData.instance.user.email!, loading: false);
                         });
                       }
                     })
@@ -210,7 +222,7 @@ class _IdConfirmationScreenState extends State<IdConfirmationScreen> {
       if (_secondsRemaining == 0) {
         setState(() {
           timer.cancel();
-          _secondsRemaining = 120;
+          _secondsRemaining = 60;
         });
       } else {
         setState(() {
