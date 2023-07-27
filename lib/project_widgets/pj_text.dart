@@ -21,9 +21,9 @@ class PjText extends StatelessWidget {
       text,
       textAlign: align,
       style: TextStyle(
-        height: height.h,
+        height: height,
         fontWeight: fontWeight,
-        fontSize: fontSize,
+        fontSize: fontSize.w,
         color: color,
         leadingDistribution: TextLeadingDistribution.even,
        // height: height,

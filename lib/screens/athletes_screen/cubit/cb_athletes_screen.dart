@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eticon_api/eticon_api.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:onlygym/repositories/athlete_repository.dart';
+import 'package:onlygym/repositories/get_it.dart';
 
 part 'st_athletes_screen.dart';
 
@@ -12,8 +14,7 @@ class CbAthletesScreen extends Cubit<StAthletesScreen> {
 
   Future<void> getData() async {
     try {
-      Map<String, dynamic> response =
-      await Api.get('method', testMode: true);
+      await (getIt<AthleteRepository>().getAll());
       emit(StAthletesScreen.loaded());
     } on APIException catch (e) {
       emit(StAthletesScreen.error(e.code, 'Что-то пошло не так!'));
