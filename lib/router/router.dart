@@ -15,6 +15,8 @@ import 'package:onlygym/screens/registration_screen/widgets/Id_confirmation_scre
 import 'package:onlygym/screens/registration_screen/widgets/birthday_screen/birthday_screen.dart';
 import 'package:onlygym/screens/registration_screen/widgets/my_params_screen/my_params_screen.dart';
 
+import '../screens/create_new_athlete_screen/create_new_athlete_screen.dart';
+
 part 'router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Widget|Screen,Route')
@@ -28,6 +30,7 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: BirthdayRoute.page),
         AutoRoute(page: MyParamsRoute.page),
         AutoRoute(page: MyTargetRoute.page),
+        AutoRoute(page: CreateNewAthleteRoute.page),
         AutoRoute(page: IdConfirmationRoute.page),
         AutoRoute(page: MainRoute.page, initial: Api.tokenIsNotEmpty, children: [
           AutoRoute(page: DiaryRoute.page),

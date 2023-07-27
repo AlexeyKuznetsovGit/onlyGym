@@ -1,11 +1,20 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onlygym/project_utils/pj_colors.dart';
+import 'package:onlygym/project_utils/pj_icons.dart';
+import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_widgets/error_dialog.dart';
 import 'package:onlygym/project_widgets/pj_appbar.dart';
 import 'package:onlygym/project_widgets/pj_loader.dart';
+import 'package:onlygym/project_widgets/pj_text_field.dart';
+import 'package:onlygym/screens/athletes_screen/widgets/avatar_card.dart';
 import 'cubit/cb_athletes_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'widgets/bottom_sheet_add_athelet.dart';
 
 @RoutePage()
 class AthletesScreen extends StatefulWidget implements AutoRouteWrapper {
@@ -13,10 +22,11 @@ class AthletesScreen extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   State<AthletesScreen> createState() => _AthletesScreenState();
+
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<CbAthletesScreen>(
-      create: (context) => CbAthletesScreen(),
+      create: (context) => CbAthletesScreen()..getData(),
       child: this,
     );
   }
@@ -26,7 +36,37 @@ class _AthletesScreenState extends State<AthletesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PjAppBar(),
+      appBar: PjAppBar(title: 'Атлеты', actions: [
+        GestureDetector(
+          onTap: () {
+            showModalBottomSheet(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.r),
+                  topRight: Radius.circular(20.r),
+                ),
+              ),
+              isScrollControlled: true,
+              barrierColor: PjColors.black.withOpacity(0.5),
+              context: context,
+              builder: (BuildContext context) {
+                return BottomSheetAddAthelet(
+                  height: 270.h,
+                  title: 'Атлеты',
+                );
+              },
+            );
+          },
+          behavior: HitTestBehavior.translucent,
+          child: Padding(
+            padding: EdgeInsets.only(right: 16.w),
+            child: Icon(
+              CustomIcons.plus,
+              color: Colors.black,
+            ),
+          ),
+        ),
+      ]),
       body: BlocConsumer<CbAthletesScreen, StAthletesScreen>(
         listener: (context, state) =>
             state.whenOrNull(error: (code, message) => showAlertDialog(context, message ?? '')),
@@ -37,13 +77,26 @@ class _AthletesScreenState extends State<AthletesScreen> {
         ),
       ),
     );
-
   }
 
   Widget _buildBodyContent(BuildContext context) {
-    return Center(
-      child: Text('Athlets'),
+    return Column(
+      children: [
+        SizedBox(
+          height: 10.h,
+        ),
+        PjTextField(title: 'Поиск атлетов', type: PjTextFieldStyle.text, controller: TextEditingController()),
+        Expanded(
+          child: ListView.separated(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.w),
+            itemBuilder: (context, index) => AvatarCard(callback: () {}),
+            itemCount: 24,
+            separatorBuilder: (context, index) => SizedBox(
+              height: 12.w,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
-    

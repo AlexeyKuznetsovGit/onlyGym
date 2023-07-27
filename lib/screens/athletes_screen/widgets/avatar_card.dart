@@ -30,13 +30,6 @@ class _AvatarCardState extends State<AvatarCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onPanStart: (_){
-        setState(() => isTouch = true);
-      },
-      onPanEnd: (_){
-        setState(() => isTouch = false);
-        widget.callback();
-      },
       child: Container(
         width: 334.w,
         decoration: BoxDecoration(
@@ -45,23 +38,31 @@ class _AvatarCardState extends State<AvatarCard> {
         ),
         child: Padding(
           padding:  EdgeInsets.all(15.w),
-          child: Row(
-            children: [
-              Icon(CustomIcons.athletes, size: 54.w, color: isTouch ? PjColors.lightBlue : PjColors.neonBlue,),
-              SizedBox(width: 10.w,),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children:  [
-                  PjText("Кузнецов Алексей", style: PjTextStyle.bold, color: isTouch ? PjColors.gray : PjColors.black),
-                  PjText("Улучшение формы", style: PjTextStyle.regular, color: isTouch ? PjColors.lightGray : PjColors.gray),
-                ],
-              ),
-              const Spacer(),
-              if(widget.supportCallback != null)...[
-                Icon(CustomIcons.plus_small, color: isTouch ? PjColors.ultraLightBlue : PjColors.lightBlue,),
-              ]
+          child: SizedBox(
+            width: 334.w,
+            child: Row(
+              children: [
 
-            ],
+                Icon(CustomIcons.avatar, size: 54.w, color: PjColors.neonBlue,),
+                SizedBox(width: 10.w,),
+                SizedBox(
+                  width: 260.w,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children:  [
+                      PjText("Кузнецов Алексей", style: PjTextStyle.bold, color: isTouch ? PjColors.gray : PjColors.black),
+                      SizedBox(height: 10.h,),
+                      Container(child: PjText("Улучшение формы", style: PjTextStyle.regular, color: isTouch ? PjColors.lightGray : PjColors.gray)),
+                    ],
+                  ),
+                ),
+                const Spacer(),
+                if(widget.supportCallback != null)...[
+                  Icon(CustomIcons.plus_small, color: isTouch ? PjColors.ultraLightBlue : PjColors.lightBlue,),
+                ]
+
+              ],
+            ),
           ),
         ),
       ),
