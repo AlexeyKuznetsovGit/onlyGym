@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
+import 'package:onlygym/project_utils/singletons/sg_app_data.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
+import 'package:onlygym/screens/profile_screen/cubit/cb_profile_screen.dart';
 import 'package:onlygym/screens/profile_screen/widgets/size_info_card.dart';
 
 class BodyParts extends StatefulWidget {
-  BodyParts({
+  final CbProfileScreen cubit;
 
+  BodyParts({
+    required this.cubit,
     super.key,
   });
 
@@ -47,29 +51,34 @@ class _BodyPartsState extends State<BodyParts> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizeInfoCard(
-                callback: () {
-                },
+                idParam: 3,
+                cubit: widget.cubit,
+                callback: () {},
                 title: "Шея",
                 icon: CustomIcons.neck,
-                data: 144.toString(),
+                data: widget.cubit.getCurrentParameter("Шея"),
               ),
               SizedBox(
                 width: 11.w,
               ),
               SizeInfoCard(
+                idParam: 4,
+                cubit: widget.cubit,
                 callback: () {},
                 title: "Плечи",
                 icon: CustomIcons.shoulders,
-                data: 22.toString(),
+                data: widget.cubit.getCurrentParameter("Плечи"),
               ),
               SizedBox(
                 width: 11.w,
               ),
               SizeInfoCard(
+                idParam: 5,
+                cubit: widget.cubit,
                 callback: () {},
                 title: "Грудь",
                 icon: CustomIcons.chest,
-                data: 43.toString(),
+                data: widget.cubit.getCurrentParameter("Грудь"),
               ),
             ],
           ),
@@ -85,11 +94,13 @@ class _BodyPartsState extends State<BodyParts> {
                 childAspectRatio: 147.w / 72.h,
                 children: List.generate(10, (index) {
                   return SizeInfoCard(
+                    idParam: index + 6,
+                    cubit: widget.cubit,
                     callback: () {},
                     title: getTitleOrIcon(index),
                     icon: getTitleOrIcon(index, returnTitle: false),
                     isLong: true,
-                    data: 144.toString(),
+                    data: widget.cubit.getCurrentParameter(getTitleOrIcon(index)),
                   );
                 }),
               ),

@@ -19,6 +19,7 @@ import 'package:onlygym/project_widgets/pj_text.dart';
 import 'package:onlygym/router/router.dart';
 import 'package:onlygym/screens/profile_screen/cubit/cb_profile_screen.dart';
 import 'package:onlygym/screens/profile_screen/widgets/body_parts.dart';
+import 'package:onlygym/screens/profile_screen/widgets/bottom_sheet_body_parts.dart';
 import 'package:onlygym/screens/profile_screen/widgets/bottom_sheet_settings.dart';
 import 'package:onlygym/screens/profile_screen/widgets/empty_avatar.dart';
 import 'package:onlygym/screens/profile_screen/widgets/info_card.dart';
@@ -63,7 +64,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           GestureDetector(
             onTap: () {
-
               showModalBottomSheet(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
@@ -95,14 +95,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: BlocConsumer<CbProfileScreen, StProfileScreen>(
         listener: (context, state) {
           state.when(loaded: () {
-            if(loading){
-                  Navigator.pop(context);
-                  loading = false;
-                }
-          }, loading: ()  {
+            if (loading) {
+              Navigator.pop(context);
+              loading = false;
+            }
+          }, loading: () {
             loading = true;
             showLoader(context, true);
-
           }, error: (code, message) {
             showAlertDialog(context, message!);
           });
@@ -125,10 +124,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           GestureDetector(
             onTap: () async {
-             await context.router.push(ProfileImageRoute());
-             setState(() {
-
-             });
+              await context.router.push(ProfileImageRoute());
+              setState(() {});
             },
             child: Center(
               child: SgAppData.instance.localAvatar != null
@@ -175,22 +172,74 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: 20.w,
               ),
               InfoCard(
-                  callback: () {}, title: "Вес, кг", data: SgAppData.instance.user.parameters![1].value.toString()),
+                  callback: ()async {
+                   await showModalBottomSheet(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.r),
+                          topRight: Radius.circular(20.r),
+                        ),
+                      ),
+                      isScrollControlled: true,
+                      barrierColor: PjColors.black.withOpacity(0.5),
+                      context: context,
+                      builder: (BuildContext ctx) {
+                        return BottomSheetBodyPartsWidget(
+                          idParam: 2,
+                          cubit: BlocProvider.of<CbProfileScreen>(context),
+                          data: SgAppData.instance.user.parameters![1].value.toString(),
+                          title: "Вес, кг",
+                          height: 270.h,
+                          type: BottomSheetType.init,
+                        );
+                      },
+                    );
+                  },
+                  title: "Вес, кг",
+                  data: SgAppData.instance.user.parameters![1].value.toString()),
               SizedBox(
                 width: 20.w,
               ),
               InfoCard(
-                  callback: () {}, title: "Рост, см", data: SgAppData.instance.user.parameters![0].value.toString()),
+                  callback: () async {
+                   await showModalBottomSheet(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.r),
+                          topRight: Radius.circular(20.r),
+                        ),
+                      ),
+                      isScrollControlled: true,
+                      barrierColor: PjColors.black.withOpacity(0.5),
+                      context: context,
+                      builder: (BuildContext ctx) {
+                        return BottomSheetBodyPartsWidget(
+                          idParam: 1,
+                          cubit: BlocProvider.of<CbProfileScreen>(context),
+                          data: SgAppData.instance.user.parameters![0].value.toString(),
+                          title: "Рост, см",
+                          height: 270.h,
+                          type: BottomSheetType.init,
+                        );
+                      },
+                    );
+                  },
+                  title: "Рост, см",
+                  data: SgAppData.instance.user.parameters![0].value.toString()),
             ],
           ),
           SizedBox(
             height: 20.h,
           ),
-          InfoCard(isLong: true, callback: () {}, title: "Моя цель", data: SgAppData.instance.user.goal!),
+          InfoCard(
+              isLong: true,
+              callback: () {},
+              title: "Моя цель",
+              data: SgAppData.instance.user.goal!),
           SizedBox(
             height: 20.h,
           ),
-          BodyParts(),
+          BodyParts(cubit: BlocProvider.of<CbProfileScreen>(context),),
         ],
       ),
     );

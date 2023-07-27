@@ -20,6 +20,7 @@ class BottomSheetEditingWidget extends StatefulWidget {
 
 class _BottomSheetEditingWidgetState extends State<BottomSheetEditingWidget> {
   final _formKeyEdit = GlobalKey<FormState>();
+  List<String> titles = ['Имя', "Фамилия", "Дата рождения", "Вес, кг", 'Рост, см'];
   bool isPressed = false;
   List<String> data = [
     SgAppData.instance.user.firstName!,
@@ -107,7 +108,7 @@ class _BottomSheetEditingWidgetState extends State<BottomSheetEditingWidget> {
                                       ? 'см'
                                       : null,
                               type: getPjTextFieldStyle(index),
-                              title: data[index],
+                              title: titles[index],
                               controller: controllers[index],
                             ),
                           )),

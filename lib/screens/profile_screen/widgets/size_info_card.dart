@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
+import 'package:onlygym/screens/profile_screen/cubit/cb_profile_screen.dart';
 import 'package:onlygym/screens/profile_screen/widgets/bottom_sheet_body_parts.dart';
 
 class SizeInfoCard extends StatefulWidget {
@@ -11,14 +12,18 @@ class SizeInfoCard extends StatefulWidget {
       this.isLong = false,
       required this.title,
       required this.icon,
+        required this.cubit,
+        required this.idParam,
       required this.data})
       : super(key: key);
 
   final Function callback;
+  final CbProfileScreen cubit;
   final bool isLong;
   final String title;
   final IconData icon;
   final String data;
+  final int idParam;
 
   @override
   State<SizeInfoCard> createState() => _SizeInfoCardState();
@@ -53,6 +58,9 @@ class _SizeInfoCardState extends State<SizeInfoCard> {
           context: context,
           builder: (BuildContext context) {
             return BottomSheetBodyPartsWidget(
+              idParam: widget.idParam,
+              cubit: widget.cubit,
+              data: widget.data,
               title: widget.title,
               height: 270.h,
               type: BottomSheetType.init,

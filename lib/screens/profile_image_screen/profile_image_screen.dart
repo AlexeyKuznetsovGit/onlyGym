@@ -111,7 +111,7 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
             child: GridView.count(
               crossAxisSpacing: 20.w,
               mainAxisSpacing: 20.h,
-              physics: NeverScrollableScrollPhysics(),
+              physics: ClampingScrollPhysics(),
               crossAxisCount: 3,
               // Количество колонок
               childAspectRatio: 98.w / 98.h,
@@ -246,11 +246,6 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
                                     isAddedPhoto = true;
                                     images.add(path);
                                   });
-                                } else {
-                                  setState(() {
-                                    selectedIndex = 1;
-                                    SgAppData.instance.localAvatar = getIcon(selectedIndex);
-                                  });
                                 }
                               },
                               child: Icon(
@@ -307,6 +302,7 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
                               : GestureDetector(
                                   onTap: () {
                                     setState(() {
+                                      print(selectedIndex > images.length);
                                       selectedIndex = index;
                                       SgAppData.instance.localAvatar = getIcon(index - 1, false);
                                     });
@@ -342,14 +338,7 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
                     context.router.push(BirthdayRoute());
                   }
                 : () {
-                    print(selectedIndex);
-                    print(images.length);
-                    if (images.isNotEmpty &&
-                        isAddedPhoto &&
-                        (selectedIndex != 0 ||
-                            selectedIndex != images.length + 1 ||
-                            selectedIndex != images.length + 2 ||
-                            selectedIndex != images.length + 3)) {
+                    if (selectedIndex < images.length) {
                       SgAppData.instance.localAvatar = null;
                       print('Загружаем аватар');
                       GetStorage().remove('localAvatar');

@@ -29,6 +29,26 @@ class CbProfileScreen extends Cubit<StProfileScreen> {
     }
   }
 
+  Future<void> changeOneParam(
+      {required int idParam, required String title, required double value, int? athleteId}) async {
+    try {
+      emit(StProfileScreen.loading());
+      bool send = true;
+      for (ParametersModel param in SgAppData.instance.user.parameters!) {
+        if (param.name == title && param.value == value) {
+          send = false;
+        }
+      }
+
+      if (send) await (getIt<AthleteRepository>().addParams(paramId: idParam, value: value, athleteId: athleteId));
+      UserModel user = await (getIt<UserRepository>().getMe());
+      SgAppData.instance.user = user;
+      emit(StProfileScreen.loaded());
+    } on APIException catch (e) {
+      emit(StProfileScreen.error(e.code, 'Что-то пошло не так!'));
+    }
+  }
+
   Future<void> editProfile(
       {required String firstName,
       required String lastName,
@@ -52,6 +72,15 @@ class CbProfileScreen extends Cubit<StProfileScreen> {
     } on APIException catch (e) {
       emit(StProfileScreen.error(e.code, 'Что-то пошло не так!'));
     }
+  }
+
+  String getCurrentParameter(String title) {
+    for (ParametersModel param in SgAppData.instance.user.parameters!) {
+      if (param.name == title) {
+        return param.value.toString();
+      }
+    }
+    return '-';
   }
 }
 

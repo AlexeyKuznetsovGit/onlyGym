@@ -6,6 +6,7 @@ import 'package:onlygym/project_widgets/pj_buttons/pj_filled_button.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_long_button.dart';
 import 'package:onlygym/project_widgets/pj_qr.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
+import 'package:onlygym/screens/profile_screen/cubit/cb_profile_screen.dart';
 import 'package:onlygym/screens/profile_screen/widgets/volumeDiagram.dart';
 
 import '../../../project_widgets/pj_text_field.dart';
@@ -14,10 +15,20 @@ enum BottomSheetType { init, edit, look }
 
 class BottomSheetBodyPartsWidget extends StatefulWidget {
   final String title;
-  final BottomSheetType type;
-  final double height;
+  BottomSheetType type;
+  double height;
+  final String data;
+  final CbProfileScreen cubit;
+  final int idParam;
 
-  const BottomSheetBodyPartsWidget({Key? key, required this.title, required this.type, required this.height})
+  BottomSheetBodyPartsWidget(
+      {Key? key,
+      required this.data,
+      required this.cubit,
+      required this.title,
+      required this.type,
+      required this.idParam,
+      required this.height})
       : super(key: key);
 
   @override
@@ -27,33 +38,39 @@ class BottomSheetBodyPartsWidget extends StatefulWidget {
 class _BottomSheetBodyPartsWidgetState extends State<BottomSheetBodyPartsWidget> {
   /*Set<MaterialState> changeButtonState = {MaterialState.selected};
   Set<MaterialState> statisticsButtonState = {MaterialState.selected};*/
+  final _formKeyEdit = GlobalKey<FormState>();
+  bool isPressed = false;
 
   MaterialStatesController changeController = MaterialStatesController();
   MaterialStatesController statisticsController = MaterialStatesController();
 
-  TextEditingController controllerVolume = TextEditingController(text: '144 см');
-  TextEditingController controllerDate = TextEditingController(text: '24.04.2023');
+  TextEditingController controllerVolume = TextEditingController();
 
-  List<int> counts = [45,25,30,10,20,35,15];
+  List<int> counts = [45, 25, 30, 10, 20, 35, 15];
   int max = 0;
-  List<String> weeks = ['пн','вт','ср','чт','пт','сб','вс'];
+  List<String> weeks = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
 
   @override
   void initState() {
-    max = counts.reduce((curr, next) => curr > next ? curr: next);
-    if(max == 0){
+    max = counts.reduce((curr, next) => curr > next ? curr : next);
+    if (max == 0) {
       max = 1;
     }
+    if (widget.data == "-") {
+      controllerVolume.text = '';
+    } else {
+      controllerVolume.text = widget.data;
+    }
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: GestureDetector(
-        onTap: (){
+        onTap: () {
           FocusScope.of(context).unfocus();
         },
         child: Container(
@@ -120,22 +137,15 @@ class _BottomSheetBodyPartsWidgetState extends State<BottomSheetBodyPartsWidget>
                       context: context,
                       builder: (BuildContext context) {
                         return BottomSheetBodyPartsWidget(
-                          height: 342.h,
+                          cubit: widget.cubit,
+                          data: widget.data,
+                          height: 270.h,
                           title: widget.title,
                           type: BottomSheetType.edit,
+                          idParam: widget.idParam,
                         );
                       },
                     );
-                    /*if (!changeButtonState.contains(MaterialState.pressed) && changeButtonState.isNotEmpty) {
-                    changeButtonState = {MaterialState.pressed};
-                  } else {
-                    changeButtonState = {MaterialState.selected};
-                  }
-                  changeController.value = changeButtonState;
-                  //await
-
-                  changeButtonState = {MaterialState.selected};
-                  changeController.value = changeButtonState;*/
                   },
                   text: 'Редактировать значение',
                   icon: CustomIcons.edit,
@@ -158,48 +168,40 @@ class _BottomSheetBodyPartsWidgetState extends State<BottomSheetBodyPartsWidget>
                       context: context,
                       builder: (BuildContext context) {
                         return BottomSheetBodyPartsWidget(
+                          idParam: widget.idParam,
+                          cubit: widget.cubit,
+                          data: widget.data,
                           height: 337.h,
                           title: widget.title,
                           type: BottomSheetType.look,
                         );
                       },
                     );
-                    /*if (!statisticsButtonState.contains(MaterialState.pressed) && statisticsButtonState.isNotEmpty) {
-                    statisticsButtonState = {MaterialState.pressed};
-                  } else {
-                    statisticsButtonState = {MaterialState.selected};
-                  }
-                  statisticsController.value = statisticsButtonState;
-
-                  //await
-
-                  statisticsButtonState = {MaterialState.selected};
-                  statisticsController.value = statisticsButtonState;*/
                   },
                   text: 'Смотреть динамику объёма',
                   icon: CustomIcons.analytics,
                   controller: statisticsController,
                 )
               ] else if (widget.type == BottomSheetType.edit) ...[
-                PjTextField(
-                  type: PjTextFieldStyle.number,
-                  title: '144 см',
-                  controller: controllerVolume,
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                PjTextField(
-                  type: PjTextFieldStyle.date,
-                  title: '24.04.2023',
-                  controller: controllerDate,
+                Form(
+                  key: _formKeyEdit,
+                  child: PjTextField(
+                    type: PjTextFieldStyle.params,
+                    title: widget.title,
+                    controller: controllerVolume,
+                  ),
                 ),
                 SizedBox(
                   height: 20.h,
                 ),
                 PjFilledButton(
                   text: 'Применить изменения',
-                  onPressed: () {},
+                  onPressed: () {
+                    if (_formKeyEdit.currentState!.validate()) {
+                      widget.cubit.changeOneParam(
+                          title: widget.title, idParam: widget.idParam, value: double.parse(controllerVolume.text));
+                    }
+                  },
                 )
               ] else ...[
                 Container(
@@ -217,12 +219,12 @@ class _BottomSheetBodyPartsWidgetState extends State<BottomSheetBodyPartsWidget>
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            setState(() {
-                            });
+                            setState(() {});
                           },
                           behavior: HitTestBehavior.translucent,
                           child: VolumeDiagram(
-                            height: 87 / (max / counts[index]), //87 это максимальная высота одного элемента диаграммы
+                            height: 87 / (max / counts[index]),
+                            //87 это максимальная высота одного элемента диаграммы
                             count: counts[index],
                             weekDay: weeks[index],
                           ),
@@ -233,7 +235,6 @@ class _BottomSheetBodyPartsWidgetState extends State<BottomSheetBodyPartsWidget>
                     ),
                   ),
                 ),
-
               ],
             ],
           ),
@@ -242,6 +243,3 @@ class _BottomSheetBodyPartsWidgetState extends State<BottomSheetBodyPartsWidget>
     );
   }
 }
-
-
-

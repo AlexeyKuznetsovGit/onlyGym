@@ -5,6 +5,7 @@ import 'package:eticon_api/eticon_api.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:onlygym/models/photos_model.dart';
 import 'package:onlygym/models/user_model.dart';
+import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_utils/singletons/sg_app_data.dart';
 import 'package:onlygym/repositories/get_it.dart';
 import 'package:onlygym/repositories/user_repository.dart';
@@ -27,6 +28,8 @@ class CbMainScreen extends Cubit<StMainScreen> {
               SgAppData.instance.avatar = photo.url;
             }
           }
+        } else {
+          SgAppData.instance.localAvatar = CustomIcons.avatar;
         }
       } else {
         String codePoint = GetStorage().read('localAvatar');
