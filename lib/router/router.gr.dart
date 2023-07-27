@@ -33,6 +33,12 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
+    CreateNewAthleteRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const CreateNewAthleteScreen()),
+      );
+    },
     DiaryRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -43,6 +49,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(child: const ExercisesScreen()),
+      );
+    },
+    RecoverPasswordRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const RecoverPasswordScreen()),
       );
     },
     ProfileRoute.name: (routeData) {
@@ -95,12 +107,6 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(child: const AthletesScreen()),
-      );
-    },
-    RecoverPasswordRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: WrappedRoute(child: const RecoverPasswordScreen()),
       );
     },
   };
@@ -159,6 +165,20 @@ class ProfileImageRouteArgs {
 }
 
 /// generated route for
+/// [CreateNewAthleteScreen]
+class CreateNewAthleteRoute extends PageRouteInfo<void> {
+  const CreateNewAthleteRoute({List<PageRouteInfo>? children})
+      : super(
+          CreateNewAthleteRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CreateNewAthleteRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [DiaryScreen]
 class DiaryRoute extends PageRouteInfo<void> {
   const DiaryRoute({List<PageRouteInfo>? children})
@@ -182,6 +202,20 @@ class ExercisesRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ExercisesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [RecoverPasswordScreen]
+class RecoverPasswordRoute extends PageRouteInfo<void> {
+  const RecoverPasswordRoute({List<PageRouteInfo>? children})
+      : super(
+          RecoverPasswordRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RecoverPasswordRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -323,20 +357,6 @@ class AthletesRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AthletesRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [RecoverPasswordScreen]
-class RecoverPasswordRoute extends PageRouteInfo<void> {
-  const RecoverPasswordRoute({List<PageRouteInfo>? children})
-      : super(
-          RecoverPasswordRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'RecoverPasswordRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

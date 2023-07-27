@@ -30,13 +30,6 @@ class _AvatarCardState extends State<AvatarCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onPanStart: (_){
-        setState(() => isTouch = true);
-      },
-      onPanEnd: (_){
-        setState(() => isTouch = false);
-        widget.callback();
-      },
       child: Container(
         width: 334.w,
         decoration: BoxDecoration(
@@ -53,7 +46,7 @@ class _AvatarCardState extends State<AvatarCard> {
                 Icon(CustomIcons.avatar, size: 54.w, color: PjColors.neonBlue,),
                 SizedBox(width: 10.w,),
                 SizedBox(
-                  width: 280.w,
+                  width: 260.w,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children:  [

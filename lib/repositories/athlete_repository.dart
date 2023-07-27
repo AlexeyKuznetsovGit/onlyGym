@@ -2,6 +2,12 @@ import 'package:eticon_api/eticon_api.dart';
 import 'package:onlygym/main.dart';
 
 class AthleteRepository {
+  
+  Future<void> getAll()async {
+    await Api.get('', urlIndex: ApiUrls.athlete, testMode: true, isAuth: true);
+  }
+  
+  
   Future<void> editAthlete({
     required String firstName,
     required String lastName,
