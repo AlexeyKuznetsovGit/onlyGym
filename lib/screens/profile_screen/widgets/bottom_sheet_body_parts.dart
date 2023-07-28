@@ -20,6 +20,7 @@ class BottomSheetBodyPartsWidget extends StatefulWidget {
   final String data;
   final CbProfileScreen cubit;
   final int idParam;
+  final int? athleteId;
 
   BottomSheetBodyPartsWidget(
       {Key? key,
@@ -27,6 +28,7 @@ class BottomSheetBodyPartsWidget extends StatefulWidget {
       required this.cubit,
       required this.title,
       required this.type,
+      this.athleteId,
       required this.idParam,
       required this.height})
       : super(key: key);
@@ -137,6 +139,7 @@ class _BottomSheetBodyPartsWidgetState extends State<BottomSheetBodyPartsWidget>
                       context: context,
                       builder: (BuildContext context) {
                         return BottomSheetBodyPartsWidget(
+                          athleteId: widget.athleteId,
                           cubit: widget.cubit,
                           data: widget.data,
                           height: 270.h,
@@ -168,6 +171,7 @@ class _BottomSheetBodyPartsWidgetState extends State<BottomSheetBodyPartsWidget>
                       context: context,
                       builder: (BuildContext context) {
                         return BottomSheetBodyPartsWidget(
+                          athleteId: widget.athleteId,
                           idParam: widget.idParam,
                           cubit: widget.cubit,
                           data: widget.data,
@@ -194,12 +198,28 @@ class _BottomSheetBodyPartsWidgetState extends State<BottomSheetBodyPartsWidget>
                 SizedBox(
                   height: 20.h,
                 ),
+                if (isPressed && _formKeyEdit.currentState != null && !_formKeyEdit.currentState!.validate()) ...[
+                  Text(
+                    'Пожалуйста, заполните/измените отмеченные поля',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                ],
                 PjFilledButton(
                   text: 'Применить изменения',
                   onPressed: () {
                     if (_formKeyEdit.currentState!.validate()) {
                       widget.cubit.changeOneParam(
-                          title: widget.title, idParam: widget.idParam, value: double.parse(controllerVolume.text));
+                          title: widget.title,
+                          idParam: widget.idParam,
+                          value: double.parse(controllerVolume.text),
+                          athleteId: widget.athleteId);
+                    } else {
+                      setState(() {
+                        isPressed = true;
+                      });
                     }
                   },
                 )

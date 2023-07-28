@@ -13,6 +13,7 @@ class SizeInfoCard extends StatefulWidget {
       required this.title,
       required this.icon,
         required this.cubit,
+        this.athleteId,
         required this.idParam,
       required this.data})
       : super(key: key);
@@ -24,6 +25,7 @@ class SizeInfoCard extends StatefulWidget {
   final IconData icon;
   final String data;
   final int idParam;
+  final int? athleteId;
 
   @override
   State<SizeInfoCard> createState() => _SizeInfoCardState();
@@ -58,6 +60,7 @@ class _SizeInfoCardState extends State<SizeInfoCard> {
           context: context,
           builder: (BuildContext context) {
             return BottomSheetBodyPartsWidget(
+              athleteId: widget.athleteId,
               idParam: widget.idParam,
               cubit: widget.cubit,
               data: widget.data,

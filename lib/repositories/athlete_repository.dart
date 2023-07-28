@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:eticon_api/eticon_api.dart';
 import 'package:onlygym/main.dart';
 
@@ -14,6 +16,7 @@ class AthleteRepository {
     required String dateBirth,
     int? athleteId,
   }) async {
+    log(athleteId.toString(),name: 'athleteId');
     var formData = athleteId != null
         ? FormData.fromMap({
             'athlete_id': athleteId,

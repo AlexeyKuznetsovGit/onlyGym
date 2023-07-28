@@ -35,7 +35,7 @@ class _MainScreenState extends State<MainScreen> {
             orElse: () => Container(),
             loading: () => Scaffold(body: PjLoader()),
             loaded: (user) => AutoTabsScaffold(
-                routes: const [DiaryRoute(), ExercisesRoute(), AthletesRoute(), ProfileRoute()],
+                routes:  [DiaryRoute(), ExercisesRoute(), AthletesRoute(), ProfileRoute()],
                 bottomNavigationBuilder: (_, tabsRouter) {
                   return BottomNavigationBar(
                     backgroundColor: PjColors.white,

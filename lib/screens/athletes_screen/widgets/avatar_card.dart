@@ -29,6 +29,7 @@ class _AvatarCardState extends State<AvatarCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: (){widget.callback();},
       behavior: HitTestBehavior.translucent,
       child: Container(
         width: 334.w,

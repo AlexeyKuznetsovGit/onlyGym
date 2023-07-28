@@ -10,6 +10,7 @@ import 'package:onlygym/project_widgets/error_dialog.dart';
 import 'package:onlygym/project_widgets/pj_appbar.dart';
 import 'package:onlygym/project_widgets/pj_loader.dart';
 import 'package:onlygym/project_widgets/pj_text_field.dart';
+import 'package:onlygym/router/router.dart';
 import 'package:onlygym/screens/athletes_screen/widgets/avatar_card.dart';
 import 'cubit/cb_athletes_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -89,7 +90,9 @@ class _AthletesScreenState extends State<AthletesScreen> {
         Expanded(
           child: ListView.separated(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.w),
-            itemBuilder: (context, index) => AvatarCard(callback: () {}),
+            itemBuilder: (context, index) => AvatarCard(callback: () {
+              context.router.push(ProfileRoute(athleteId: 5));
+            }),
             itemCount: 24,
             separatorBuilder: (context, index) => SizedBox(
               height: 12.w,

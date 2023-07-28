@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
@@ -11,8 +12,9 @@ import 'package:onlygym/screens/profile_screen/cubit/cb_profile_screen.dart';
 
 class BottomSheetEditingWidget extends StatefulWidget {
   final CbProfileScreen cubit;
+  final int? athleteId;
 
-  BottomSheetEditingWidget({Key? key, required this.cubit}) : super(key: key);
+  BottomSheetEditingWidget({Key? key, required this.cubit, this.athleteId}) : super(key: key);
 
   @override
   State<BottomSheetEditingWidget> createState() => _BottomSheetEditingWidgetState();
@@ -33,8 +35,22 @@ class _BottomSheetEditingWidgetState extends State<BottomSheetEditingWidget> {
 
   @override
   void initState() {
-    data[2] = formatDateToISO(SgAppData.instance.user.dateBirth!);
-    controllers = generateTextEditingControllers(data);
+    if (widget.athleteId == null) {
+      data[2] = formatDateToISO(SgAppData.instance.user.dateBirth!);
+      controllers = generateTextEditingControllers(data);
+    } else {
+      titles.clear();
+      data.clear();
+
+      titles = ["Дата рождения", "Вес, кг", 'Рост, см'];
+      data = [
+        formatDateToISO(widget.cubit.user.dateBirth!),
+        widget.cubit.user.parameters![1].value.toString(),
+        widget.cubit.user.parameters![0].value.toString(),
+      ];
+      controllers = generateTextEditingControllers(data);
+    }
+
     super.initState();
   }
 
@@ -48,7 +64,7 @@ class _BottomSheetEditingWidgetState extends State<BottomSheetEditingWidget> {
         },
         child: SingleChildScrollView(
           child: Container(
-            height: 560.h,
+            height: widget.athleteId == null ? 560.h : 414.h,
             decoration: BoxDecoration(
                 color: PjColors.white,
                 borderRadius: BorderRadius.only(
@@ -98,30 +114,47 @@ class _BottomSheetEditingWidgetState extends State<BottomSheetEditingWidget> {
                     height: 20.h,
                   ),
                   ...List.generate(
-                      5,
+                      data.length,
                       (index) => Padding(
                             padding: EdgeInsets.only(bottom: 20.h),
                             child: PjTextField(
-                              suffixText: index == 3
+                              suffixText: index == data.length - 2
                                   ? 'кг'
-                                  : index == 4
+                                  : index == data.length - 1
                                       ? 'см'
                                       : null,
-                              type: getPjTextFieldStyle(index),
+                              type: getPjTextFieldStyle(index, widget.athleteId),
                               title: titles[index],
                               controller: controllers[index],
                             ),
                           )),
+                  if (isPressed && _formKeyEdit.currentState != null && !_formKeyEdit.currentState!.validate()) ...[
+                    Text(
+                      'Пожалуйста, заполните/измените отмеченные поля',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                  ],
                   PjFilledButton(
                     text: 'Применить изменения',
                     onPressed: () {
                       if (_formKeyEdit.currentState!.validate()) {
-                        widget.cubit.editProfile(
-                            firstName: controllers[0].text,
-                            lastName: controllers[1].text,
-                            dateBirth: controllers[2].text,
-                            weight: double.parse(controllers[3].text),
-                            height: double.parse(controllers[4].text));
+                        widget.athleteId == null
+                            ? widget.cubit.editProfile(
+                                firstName: controllers[0].text,
+                                lastName: controllers[1].text,
+                                dateBirth: controllers[2].text,
+                                weight: double.parse(controllers[3].text),
+                                height: double.parse(controllers[4].text))
+                            : widget.cubit.editProfile(
+                                firstName: widget.cubit.user.firstName!,
+                                lastName: widget.cubit.user.lastName!,
+                                dateBirth: controllers[0].text,
+                                weight: double.parse(controllers[1].text),
+                                height: double.parse(controllers[2].text),
+                                athleteId: widget.athleteId);
                       } else {
                         setState(() {
                           isPressed = true;
@@ -139,7 +172,7 @@ class _BottomSheetEditingWidgetState extends State<BottomSheetEditingWidget> {
   }
 
   List<TextEditingController> generateTextEditingControllers(List<String> data) {
-    return List<TextEditingController>.generate(5, (index) => TextEditingController(text: data[index]));
+    return List<TextEditingController>.generate(data.length, (index) => TextEditingController(text: data[index]));
   }
 
   String formatDateToISO(String inputDate) {
@@ -156,13 +189,21 @@ class _BottomSheetEditingWidgetState extends State<BottomSheetEditingWidget> {
     }
   }
 
-  PjTextFieldStyle getPjTextFieldStyle(int index) {
-    if (index < 2) {
-      return PjTextFieldStyle.text;
-    } else if (index == 2) {
-      return PjTextFieldStyle.date;
+  PjTextFieldStyle getPjTextFieldStyle(int index, int? athleteId) {
+    if (athleteId == null) {
+      if (index < 2) {
+        return PjTextFieldStyle.text;
+      } else if (index == 2) {
+        return PjTextFieldStyle.date;
+      } else {
+        return PjTextFieldStyle.params;
+      }
     } else {
-      return PjTextFieldStyle.params;
+      if (index == 0) {
+        return PjTextFieldStyle.date;
+      } else {
+        return PjTextFieldStyle.params;
+      }
     }
   }
 }

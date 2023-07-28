@@ -20,21 +20,24 @@ mixin _$StProfileScreen {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
-    required TResult Function() loaded,
+    required TResult Function(UserModel user) loaded,
+    required TResult Function() init,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
-    TResult? Function()? loaded,
+    TResult? Function(UserModel user)? loaded,
+    TResult? Function()? init,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
-    TResult Function()? loaded,
+    TResult Function(UserModel user)? loaded,
+    TResult Function()? init,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -43,6 +46,7 @@ mixin _$StProfileScreen {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Init value) init,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +54,7 @@ mixin _$StProfileScreen {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Init value)? init,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +62,7 @@ mixin _$StProfileScreen {
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Init value)? init,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -119,7 +125,8 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
-    required TResult Function() loaded,
+    required TResult Function(UserModel user) loaded,
+    required TResult Function() init,
   }) {
     return loading();
   }
@@ -129,7 +136,8 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
-    TResult? Function()? loaded,
+    TResult? Function(UserModel user)? loaded,
+    TResult? Function()? init,
   }) {
     return loading?.call();
   }
@@ -139,7 +147,8 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
-    TResult Function()? loaded,
+    TResult Function(UserModel user)? loaded,
+    TResult Function()? init,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -154,6 +163,7 @@ class _$_Loading implements _Loading {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Init value) init,
   }) {
     return loading(this);
   }
@@ -164,6 +174,7 @@ class _$_Loading implements _Loading {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Init value)? init,
   }) {
     return loading?.call(this);
   }
@@ -174,6 +185,7 @@ class _$_Loading implements _Loading {
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Init value)? init,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -259,7 +271,8 @@ class _$_Error implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
-    required TResult Function() loaded,
+    required TResult Function(UserModel user) loaded,
+    required TResult Function() init,
   }) {
     return error(this.error, message);
   }
@@ -269,7 +282,8 @@ class _$_Error implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
-    TResult? Function()? loaded,
+    TResult? Function(UserModel user)? loaded,
+    TResult? Function()? init,
   }) {
     return error?.call(this.error, message);
   }
@@ -279,7 +293,8 @@ class _$_Error implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
-    TResult Function()? loaded,
+    TResult Function(UserModel user)? loaded,
+    TResult Function()? init,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -294,6 +309,7 @@ class _$_Error implements _Error {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Init value) init,
   }) {
     return error(this);
   }
@@ -304,6 +320,7 @@ class _$_Error implements _Error {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Init value)? init,
   }) {
     return error?.call(this);
   }
@@ -314,6 +331,7 @@ class _$_Error implements _Error {
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Init value)? init,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -337,6 +355,8 @@ abstract class _Error implements StProfileScreen {
 abstract class _$$_LoadedCopyWith<$Res> {
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({UserModel user});
 }
 
 /// @nodoc
@@ -345,35 +365,60 @@ class __$$_LoadedCopyWithImpl<$Res>
     implements _$$_LoadedCopyWith<$Res> {
   __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(_$_Loaded(
+      null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserModel,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded();
+  const _$_Loaded(this.user);
+
+  @override
+  final UserModel user;
 
   @override
   String toString() {
-    return 'StProfileScreen.loaded()';
+    return 'StProfileScreen.loaded(user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Loaded);
+        (other.runtimeType == runtimeType &&
+            other is _$_Loaded &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
-    required TResult Function() loaded,
+    required TResult Function(UserModel user) loaded,
+    required TResult Function() init,
   }) {
-    return loaded();
+    return loaded(user);
   }
 
   @override
@@ -381,9 +426,10 @@ class _$_Loaded implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
-    TResult? Function()? loaded,
+    TResult? Function(UserModel user)? loaded,
+    TResult? Function()? init,
   }) {
-    return loaded?.call();
+    return loaded?.call(user);
   }
 
   @override
@@ -391,11 +437,12 @@ class _$_Loaded implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
-    TResult Function()? loaded,
+    TResult Function(UserModel user)? loaded,
+    TResult Function()? init,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(user);
     }
     return orElse();
   }
@@ -406,6 +453,7 @@ class _$_Loaded implements _Loaded {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Init value) init,
   }) {
     return loaded(this);
   }
@@ -416,6 +464,7 @@ class _$_Loaded implements _Loaded {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Init value)? init,
   }) {
     return loaded?.call(this);
   }
@@ -426,6 +475,7 @@ class _$_Loaded implements _Loaded {
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Init value)? init,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -436,5 +486,122 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements StProfileScreen {
-  const factory _Loaded() = _$_Loaded;
+  const factory _Loaded(final UserModel user) = _$_Loaded;
+
+  UserModel get user;
+  @JsonKey(ignore: true)
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_InitCopyWith<$Res> {
+  factory _$$_InitCopyWith(_$_Init value, $Res Function(_$_Init) then) =
+      __$$_InitCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_InitCopyWithImpl<$Res>
+    extends _$StProfileScreenCopyWithImpl<$Res, _$_Init>
+    implements _$$_InitCopyWith<$Res> {
+  __$$_InitCopyWithImpl(_$_Init _value, $Res Function(_$_Init) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_Init implements _Init {
+  const _$_Init();
+
+  @override
+  String toString() {
+    return 'StProfileScreen.init()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Init);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function(int? error, String? message) error,
+    required TResult Function(UserModel user) loaded,
+    required TResult Function() init,
+  }) {
+    return init();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loading,
+    TResult? Function(int? error, String? message)? error,
+    TResult? Function(UserModel user)? loaded,
+    TResult? Function()? init,
+  }) {
+    return init?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(int? error, String? message)? error,
+    TResult Function(UserModel user)? loaded,
+    TResult Function()? init,
+    required TResult orElse(),
+  }) {
+    if (init != null) {
+      return init();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Init value) init,
+  }) {
+    return init(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Init value)? init,
+  }) {
+    return init?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Init value)? init,
+    required TResult orElse(),
+  }) {
+    if (init != null) {
+      return init(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Init implements StProfileScreen {
+  const factory _Init() = _$_Init;
 }

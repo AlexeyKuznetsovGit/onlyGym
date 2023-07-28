@@ -10,9 +10,9 @@ import 'package:onlygym/project_widgets/pj_buttons/pj_long_button.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 
 class BottomSheetPhotoWidget extends StatefulWidget {
-  final bool deletePhoto;
+  final bool changePhoto;
 
-  BottomSheetPhotoWidget({Key? key, required this.deletePhoto}) : super(key: key);
+  BottomSheetPhotoWidget({Key? key, required this.changePhoto}) : super(key: key);
 
   @override
   State<BottomSheetPhotoWidget> createState() => _BottomSheetPhotoWidgetState();
@@ -76,7 +76,6 @@ class _BottomSheetPhotoWidgetState extends State<BottomSheetPhotoWidget> {
             SizedBox(
               height: 20.h,
             ),
-            if (!widget.deletePhoto) ...[
               PjLongButton(
                 text: 'Сделать снимок',
                 icon: CustomIcons.plus,
@@ -96,7 +95,7 @@ class _BottomSheetPhotoWidgetState extends State<BottomSheetPhotoWidget> {
                 height: 20.h,
               ),
               PjLongButton(
-                text: 'Выбрать фото',
+                text: widget.changePhoto ? 'Изменить фото' :'Выбрать фото',
                 icon: CustomIcons.photos,
                 controller: secondBtnController,
                 onPressed: () async {
@@ -112,27 +111,7 @@ class _BottomSheetPhotoWidgetState extends State<BottomSheetPhotoWidget> {
                   }
                 },
               ),
-            ] else ...[
-              PjLongButton(
-                text: 'Удалить фото',
-                icon: CustomIcons.trash,
-                controller: firstBtnController,
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              PjLongButton(
-                text: 'Отмена',
-                icon: CustomIcons.cross,
-                controller: secondBtnController,
-                onPressed: () async {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
+
             SizedBox(
               height: 20.h,
             ),

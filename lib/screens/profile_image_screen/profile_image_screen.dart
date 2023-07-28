@@ -39,19 +39,11 @@ class ProfileImageScreen extends StatefulWidget implements AutoRouteWrapper {
 
 class _ProfileImageScreenState extends State<ProfileImageScreen> {
   int selectedIndex = 1;
-  List<String> images = [];
-  double size = 98.w;
-  bool isAddedPhoto = false;
 
   @override
   void initState() {
     if (!widget.isRegistration) {
-      if (SgAppData.instance.user.photos!.isNotEmpty) {
-        for (PhotosModel photo in SgAppData.instance.user.photos!) {
-          images.add("${PjUtils.imageUrl}${photo.url!}");
-        }
-      }
-      selectedIndex = getIndex(images.length);
+      selectedIndex = getIndex();
     }
     super.initState();
   }
@@ -115,204 +107,136 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
               crossAxisCount: 3,
               // Количество колонок
               childAspectRatio: 98.w / 98.h,
-              children: widget.isRegistration
-                  ? List.generate(9, (index) {
-                      return index == 0 && SgAppData.instance.avatar == null
-                          ? GestureDetector(
-                              onTap: () async {
-                                setState(() {
-                                  selectedIndex = index;
-                                });
-                                String? path = await showModalBottomSheet(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20.r),
-                                      topRight: Radius.circular(20.r),
-                                    ),
-                                  ),
-                                  isScrollControlled: true,
-                                  barrierColor: PjColors.black.withOpacity(0.5),
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return BottomSheetPhotoWidget(
-                                      deletePhoto: false,
-                                    );
-                                  },
-                                );
-                                if (path != null) {
-                                  setState(() {
-                                    SgAppData.instance.localAvatar = null;
-                                    SgAppData.instance.avatar = path;
-                                  });
-                                } else {
-                                  setState(() {
-                                    selectedIndex = 1;
-                                    SgAppData.instance.localAvatar = getIcon(selectedIndex);
-                                  });
-                                }
-                              },
-                              child: Icon(
-                                getIcon(index),
-                                size: 98.w,
-                                color: PjColors.neonBlue,
+              children: List.generate(9, (index) {
+                return index == 0 && SgAppData.instance.avatar == null
+                    ? GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedIndex = index;
+                          });
+                        },
+                        onLongPress: () async {
+                          setState(() {
+                            selectedIndex = index;
+                          });
+                          String? path = await showModalBottomSheet(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.r),
+                                topRight: Radius.circular(20.r),
                               ),
-                            )
-                          : index == 0 && SgAppData.instance.avatar != null
-                              ? GestureDetector(
-                                  onTap: () async {
-                                    setState(() {
-                                      selectedIndex = index;
-                                    });
-                                    bool? res = await showModalBottomSheet(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20.r),
-                                          topRight: Radius.circular(20.r),
-                                        ),
-                                      ),
-                                      isScrollControlled: true,
-                                      barrierColor: PjColors.black.withOpacity(0.5),
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return BottomSheetPhotoWidget(
-                                          deletePhoto: true,
-                                        );
-                                      },
-                                    );
-                                    if (res != null && res) {
-                                      SgAppData.instance.avatar = null;
-                                      setState(() {
-                                        selectedIndex = 1;
-                                        SgAppData.instance.localAvatar = getIcon(selectedIndex);
-                                      });
-                                    }
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100.r),
-                                    child: Image.file(
+                            ),
+                            isScrollControlled: true,
+                            barrierColor: PjColors.black.withOpacity(0.5),
+                            context: context,
+                            builder: (BuildContext context) {
+                              return BottomSheetPhotoWidget(
+                                changePhoto: false,
+                              );
+                            },
+                          );
+                          if (path != null) {
+                            setState(() {
+                              SgAppData.instance.localAvatar = null;
+                              SgAppData.instance.avatar = path;
+                            });
+                          } else {
+                            setState(() {
+                              selectedIndex = 1;
+                              SgAppData.instance.localAvatar = getIcon(selectedIndex);
+                            });
+                          }
+                        },
+                        child: Icon(
+                          getIcon(index),
+                          size: 98.w,
+                          color: PjColors.neonBlue,
+                        ),
+                      )
+                    : index == 0 && SgAppData.instance.avatar != null
+                        ? GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedIndex = index;
+                              });
+                              /*else {
+                                setState(() {
+                                  selectedIndex = 1;
+                                  SgAppData.instance.localAvatar = getIcon(selectedIndex);
+                                });
+                              }*/
+                              /*if (res != null && res) {
+                                SgAppData.instance.avatar = null;
+                                setState(() {
+                                  selectedIndex = 1;
+                                  SgAppData.instance.localAvatar = getIcon(selectedIndex);
+                                });
+                              }*/
+                            },
+                            onLongPress: () async {
+                              setState(() {
+                                selectedIndex = index;
+                              });
+                              String? path = await showModalBottomSheet(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20.r),
+                                    topRight: Radius.circular(20.r),
+                                  ),
+                                ),
+                                isScrollControlled: true,
+                                barrierColor: PjColors.black.withOpacity(0.5),
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return BottomSheetPhotoWidget(
+                                    changePhoto: true,
+                                  );
+                                },
+                              );
+                              if (path != null) {
+                                setState(() {
+                                  SgAppData.instance.localAvatar = null;
+                                  SgAppData.instance.avatar = path;
+                                });
+                              }
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100.r),
+                              child: SgAppData.instance.avatar!.contains('http')
+                                  ? Image.network(
+                                      SgAppData.instance.avatar!,
+                                      width: 98.w,
+                                      height: 98.h,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.file(
                                       File(SgAppData.instance.avatar!),
                                       width: 98.w,
                                       height: 98.h,
                                       fit: BoxFit.cover,
                                     ),
-                                  ))
-                              : index > 0 && index < 4
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          selectedIndex = index;
-                                          SgAppData.instance.localAvatar = getIcon(index);
-                                        });
-                                      },
-                                      child: Icon(
-                                        getIcon(index),
-                                        size: 98.w,
-                                        color: index == selectedIndex ? PjColors.neonBlue : PjColors.lightBlue,
-                                      ),
-                                    )
-                                  : Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: PjColors.lightBlue,
-                                      ),
-                                    );
-                    })
-                  : List.generate(
-                      images.length + 4,
-                      (index) => index == 0
-                          ? GestureDetector(
-                              onTap: () async {
-                                setState(() {
-                                  selectedIndex = index;
-                                });
-                                String? path = await showModalBottomSheet(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20.r),
-                                      topRight: Radius.circular(20.r),
-                                    ),
-                                  ),
-                                  isScrollControlled: true,
-                                  barrierColor: PjColors.black.withOpacity(0.5),
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return BottomSheetPhotoWidget(
-                                      deletePhoto: false,
-                                    );
-                                  },
-                                );
-                                if (path != null) {
+                            ))
+                        : index > 0 && index < 4
+                            ? GestureDetector(
+                                onTap: () {
                                   setState(() {
-                                    isAddedPhoto = true;
-                                    images.add(path);
+                                    selectedIndex = index;
+                                    SgAppData.instance.localAvatar = getIcon(index);
                                   });
-                                }
-                              },
-                              child: Icon(
-                                getIcon(index),
-                                size: 98.w,
-                                color: PjColors.neonBlue,
-                              ),
-                            )
-                          : index < images.length + 1
-                              ? GestureDetector(
-                                  onTap: () async {
-                                    setState(() {
-                                      selectedIndex = index;
-                                    });
-                                    bool? res = await showModalBottomSheet(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20.r),
-                                          topRight: Radius.circular(20.r),
-                                        ),
-                                      ),
-                                      isScrollControlled: true,
-                                      barrierColor: PjColors.black.withOpacity(0.5),
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return BottomSheetPhotoWidget(
-                                          deletePhoto: true,
-                                        );
-                                      },
-                                    );
-                                    if (res != null && res) {
-                                      setState(() {
-                                        images.removeAt(index - 1);
-                                      });
-                                    }
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100.r),
-                                    child: images[index - 1].contains('http')
-                                        ? Image.network(
-                                            images[index - 1],
-                                            width: selectedIndex == index ? size : 98.w,
-                                            height: selectedIndex == index ? size : 98.h,
-                                            fit: BoxFit.cover,
-                                          )
-                                        : Image.file(
-                                            File(images[index - 1]),
-                                            width: selectedIndex == index ? size : 98.w,
-                                            height: selectedIndex == index ? size : 98.h,
-                                            fit: BoxFit.cover,
-                                          ),
-                                  ),
-                                )
-                              : GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      print(selectedIndex > images.length);
-                                      selectedIndex = index;
-                                      SgAppData.instance.localAvatar = getIcon(index - 1, false);
-                                    });
-                                  },
-                                  child: Icon(
-                                    getIcon(index - 1, false),
-                                    size: 98.w,
-                                    color: index == selectedIndex ? PjColors.neonBlue : PjColors.lightBlue,
-                                  ),
-                                )),
+                                },
+                                child: Icon(
+                                  getIcon(index),
+                                  size: 98.w,
+                                  color: index == selectedIndex ? PjColors.neonBlue : PjColors.lightBlue,
+                                ),
+                              )
+                            : Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: PjColors.lightBlue,
+                                ),
+                              );
+              }),
             ),
           ),
           SizedBox(
@@ -320,25 +244,23 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
           ),
           PjFilledButton(
             text: widget.isRegistration ? 'Продолжить' : 'Сохранить изменения',
-            onPressed: widget.isRegistration
-                ? () {
-                    if (selectedIndex == 0 && SgAppData.instance.avatar != null) {
-                      SgAppData.instance.localAvatar = null;
-                      print('Загружаем аватар');
-                      log(SgAppData.instance.avatar.toString(), name: 'avatar');
-                      log(SgAppData.instance.localAvatar.toString(), name: 'LocalAvatar');
-                    } else {
-                      print('Загружаем локальный аватар');
-                      print('AVATAR: ${SgAppData.instance.localAvatar?.codePoint.toRadixString(16)}');
-                      GetStorage().write('localAvatar', SgAppData.instance.localAvatar?.codePoint.toRadixString(16));
-                      log(SgAppData.instance.avatar.toString(), name: 'avatar');
-                      log(SgAppData.instance.localAvatar.toString(), name: 'LocalAvatar');
-                    }
-
-                    context.router.push(BirthdayRoute());
-                  }
-                : () {
-                    if (selectedIndex < images.length) {
+            onPressed: () {
+              if (selectedIndex == 0 && SgAppData.instance.avatar != null) {
+                SgAppData.instance.localAvatar = null;
+                GetStorage().remove('localAvatar');
+                if (!widget.isRegistration) {
+                  context.read<CbProfileImageScreen>().addAvatar(image: SgAppData.instance.avatar!);
+                }
+              } else {
+                GetStorage().write('localAvatar', SgAppData.instance.localAvatar?.codePoint.toRadixString(16));
+                if (!widget.isRegistration) {
+                  context.read<CbProfileImageScreen>().emit(StProfileImageScreen.addPhotoSuccess());
+                }
+              }
+              if (widget.isRegistration) {
+                context.router.push(BirthdayRoute());
+              }
+              /*if (selectedIndex < images.length) {
                       SgAppData.instance.localAvatar = null;
                       print('Загружаем аватар');
                       GetStorage().remove('localAvatar');
@@ -349,64 +271,54 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
                       context.read<CbProfileImageScreen>().emit(StProfileImageScreen.addPhotoSuccess());
                       log(SgAppData.instance.avatar.toString(), name: 'avatar');
                       log(SgAppData.instance.localAvatar.toString(), name: 'LocalAvatar');
-                    }
-                  },
+                    }*/
+            },
           )
         ],
       ),
     );
   }
 
-  IconData getIcon(int index, [bool isRegister = true]) {
+  IconData getIcon(int index) {
     late IconData icon;
-    if (isRegister) {
-      switch (index) {
-        case 0:
-          {
-            icon = CustomIcons.add_photo;
-            break;
-          }
-        case 1:
-          {
-            icon = CustomIcons.avatar;
+    switch (index) {
+      case 0:
+        {
+          icon = CustomIcons.add_photo;
+          break;
+        }
+      case 1:
+        {
+          icon = CustomIcons.avatar;
 
-            break;
-          }
-        case 2:
-          {
-            icon = CustomIcons.sports_kettlebell;
+          break;
+        }
+      case 2:
+        {
+          icon = CustomIcons.sports_kettlebell;
 
-            break;
-          }
-        case 3:
-          {
-            icon = CustomIcons.dumbbell;
+          break;
+        }
+      case 3:
+        {
+          icon = CustomIcons.dumbbell;
 
-            break;
-          }
-      }
-    } else {
-      if (index == images.length) {
-        icon = CustomIcons.avatar;
-      } else if (index == images.length + 1) {
-        icon = CustomIcons.sports_kettlebell;
-      } else if (index == images.length + 2) {
-        icon = CustomIcons.dumbbell;
-      }
+          break;
+        }
     }
 
     return icon;
   }
 
-  int getIndex(int userPhotoLength) {
+  int getIndex() {
     late int index;
     if (SgAppData.instance.localAvatar != null) {
       if (SgAppData.instance.localAvatar == CustomIcons.avatar) {
-        index = userPhotoLength + 1;
+        index = 1;
       } else if (SgAppData.instance.localAvatar == CustomIcons.sports_kettlebell) {
-        index = userPhotoLength + 2;
+        index = 2;
       } else if (SgAppData.instance.localAvatar == CustomIcons.dumbbell) {
-        index = userPhotoLength + 3;
+        index = 3;
       }
     } else {
       index = 0;
@@ -414,3 +326,102 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
     return index;
   }
 }
+
+///Todo вариант для отображения большого кол-ва фоток
+/*
+List.generate(
+images.length + 4,
+(index) => index == 0
+? GestureDetector(
+onTap: () async {
+setState(() {
+selectedIndex = index;
+});
+String? path = await showModalBottomSheet(
+shape: RoundedRectangleBorder(
+borderRadius: BorderRadius.only(
+topLeft: Radius.circular(20.r),
+topRight: Radius.circular(20.r),
+),
+),
+isScrollControlled: true,
+barrierColor: PjColors.black.withOpacity(0.5),
+context: context,
+builder: (BuildContext context) {
+return BottomSheetPhotoWidget(
+deletePhoto: false,
+);
+},
+);
+if (path != null) {
+setState(() {
+isAddedPhoto = true;
+images.add(path);
+});
+}
+},
+child: Icon(
+getIcon(index),
+size: 98.w,
+color: PjColors.neonBlue,
+),
+)
+    : index < images.length + 1
+? GestureDetector(
+onTap: () async {
+setState(() {
+selectedIndex = index;
+});
+bool? res = await showModalBottomSheet(
+shape: RoundedRectangleBorder(
+borderRadius: BorderRadius.only(
+topLeft: Radius.circular(20.r),
+topRight: Radius.circular(20.r),
+),
+),
+isScrollControlled: true,
+barrierColor: PjColors.black.withOpacity(0.5),
+context: context,
+builder: (BuildContext context) {
+return BottomSheetPhotoWidget(
+deletePhoto: true,
+);
+},
+);
+if (res != null && res) {
+setState(() {
+images.removeAt(index - 1);
+});
+}
+},
+child: ClipRRect(
+borderRadius: BorderRadius.circular(100.r),
+child: images[index - 1].contains('http')
+? Image.network(
+images[index - 1],
+width: selectedIndex == index ? size : 98.w,
+height: selectedIndex == index ? size : 98.h,
+fit: BoxFit.cover,
+)
+    : Image.file(
+File(images[index - 1]),
+width: selectedIndex == index ? size : 98.w,
+height: selectedIndex == index ? size : 98.h,
+fit: BoxFit.cover,
+),
+),
+)
+    : GestureDetector(
+onTap: () {
+setState(() {
+print(selectedIndex > images.length);
+selectedIndex = index;
+SgAppData.instance.localAvatar = getIcon(index - 1, false);
+});
+},
+child: Icon(
+getIcon(index - 1, false),
+size: 98.w,
+color: index == selectedIndex ? PjColors.neonBlue : PjColors.lightBlue,
+),
+))*/
