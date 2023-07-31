@@ -16,9 +16,15 @@ abstract class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     MyTargetRoute.name: (routeData) {
+      final args = routeData.argsAs<MyTargetRouteArgs>(
+          orElse: () => const MyTargetRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const MyTargetScreen()),
+        child: WrappedRoute(
+            child: MyTargetScreen(
+          key: args.key,
+          user: args.user,
+        )),
       );
     },
     ProfileImageRoute.name: (routeData) {
@@ -114,16 +120,40 @@ abstract class _$AppRouter extends RootStackRouter {
 
 /// generated route for
 /// [MyTargetScreen]
-class MyTargetRoute extends PageRouteInfo<void> {
-  const MyTargetRoute({List<PageRouteInfo>? children})
-      : super(
+class MyTargetRoute extends PageRouteInfo<MyTargetRouteArgs> {
+  MyTargetRoute({
+    Key? key,
+    UserModel? user,
+    List<PageRouteInfo>? children,
+  }) : super(
           MyTargetRoute.name,
+          args: MyTargetRouteArgs(
+            key: key,
+            user: user,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'MyTargetRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<MyTargetRouteArgs> page =
+      PageInfo<MyTargetRouteArgs>(name);
+}
+
+class MyTargetRouteArgs {
+  const MyTargetRouteArgs({
+    this.key,
+    this.user,
+  });
+
+  final Key? key;
+
+  final UserModel? user;
+
+  @override
+  String toString() {
+    return 'MyTargetRouteArgs{key: $key, user: $user}';
+  }
 }
 
 /// generated route for

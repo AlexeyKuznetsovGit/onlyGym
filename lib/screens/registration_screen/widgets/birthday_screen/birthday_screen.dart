@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
+import 'package:onlygym/project_utils/pj_utils.dart';
 import 'package:onlygym/project_utils/singletons/sg_app_data.dart';
 import 'package:onlygym/project_widgets/error_dialog.dart';
 import 'package:onlygym/project_widgets/pj_appbar.dart';
@@ -138,18 +139,5 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
         ),
       ),
     );
-  }
-  String formatDateToISO(String inputDate) {
-    DateFormat inputDateFormat = DateFormat("dd.MM.yyyy");
-    DateFormat outputDateFormat = DateFormat("yyyy-MM-dd");
-
-    try {
-      DateTime date = inputDateFormat.parseStrict(inputDate);
-      String formattedDate = outputDateFormat.format(date);
-      return formattedDate;
-    } catch (e) {
-      print('Ошибка при преобразовании даты: $e');
-      return '';
-    }
   }
 }

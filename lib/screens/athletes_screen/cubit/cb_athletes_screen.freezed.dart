@@ -20,21 +20,21 @@ mixin _$StAthletesScreen {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
-    required TResult Function() loaded,
+    required TResult Function(List<UserModel> user) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
-    TResult? Function()? loaded,
+    TResult? Function(List<UserModel> user)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
-    TResult Function()? loaded,
+    TResult Function(List<UserModel> user)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -119,7 +119,7 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
-    required TResult Function() loaded,
+    required TResult Function(List<UserModel> user) loaded,
   }) {
     return loading();
   }
@@ -129,7 +129,7 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
-    TResult? Function()? loaded,
+    TResult? Function(List<UserModel> user)? loaded,
   }) {
     return loading?.call();
   }
@@ -139,7 +139,7 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
-    TResult Function()? loaded,
+    TResult Function(List<UserModel> user)? loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -259,7 +259,7 @@ class _$_Error implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
-    required TResult Function() loaded,
+    required TResult Function(List<UserModel> user) loaded,
   }) {
     return error(this.error, message);
   }
@@ -269,7 +269,7 @@ class _$_Error implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
-    TResult? Function()? loaded,
+    TResult? Function(List<UserModel> user)? loaded,
   }) {
     return error?.call(this.error, message);
   }
@@ -279,7 +279,7 @@ class _$_Error implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
-    TResult Function()? loaded,
+    TResult Function(List<UserModel> user)? loaded,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -337,6 +337,8 @@ abstract class _Error implements StAthletesScreen {
 abstract class _$$_LoadedCopyWith<$Res> {
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<UserModel> user});
 }
 
 /// @nodoc
@@ -345,35 +347,65 @@ class __$$_LoadedCopyWithImpl<$Res>
     implements _$$_LoadedCopyWith<$Res> {
   __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(_$_Loaded(
+      null == user
+          ? _value._user
+          : user // ignore: cast_nullable_to_non_nullable
+              as List<UserModel>,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded();
+  const _$_Loaded(final List<UserModel> user) : _user = user;
+
+  final List<UserModel> _user;
+  @override
+  List<UserModel> get user {
+    if (_user is EqualUnmodifiableListView) return _user;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_user);
+  }
 
   @override
   String toString() {
-    return 'StAthletesScreen.loaded()';
+    return 'StAthletesScreen.loaded(user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Loaded);
+        (other.runtimeType == runtimeType &&
+            other is _$_Loaded &&
+            const DeepCollectionEquality().equals(other._user, _user));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_user));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
-    required TResult Function() loaded,
+    required TResult Function(List<UserModel> user) loaded,
   }) {
-    return loaded();
+    return loaded(user);
   }
 
   @override
@@ -381,9 +413,9 @@ class _$_Loaded implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
-    TResult? Function()? loaded,
+    TResult? Function(List<UserModel> user)? loaded,
   }) {
-    return loaded?.call();
+    return loaded?.call(user);
   }
 
   @override
@@ -391,11 +423,11 @@ class _$_Loaded implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
-    TResult Function()? loaded,
+    TResult Function(List<UserModel> user)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(user);
     }
     return orElse();
   }
@@ -436,5 +468,10 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements StAthletesScreen {
-  const factory _Loaded() = _$_Loaded;
+  const factory _Loaded(final List<UserModel> user) = _$_Loaded;
+
+  List<UserModel> get user;
+  @JsonKey(ignore: true)
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }

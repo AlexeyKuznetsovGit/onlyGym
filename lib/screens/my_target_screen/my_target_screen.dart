@@ -5,6 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:onlygym/models/user_model.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/singletons/sg_app_data.dart';
 import 'package:onlygym/project_widgets/error_dialog.dart';
@@ -21,7 +22,8 @@ import 'package:onlygym/screens/my_target_screen/widgets/text_field_fill.dart';
 
 @RoutePage()
 class MyTargetScreen extends StatefulWidget implements AutoRouteWrapper {
-  const MyTargetScreen({Key? key}) : super(key: key);
+  final UserModel? user;
+  const MyTargetScreen({Key? key, this.user}) : super(key: key);
 
   @override
   State<MyTargetScreen> createState() => _MyTargetScreenState();
@@ -43,7 +45,7 @@ class _MyTargetScreenState extends State<MyTargetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Container(
+      bottomNavigationBar: widget.user == null ? Container(
         height: 48.h,
         margin: EdgeInsets.only(bottom: 20.h),
         alignment: Alignment.center,
@@ -54,7 +56,7 @@ class _MyTargetScreenState extends State<MyTargetScreen> {
           type: PjTextButtonType.left,
           onPressed: () {},
         ),
-      ),
+      ) : null,
       appBar: PjAppBar(
         leading: () {
           context.router.pop();
@@ -89,16 +91,16 @@ class _MyTargetScreenState extends State<MyTargetScreen> {
         physics: ClampingScrollPhysics(),
         child: Column(
           children: [
-            const PjText(
-              "Моя цель",
+            PjText(
+              widget.user != null ? "Цель атлета" : "Моя цель",
               style: PjTextStyle.h1,
               color: PjColors.neonBlue,
             ),
             SizedBox(
               height: 10.h,
             ),
-            const PjText(
-              "Выберите свою основную цель",
+            PjText(
+              "Выберите${widget.user != null ? " " :" свою"} основную цель",
               align: TextAlign.center,
               style: PjTextStyle.regular,
             ),
@@ -140,9 +142,14 @@ class _MyTargetScreenState extends State<MyTargetScreen> {
               height: 30.h,
             ),
             PjFilledButton(
-                text: "Зарегистрироваться",
+                text: widget.user != null ? "Добавить атлета" : "Зарегистрироваться",
                 onPressed: () {
                   if(selectedOption != ''){
+                    if(widget.user != null){
+                      widget.user!.goal = selectedOption;
+                      context.read<CbMyTargetScreen>().createNewAthlete(widget.user!);
+                      return;
+                    }
                     SgAppData.instance.user.goal = selectedOption;
                     log(selectedOption, name: 'selectedOption');
                     context.router.push(IdConfirmationRoute());

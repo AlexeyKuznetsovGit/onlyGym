@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onlygym/models/user_model.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
@@ -33,6 +34,14 @@ class AthletesScreen extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _AthletesScreenState extends State<AthletesScreen> {
+  TextEditingController controller = TextEditingController();
+
+  @override
+  void didUpdateWidget(covariant AthletesScreen oldWidget) {
+    print(123);
+    super.didUpdateWidget(oldWidget);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,30 +82,46 @@ class _AthletesScreenState extends State<AthletesScreen> {
         builder: (context, state) => state.maybeWhen(
           orElse: () => Container(),
           loading: () => const PjLoader(),
-          loaded: () => _buildBodyContent(context),
+          loaded: (users) => _buildBodyContent(context, users),
         ),
       ),
     );
   }
 
-  Widget _buildBodyContent(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 10.h,
-        ),
-        PjTextField(title: 'Поиск атлетов', type: PjTextFieldStyle.text, controller: TextEditingController()),
-        Expanded(
-          child: ListView.separated(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.w),
-            itemBuilder: (context, index) => AvatarCard(callback: () {}),
-            itemCount: 24,
-            separatorBuilder: (context, index) => SizedBox(
-              height: 12.w,
+  Widget _buildBodyContent(BuildContext context, List<UserModel> users) {
+    List<UserModel> filtered = users
+        .where((element) => element.lastName!.contains(controller.text) || element.firstName!.contains(controller.text))
+        .toList();
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      behavior: HitTestBehavior.translucent,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 10.h,
+          ),
+          PjTextField(title: 'Поиск атлетов', type: PjTextFieldStyle.text, controller: controller, onChanged: (v){
+            setState(() {
+
+            });
+          },),
+          Expanded(
+            child: ListView.separated(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.w),
+              itemBuilder: (context, index) => AvatarCard(
+                callback: () {},
+                user: filtered[index],
+              ),
+              itemCount: filtered.length,
+              separatorBuilder: (context, index) => SizedBox(
+                height: 12.w,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

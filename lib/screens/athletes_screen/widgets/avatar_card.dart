@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onlygym/models/user_model.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
@@ -10,8 +11,9 @@ import 'package:onlygym/project_widgets/pj_text.dart';
 class AvatarCard extends StatefulWidget {
   final Function callback;
   final Function? supportCallback;
+  final UserModel user;
 
-  const AvatarCard({Key? key, required this.callback, this.supportCallback}) : super(key: key);
+  const AvatarCard({Key? key, required this.callback, this.supportCallback, required this.user}) : super(key: key);
 
   @override
   State<AvatarCard> createState() => _AvatarCardState();
@@ -50,7 +52,7 @@ class _AvatarCardState extends State<AvatarCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children:  [
-                      PjText("Кузнецов Алексей", style: PjTextStyle.bold, color: isTouch ? PjColors.gray : PjColors.black),
+                      PjText('${widget.user.firstName} ${widget.user.lastName}', style: PjTextStyle.bold, color: isTouch ? PjColors.gray : PjColors.black),
                       SizedBox(height: 10.h,),
                       Container(child: PjText("Улучшение формы", style: PjTextStyle.regular, color: isTouch ? PjColors.lightGray : PjColors.gray)),
                     ],

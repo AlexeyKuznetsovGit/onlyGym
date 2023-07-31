@@ -1,13 +1,32 @@
 import 'package:eticon_api/eticon_api.dart';
 import 'package:onlygym/main.dart';
+import 'package:onlygym/models/user_model.dart';
 
 class AthleteRepository {
-  
-  Future<void> getAll()async {
-    await Api.get('', urlIndex: ApiUrls.athlete, testMode: true, isAuth: true);
+  Future<List<UserModel>> getAll() async {
+    List<UserModel> result = [];
+    Map<String, dynamic> response = await Api.get('', urlIndex: ApiUrls.athlete, testMode: true, isAuth: true);
+    for(var elm in response['key']){
+      result.add(UserModel.fromJson(elm));
+    }
+    return result;
   }
-  
-  
+
+  Future<void> addNew(UserModel user) async {
+    await Api.post('addVirtualAthlete',
+        body: FormData.fromMap({
+          "first_name": user.firstName,
+          "last_name": user.lastName,
+          "date_birth": user.dateBirth,
+          "weight": user.parameters![1].value,
+          "height": user.parameters![0].value,
+          "target": user.goal
+        }),
+        urlIndex: ApiUrls.athlete,
+        testMode: true,
+        isAuth: true);
+  }
+
   Future<void> editAthlete({
     required String firstName,
     required String lastName,
