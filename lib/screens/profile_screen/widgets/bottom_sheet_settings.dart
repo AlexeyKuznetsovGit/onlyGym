@@ -19,8 +19,9 @@ import 'package:onlygym/screens/profile_screen/widgets/bottom_sheet_target.dart'
 
 class BottomSheetSettingsWidget extends StatefulWidget {
   final CbProfileScreen cubit;
+  final int? athleteId;
 
-  const BottomSheetSettingsWidget({Key? key, required this.cubit}) : super(key: key);
+  const BottomSheetSettingsWidget({Key? key, this.athleteId, required this.cubit}) : super(key: key);
 
   @override
   State<BottomSheetSettingsWidget> createState() => _BottomSheetSettingsWidgetState();
@@ -42,12 +43,13 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
     MaterialStatesController(),
     MaterialStatesController()
   ];
+
   bool isNotificationsDisabled = false;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 486.h,
+      height: widget.athleteId == null ? 486.h : 342.h,
       decoration: BoxDecoration(
           color: PjColors.white,
           borderRadius: BorderRadius.only(
@@ -95,12 +97,12 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
             height: 20.h,
           ),
           ...List.generate(
-              5,
+              widget.athleteId == null ? 5 : 3,
               (index) => Padding(
-                    padding: EdgeInsets.only(bottom: index == 4 ? 0 : 20.h),
+                    padding: EdgeInsets.only(bottom: 20.h),
                     child: PjLongButton(
                       onPressed: () async {
-                        if (index != 2) {
+                        if (index != 2 || widget.athleteId != null) {
                           if (!buttonState[index].contains(MaterialState.pressed) && buttonState[index].isNotEmpty) {
                             buttonState[index] = {MaterialState.pressed};
                           } else {
@@ -110,94 +112,132 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                         }
 
                         /// Todo: При открытии второго ботомщита, у первого необходимо сделать barrierColor = Colors.transpanent
-                        switch (index) {
-                          case 0:
-                            {
-                              await showModalBottomSheet(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20.r),
-                                    topRight: Radius.circular(20.r),
-                                  ),
-                                ),
-                                isScrollControlled: true,
-                                useSafeArea: true,
-                                barrierColor: PjColors.black.withOpacity(0.5),
-                                context: context,
-                                builder: (context) {
-                                  return BottomSheetEditingWidget(
-                                    cubit: widget.cubit,
-                                  );
-                                },
-                              );
-                              buttonState[index] = {MaterialState.selected};
-                              controllers[index].value = buttonState[index];
-                              break;
-                            }
-                          case 1:
-                            {
-                              await showModalBottomSheet(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20.r),
-                                    topRight: Radius.circular(20.r),
-                                  ),
-                                ),
-                                isScrollControlled: true,
-                                useSafeArea: true,
-                                barrierColor: PjColors.black.withOpacity(0.5),
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: BottomSheetTargetWidget(
-                                      cubit: widget.cubit,
+                        if (widget.athleteId == null) {
+                          switch (index) {
+                            case 0:
+                              {
+                                await showModalBottomSheet(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.r),
+                                      topRight: Radius.circular(20.r),
                                     ),
-                                  );
-                                },
-                              );
-                              buttonState[index] = {MaterialState.selected};
-                              controllers[index].value = buttonState[index];
-                              break;
-                            }
-                          case 2:
-                            {
-                              setState(() {
-                                isNotificationsDisabled = !isNotificationsDisabled;
-                              });
-
-                              break;
-                            }
-                          case 3:
-                            {
-                              await showModalBottomSheet(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20.r),
-                                    topRight: Radius.circular(20.r),
                                   ),
-                                ),
-                                isScrollControlled: true,
-                                barrierColor: PjColors.black.withOpacity(0.5),
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return BottomSheetQrWidget();
-                                },
-                              );
-                              buttonState[index] = {MaterialState.selected};
-                              controllers[index].value = buttonState[index];
-                              break;
-                            }
-                          case 4:
-                            {
-                              Api.setToken('');
-                              context.router.replace(AuthRoute());
-                              break;
-                            }
+                                  isScrollControlled: true,
+                                  useSafeArea: true,
+                                  barrierColor: PjColors.black.withOpacity(0.5),
+                                  context: context,
+                                  builder: (context) {
+                                    return BottomSheetEditingWidget(
+                                      cubit: widget.cubit,
+                                    );
+                                  },
+                                );
+                                buttonState[index] = {MaterialState.selected};
+                                controllers[index].value = buttonState[index];
+                                break;
+                              }
+                            case 1:
+                              {
+                                await showModalBottomSheet(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.r),
+                                      topRight: Radius.circular(20.r),
+                                    ),
+                                  ),
+                                  isScrollControlled: true,
+                                  useSafeArea: true,
+                                  barrierColor: PjColors.black.withOpacity(0.5),
+                                  context: context,
+                                  builder: (context) {
+                                    return Padding(
+                                      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                      child: BottomSheetTargetWidget(
+                                        cubit: widget.cubit,
+                                      ),
+                                    );
+                                  },
+                                );
+                                buttonState[index] = {MaterialState.selected};
+                                controllers[index].value = buttonState[index];
+                                break;
+                              }
+                            case 2:
+                              {
+                                setState(() {
+                                  isNotificationsDisabled = !isNotificationsDisabled;
+                                });
+
+                                break;
+                              }
+                            case 3:
+                              {
+                                await showModalBottomSheet(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.r),
+                                      topRight: Radius.circular(20.r),
+                                    ),
+                                  ),
+                                  isScrollControlled: true,
+                                  barrierColor: PjColors.black.withOpacity(0.5),
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return BottomSheetQrWidget();
+                                  },
+                                );
+                                buttonState[index] = {MaterialState.selected};
+                                controllers[index].value = buttonState[index];
+                                break;
+                              }
+                            case 4:
+                              {
+                                Api.setToken('');
+                                context.router.replace(AuthRoute());
+                                break;
+                              }
+                          }
+                        } else {
+                          switch (index) {
+                            case 0:
+                              {
+                                await showModalBottomSheet(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.r),
+                                      topRight: Radius.circular(20.r),
+                                    ),
+                                  ),
+                                  isScrollControlled: true,
+                                  useSafeArea: true,
+                                  barrierColor: PjColors.black.withOpacity(0.5),
+                                  context: context,
+                                  builder: (context) {
+                                    return BottomSheetEditingWidget(
+                                      cubit: widget.cubit,
+                                      athleteId: widget.athleteId,
+                                    );
+                                  },
+                                );
+                                buttonState[index] = {MaterialState.selected};
+                                controllers[index].value = buttonState[index];
+                                break;
+                              }
+                            case 1:
+                              {
+                                break;
+                              }
+                            case 2:
+                              {
+                                break;
+                              }
+
+                          }
                         }
                       },
-                      icon: getTitleOrIcon(index, returnTitle: false, isNotificationsDisabled: isNotificationsDisabled),
-                      text: getTitleOrIcon(index, isNotificationsDisabled: isNotificationsDisabled),
+                      icon: getTitleOrIcon(index, returnTitle: false, isNotificationsDisabled: isNotificationsDisabled, athleteId: widget.athleteId),
+                      text: getTitleOrIcon(index, isNotificationsDisabled: isNotificationsDisabled,athleteId: widget.athleteId),
                       controller: controllers[index],
                     ),
                   ))
@@ -206,56 +246,87 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
     );
   }
 
-  dynamic getTitleOrIcon(int index, {bool returnTitle = true, bool isNotificationsDisabled = false}) {
+  dynamic getTitleOrIcon(int index, {bool returnTitle = true, bool isNotificationsDisabled = false, int? athleteId}) {
     String title = '';
     late IconData icon;
-
-    switch (index) {
-      case 0:
-        {
-          if (returnTitle) {
-            title = 'Редактировать профиль';
-          } else {
-            icon = CustomIcons.edit;
+    if (athleteId == null) {
+      switch (index) {
+        case 0:
+          {
+            if (returnTitle) {
+              title = 'Редактировать профиль';
+            } else {
+              icon = CustomIcons.edit;
+            }
+            break;
           }
-          break;
-        }
-      case 1:
-        {
-          if (returnTitle) {
-            title = 'Изменить цель';
-          } else {
-            icon = CustomIcons.goal;
+        case 1:
+          {
+            if (returnTitle) {
+              title = 'Изменить цель';
+            } else {
+              icon = CustomIcons.goal;
+            }
+            break;
           }
-          break;
-        }
-      case 2:
-        {
-          if (returnTitle) {
-            title = isNotificationsDisabled ? 'Уведомления отключены' : 'Уведомления включены';
-          } else {
-            icon = isNotificationsDisabled ? CustomIcons.notification_off : CustomIcons.notification_on;
+        case 2:
+          {
+            if (returnTitle) {
+              title = isNotificationsDisabled ? 'Уведомления отключены' : 'Уведомления включены';
+            } else {
+              icon = isNotificationsDisabled ? CustomIcons.notification_off : CustomIcons.notification_on;
+            }
+            break;
           }
-          break;
-        }
-      case 3:
-        {
-          if (returnTitle) {
-            title = 'Предоставить доступ к аккаунту';
-          } else {
-            icon = CustomIcons.qr;
+        case 3:
+          {
+            if (returnTitle) {
+              title = 'Предоставить доступ к аккаунту';
+            } else {
+              icon = CustomIcons.qr;
+            }
+            break;
           }
-          break;
-        }
-      case 4:
-        {
-          if (returnTitle) {
-            title = 'Выйти из аккаунта';
-          } else {
-            icon = CustomIcons.quit;
+        case 4:
+          {
+            if (returnTitle) {
+              title = 'Выйти из аккаунта';
+            } else {
+              icon = CustomIcons.quit;
+            }
+            break;
           }
-          break;
-        }
+      }
+    } else {
+      switch (index) {
+        case 0:
+          {
+            if (returnTitle) {
+              title = 'Редактировать профиль';
+            } else {
+              icon = CustomIcons.edit;
+            }
+            break;
+          }
+        case 1:
+          {
+            if (returnTitle) {
+              title = 'Предоставить доступ к аккаунту';
+            } else {
+              icon = CustomIcons.akk_ok;
+            }
+            break;
+          }
+        case 2:
+          {
+            if (returnTitle) {
+              title = 'Удалить атлета';
+            } else {
+              icon = CustomIcons.akk_cross;
+            }
+            break;
+          }
+      }
     }
 
     if (returnTitle) {

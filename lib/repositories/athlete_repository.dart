@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:eticon_api/eticon_api.dart';
 import 'package:onlygym/main.dart';
 import 'package:onlygym/models/user_model.dart';
@@ -33,6 +35,7 @@ class AthleteRepository {
     required String dateBirth,
     int? athleteId,
   }) async {
+    log(athleteId.toString(),name: 'athleteId');
     var formData = athleteId != null
         ? FormData.fromMap({
             'athlete_id': athleteId,
@@ -82,5 +85,19 @@ class AthleteRepository {
           };
     Map<String, dynamic> response =
         await Api.post('addParams', query: body, urlIndex: ApiUrls.athlete, testMode: true, isAuth: true);
+  }
+  Future<void> addPhoto({
+    required String pathPhoto,
+    required String namePhoto,
+  }) async {
+    var formData =  FormData.fromMap({
+      'avatar': await MultipartFile.fromFile(
+        pathPhoto,
+        filename: namePhoto,
+      )
+    });
+
+    Map<String, dynamic> response =
+    await Api.post('avatar', body: formData, urlIndex: ApiUrls.athlete, testMode: true, isAuth: true);
   }
 }

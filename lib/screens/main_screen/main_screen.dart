@@ -35,8 +35,7 @@ class _MainScreenState extends State<MainScreen> {
             orElse: () => Container(),
             loading: () => Scaffold(body: PjLoader()),
             loaded: (user) => AutoTabsScaffold(
-                routes: const [DiaryRoute(), ExercisesRoute(), AthletesRoute(), ProfileRoute()],
-                lazyLoad: true,
+                routes:  [DiaryRoute(), ExercisesRoute(), AthletesRoute(), ProfileRoute()],
                 bottomNavigationBuilder: (_, tabsRouter) {
                   return BottomNavigationBar(
                     backgroundColor: PjColors.white,
@@ -47,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
                     selectedFontSize: 10.w,
                     unselectedFontSize: 10.w,
                     showUnselectedLabels: true,
-                    currentIndex: tabsRouter.activeIndex ,
+                    currentIndex: tabsRouter.activeIndex,
                     selectedLabelStyle: const TextStyle(fontFamily: "SFPro"),
                     unselectedLabelStyle: const TextStyle(fontFamily: "SFPro"),
                     onTap: tabsRouter.setActiveIndex,
@@ -58,7 +57,6 @@ class _MainScreenState extends State<MainScreen> {
                       BottomNavigationBarItem(icon: Icon(CustomIcons.profile), label: "Профиль"),
                     ],
                   );
-                },
-            )));
+                })));
   }
 }

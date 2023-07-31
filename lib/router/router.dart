@@ -39,5 +39,6 @@ class AppRouter extends _$AppRouter {
           AutoRoute(page: AthletesRoute.page, maintainState: false),
           AutoRoute(page: ProfileRoute.page, initial: true)
         ]),
+        AutoRoute(page: ProfileRoute.page)
       ];
 }

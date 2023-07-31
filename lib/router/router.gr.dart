@@ -64,9 +64,15 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     ProfileRoute.name: (routeData) {
+      final args = routeData.argsAs<ProfileRouteArgs>(
+          orElse: () => const ProfileRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const ProfileScreen()),
+        child: WrappedRoute(
+            child: ProfileScreen(
+          key: args.key,
+          athleteId: args.athleteId,
+        )),
       );
     },
     MainRoute.name: (routeData) {
@@ -252,16 +258,40 @@ class RecoverPasswordRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ProfileScreen]
-class ProfileRoute extends PageRouteInfo<void> {
-  const ProfileRoute({List<PageRouteInfo>? children})
-      : super(
+class ProfileRoute extends PageRouteInfo<ProfileRouteArgs> {
+  ProfileRoute({
+    Key? key,
+    int? athleteId,
+    List<PageRouteInfo>? children,
+  }) : super(
           ProfileRoute.name,
+          args: ProfileRouteArgs(
+            key: key,
+            athleteId: athleteId,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'ProfileRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<ProfileRouteArgs> page =
+      PageInfo<ProfileRouteArgs>(name);
+}
+
+class ProfileRouteArgs {
+  const ProfileRouteArgs({
+    this.key,
+    this.athleteId,
+  });
+
+  final Key? key;
+
+  final int? athleteId;
+
+  @override
+  String toString() {
+    return 'ProfileRouteArgs{key: $key, athleteId: $athleteId}';
+  }
 }
 
 /// generated route for
