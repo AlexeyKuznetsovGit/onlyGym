@@ -89,20 +89,24 @@ class _SizeInfoCardState extends State<SizeInfoCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Icon(
-                    widget.icon,
-                    size: 24.w,
-                    color: isActive ? PjColors.white : PjColors.neonBlue,
-                  ),
-                  SizedBox(width: 10.w),
-                  PjText(
-                    widget.data,
-                    style: PjTextStyle.bold,
-                    color: isActive ? PjColors.white : PjColors.black,
-                  )
-                ],
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    Icon(
+                      widget.icon,
+                      size: 24.w,
+                      color: isActive ? PjColors.white : PjColors.neonBlue,
+                    ),
+                    SizedBox(width: 10.w),
+                    PjText(
+                      widget.data,
+                      style: PjTextStyle.bold,
+                      color: isActive ? PjColors.white : PjColors.black,
+                    ),
+
+                  ],
+                ),
               ),
               SizedBox(
                 height: 10.h,

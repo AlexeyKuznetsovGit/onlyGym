@@ -83,8 +83,9 @@ class AthleteRepository {
             'param_id': paramId,
             'value': value,
           };
+
     Map<String, dynamic> response =
-        await Api.post('addParams', query: body, urlIndex: ApiUrls.athlete, testMode: true, isAuth: true);
+        await Api.post('addParams', body: body, urlIndex: ApiUrls.athlete, testMode: true, isAuth: true);
   }
   Future<void> addPhoto({
     required String pathPhoto,

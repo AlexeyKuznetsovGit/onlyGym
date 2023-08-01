@@ -49,7 +49,7 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: widget.athleteId == null ? 486.h : 342.h,
+      height: widget.athleteId == null ? 486.h : 270.h,
       decoration: BoxDecoration(
           color: PjColors.white,
           borderRadius: BorderRadius.only(
@@ -97,7 +97,7 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
             height: 20.h,
           ),
           ...List.generate(
-              widget.athleteId == null ? 5 : 3,
+              widget.athleteId == null ? 5 : 2,
               (index) => Padding(
                     padding: EdgeInsets.only(bottom: 20.h),
                     child: PjLongButton(
@@ -228,11 +228,6 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
                               {
                                 break;
                               }
-                            case 2:
-                              {
-                                break;
-                              }
-
                           }
                         }
                       },
@@ -309,15 +304,6 @@ class _BottomSheetSettingsWidgetState extends State<BottomSheetSettingsWidget> {
             break;
           }
         case 1:
-          {
-            if (returnTitle) {
-              title = 'Предоставить доступ к аккаунту';
-            } else {
-              icon = CustomIcons.akk_ok;
-            }
-            break;
-          }
-        case 2:
           {
             if (returnTitle) {
               title = 'Удалить атлета';
