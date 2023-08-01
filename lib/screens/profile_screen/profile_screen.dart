@@ -184,14 +184,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             '${user.lastName!.capitalizeFirst.toString()} ${user.firstName!.capitalizeFirst.toString()}',
             style: PjTextStyle.h1,
           ),
-          SizedBox(
-            height: 10.h,
-          ),
-          PjText(
-            user.email!,
-            style: PjTextStyle.regular,
-            color: PjColors.gray,
-          ),
+
+          if(widget.athleteId == null)...[
+            SizedBox(
+              height: 10.h,
+            ),
+            PjText(
+              user.email!,
+              style: PjTextStyle.regular,
+              color: PjColors.gray,
+            ),
+          ]
+          ,
           SizedBox(height: 30.h),
           /*
           SizedBox(height: 40.h),

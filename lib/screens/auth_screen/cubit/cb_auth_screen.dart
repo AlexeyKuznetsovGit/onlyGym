@@ -28,7 +28,13 @@ class CbAuthScreen extends Cubit<StAuthScreen> {
       }
       emit(StAuthScreen.signInSuccessful());
     } on APIException catch (e) {
-      emit(StAuthScreen.error(e.code, 'Что-то пошло не так!'));
+      String textError = "Что-то пошло не так!";
+      if (e.body['detail'] != null) {
+        if (e.body['detail'] == 'User not found or incorrect password') {
+          textError = 'Неправильный логин/пароль';
+        }
+      }
+      emit(StAuthScreen.error(e.code, textError));
     }
   }
 }

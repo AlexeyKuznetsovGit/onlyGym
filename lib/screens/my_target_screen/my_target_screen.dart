@@ -23,6 +23,7 @@ import 'package:onlygym/screens/my_target_screen/widgets/text_field_fill.dart';
 @RoutePage()
 class MyTargetScreen extends StatefulWidget implements AutoRouteWrapper {
   final UserModel? user;
+
   const MyTargetScreen({Key? key, this.user}) : super(key: key);
 
   @override
@@ -42,21 +43,24 @@ class _MyTargetScreenState extends State<MyTargetScreen> {
   String selectedOption = 'Улучшение формы';
   String anotherTarget = 'Другое';
   TextEditingController controller = TextEditingController(text: 'Другое');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: widget.user == null ? Container(
-        height: 48.h,
-        margin: EdgeInsets.only(bottom: 20.h),
-        alignment: Alignment.center,
-        child: PjTextButton(
-          textColor: PjColors.neonBlue,
-          textStyle: PjTextStyle.tiny,
-          text: "Политика конфиденциальности и Правила использования",
-          type: PjTextButtonType.left,
-          onPressed: () {},
-        ),
-      ) : null,
+      bottomNavigationBar: widget.user == null
+          ? Container(
+              height: 48.h,
+              margin: EdgeInsets.only(bottom: 20.h),
+              alignment: Alignment.center,
+              child: PjTextButton(
+                textColor: PjColors.neonBlue,
+                textStyle: PjTextStyle.tiny,
+                text: "Политика конфиденциальности и Правила использования",
+                type: PjTextButtonType.left,
+                onPressed: () {},
+              ),
+            )
+          : null,
       appBar: PjAppBar(
         leading: () {
           context.router.pop();
@@ -86,7 +90,7 @@ class _MyTargetScreenState extends State<MyTargetScreen> {
   }
 
   Widget _buildBodyContent(BuildContext context) {
-    return  Center(
+    return Center(
       child: SingleChildScrollView(
         physics: ClampingScrollPhysics(),
         child: Column(
@@ -100,17 +104,16 @@ class _MyTargetScreenState extends State<MyTargetScreen> {
               height: 10.h,
             ),
             PjText(
-              "Выберите${widget.user != null ? " " :" свою"} основную цель",
+              "Выберите${widget.user != null ? " " : " свою"} основную цель",
               align: TextAlign.center,
               style: PjTextStyle.regular,
             ),
             SizedBox(
               height: 50.h,
             ),
-
             ...List.generate(
                 4,
-                    (index) => Padding(
+                (index) => Padding(
                     padding: EdgeInsets.only(bottom: 20.h),
                     child: PjRadioButton(
                       option: targets[index],
@@ -137,17 +140,18 @@ class _MyTargetScreenState extends State<MyTargetScreen> {
               selectedOption: selectedOption,
               controller: controller,
             ),
-
             SizedBox(
               height: 30.h,
             ),
             PjFilledButton(
                 text: widget.user != null ? "Добавить атлета" : "Зарегистрироваться",
                 onPressed: () {
-                  if(selectedOption != ''){
-                    if(widget.user != null){
+                  if (selectedOption != '') {
+                    if (widget.user != null) {
                       widget.user!.goal = selectedOption;
                       context.read<CbMyTargetScreen>().createNewAthlete(widget.user!);
+                      context.router.pushAndPopUntil(MainRoute(children: [AthletesRoute()]), predicate: (_) => false);
+
                       return;
                     }
                     SgAppData.instance.user.goal = selectedOption;

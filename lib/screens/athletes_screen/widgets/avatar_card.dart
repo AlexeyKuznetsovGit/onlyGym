@@ -55,7 +55,7 @@ class _AvatarCardState extends State<AvatarCard> {
                     children:  [
                       PjText('${widget.user.firstName} ${widget.user.lastName}', style: PjTextStyle.bold, color: isTouch ? PjColors.gray : PjColors.black),
                       SizedBox(height: 10.h,),
-                      Container(child: PjText("Улучшение формы", style: PjTextStyle.regular, color: isTouch ? PjColors.lightGray : PjColors.gray)),
+                      Container(child: PjText(widget.user.goal ?? "Улучшение формы", style: PjTextStyle.regular, color: isTouch ? PjColors.lightGray : PjColors.gray)),
                     ],
                   ),
                 ),

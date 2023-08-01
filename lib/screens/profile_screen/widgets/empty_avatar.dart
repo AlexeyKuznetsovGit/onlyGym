@@ -23,15 +23,17 @@ class EmptyAvatar extends StatelessWidget {
           size: 98.w,
           color: PjColors.neonBlue,
         ),
-        Container(
-          width: 24.w,
-          height: 24.h,
-          decoration: const BoxDecoration(shape: BoxShape.circle, color: PjColors.lightBlue),
-          child: const Icon(
-            CustomIcons.plus_small,
-            color: PjColors.white,
-          ),
-        )
+        if (athleteId == null) ...[
+          Container(
+            width: 24.w,
+            height: 24.h,
+            decoration: const BoxDecoration(shape: BoxShape.circle, color: PjColors.lightBlue),
+            child: const Icon(
+              CustomIcons.plus_small,
+              color: PjColors.white,
+            ),
+          )
+        ]
       ],
     );
   }

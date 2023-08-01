@@ -11,6 +11,7 @@ import 'package:onlygym/project_widgets/error_dialog.dart';
 import 'package:onlygym/project_widgets/pj_appbar.dart';
 import 'package:onlygym/project_widgets/pj_loader.dart';
 import 'package:onlygym/project_widgets/pj_text_field.dart';
+import 'package:onlygym/router/router.dart';
 import 'package:onlygym/screens/athletes_screen/widgets/avatar_card.dart';
 import 'cubit/cb_athletes_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,7 +94,7 @@ class _AthletesScreenState extends State<AthletesScreen> {
         .where((element) => element.lastName!.contains(controller.text) || element.firstName!.contains(controller.text))
         .toList();
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScope.of(context).unfocus();
       },
       behavior: HitTestBehavior.translucent,
@@ -102,16 +103,21 @@ class _AthletesScreenState extends State<AthletesScreen> {
           SizedBox(
             height: 10.h,
           ),
-          PjTextField(title: 'Поиск атлетов', type: PjTextFieldStyle.text, controller: controller, onChanged: (v){
-            setState(() {
-
-            });
-          },),
+          PjTextField(
+            title: 'Поиск атлетов',
+            type: PjTextFieldStyle.text,
+            controller: controller,
+            onChanged: (v) {
+              setState(() {});
+            },
+          ),
           Expanded(
             child: ListView.separated(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.w),
               itemBuilder: (context, index) => AvatarCard(
-                callback: () {},
+                callback: () {
+                  context.router.push(ProfileRoute(athleteId: filtered[index].id));
+                },
                 user: filtered[index],
               ),
               itemCount: filtered.length,
