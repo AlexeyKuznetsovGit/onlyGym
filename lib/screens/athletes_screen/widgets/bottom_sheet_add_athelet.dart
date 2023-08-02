@@ -10,6 +10,7 @@ import 'package:onlygym/project_widgets/pj_buttons/pj_long_button.dart';
 import 'package:onlygym/project_widgets/pj_qr.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 import 'package:onlygym/router/router.dart';
+import 'package:onlygym/screens/athletes_screen/cubit/cb_athletes_screen.dart';
 import 'package:onlygym/screens/profile_screen/widgets/volumeDiagram.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -19,8 +20,9 @@ class BottomSheetAddAthelet extends StatefulWidget {
   final String title;
   final double height;
   final bool isQr;
+  final CbAthletesScreen cubit;
 
-  const BottomSheetAddAthelet({Key? key, required this.title, required this.height, this.isQr = false})
+  const BottomSheetAddAthelet({Key? key, required this.title, required this.cubit, required this.height, this.isQr = false})
       : super(key: key);
 
   @override
@@ -34,8 +36,6 @@ class _BottomSheetAddAtheletState extends State<BottomSheetAddAthelet> {
   MaterialStatesController changeController = MaterialStatesController();
   MaterialStatesController statisticsController = MaterialStatesController();
 
-  TextEditingController controllerVolume = TextEditingController(text: '144 см');
-  TextEditingController controllerDate = TextEditingController(text: '24.04.2023');
 
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
@@ -171,6 +171,7 @@ class _BottomSheetAddAtheletState extends State<BottomSheetAddAthelet> {
                       context: context,
                       builder: (BuildContext context) {
                         return BottomSheetAddAthelet(
+                          cubit: widget.cubit,
                           height: 480.w,
                           title: 'Поместите QR-код в рамку',
                           isQr: true,
@@ -192,11 +193,18 @@ class _BottomSheetAddAtheletState extends State<BottomSheetAddAthelet> {
 
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      print(scanData);
-      if (scanData == BarcodeFormat.qrcode) {
-        print('123');
+    controller.scannedDataStream.listen((scanData) async {
+      if (scanData.format == BarcodeFormat.qrcode && scanData.code != null) {
+        if( scanData.code!.isNotEmpty && isNumeric(scanData.code!)){
+          controller.stopCamera();
+         await widget.cubit.addAthleteByQr(int.parse(scanData.code!));
+         context.router.pop();
+         context.router.pop();
+        }
       }
     });
+  }
+  bool isNumeric(String str) {
+    return num.tryParse(str) != null;
   }
 }

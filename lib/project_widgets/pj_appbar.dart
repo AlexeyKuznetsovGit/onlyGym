@@ -20,6 +20,7 @@ class PjAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
+      centerTitle: true,
       backgroundColor: PjColors.white,
       automaticallyImplyLeading: false,
       title: PjText(

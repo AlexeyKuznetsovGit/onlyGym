@@ -59,8 +59,10 @@ class _AthletesScreenState extends State<AthletesScreen> {
               isScrollControlled: true,
               barrierColor: PjColors.black.withOpacity(0.5),
               context: context,
-              builder: (BuildContext context) {
+              builder: (ctx) {
+                CbAthletesScreen cubit = BlocProvider.of<CbAthletesScreen>(context);
                 return BottomSheetAddAthelet(
+                  cubit: cubit,
                   height: 270.h,
                   title: 'Атлеты',
                 );
@@ -79,7 +81,10 @@ class _AthletesScreenState extends State<AthletesScreen> {
       ]),
       body: BlocConsumer<CbAthletesScreen, StAthletesScreen>(
         listener: (context, state) =>
-            state.whenOrNull(error: (code, message) => showAlertDialog(context, message ?? '')),
+            state.whenOrNull(error: (code, message) => showAlertDialog(context, message ?? '', true, () {
+              context.read<CbAthletesScreen>().emit(StAthletesScreen.loaded(
+                   context.read<CbAthletesScreen>().list));
+            })),
         builder: (context, state) => state.maybeWhen(
           orElse: () => Container(),
           loading: () => const PjLoader(),

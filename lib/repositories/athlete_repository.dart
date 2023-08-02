@@ -29,6 +29,14 @@ class AthleteRepository {
         isAuth: true);
   }
 
+  Future<void> addAthleteByQr(int athleteId) async {
+    await Api.post('addByQr',
+        body: {'athlete_id': athleteId},
+        urlIndex: ApiUrls.athlete,
+        testMode: true,
+        isAuth: true);
+  }
+
   Future<void> editAthlete({
     required String firstName,
     required String lastName,

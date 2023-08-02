@@ -12,9 +12,20 @@ part 'cb_athletes_screen.freezed.dart';
 class CbAthletesScreen extends Cubit<StAthletesScreen> {
 
   CbAthletesScreen() : super(const StAthletesScreen.loading());
-
+  List<UserModel> list = [];
   Future<void> getData() async {
     try {
+      list = [];
+      list = await (getIt<AthleteRepository>().getAll());
+      emit(StAthletesScreen.loaded(list));
+    } on APIException catch (e) {
+      emit(StAthletesScreen.error(e.code, 'Что-то пошло не так!'));
+    }
+  }
+  Future<void> addAthleteByQr(int athleteId) async {
+    try {
+      emit(StAthletesScreen.loading());
+      await (getIt<AthleteRepository>().addAthleteByQr(athleteId));
       List<UserModel> list = await (getIt<AthleteRepository>().getAll());
       emit(StAthletesScreen.loaded(list));
     } on APIException catch (e) {
