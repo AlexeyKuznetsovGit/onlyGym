@@ -20,7 +20,8 @@ import 'widgets/bottom_sheet_add_athelet.dart';
 
 @RoutePage()
 class AthletesScreen extends StatefulWidget implements AutoRouteWrapper {
-  const AthletesScreen({Key? key}) : super(key: key);
+  final bool isChoiceAthlete;
+  const AthletesScreen({Key? key, this.isChoiceAthlete = false}) : super(key: key);
 
   @override
   State<AthletesScreen> createState() => _AthletesScreenState();
@@ -38,15 +39,13 @@ class _AthletesScreenState extends State<AthletesScreen> {
   TextEditingController controller = TextEditingController();
 
   @override
-  void didUpdateWidget(covariant AthletesScreen oldWidget) {
-    print(123);
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PjAppBar(title: 'Атлеты', actions: [
+      appBar: PjAppBar(title: 'Атлеты',
+          leading:  widget.isChoiceAthlete ? (){
+          Navigator.pop(context);
+          } : null,
+          actions: !widget.isChoiceAthlete ? [
         GestureDetector(
           onTap: () {
             showModalBottomSheet(
@@ -78,7 +77,7 @@ class _AthletesScreenState extends State<AthletesScreen> {
             ),
           ),
         ),
-      ]),
+      ] : null),
       body: BlocConsumer<CbAthletesScreen, StAthletesScreen>(
         listener: (context, state) =>
             state.whenOrNull(error: (code, message) => showAlertDialog(context, message ?? '', true, () {
@@ -118,6 +117,7 @@ class _AthletesScreenState extends State<AthletesScreen> {
           ),
           Expanded(
             child: ListView.separated(
+              physics: ClampingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.w),
               itemBuilder: (context, index) => AvatarCard(
                 callback: () {

@@ -15,6 +15,50 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    AthletesRoute.name: (routeData) {
+      final args = routeData.argsAs<AthletesRouteArgs>(
+          orElse: () => const AthletesRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: AthletesScreen(
+          key: args.key,
+          isChoiceAthlete: args.isChoiceAthlete,
+        )),
+      );
+    },
+    AuthRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<AuthRouteArgs>(orElse: () => const AuthRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: AuthScreen(key: args.key)),
+      );
+    },
+    CreateNewAthleteRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const CreateNewAthleteScreen()),
+      );
+    },
+    DiaryRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const DiaryScreen()),
+      );
+    },
+    ExercisesRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const ExercisesScreen()),
+      );
+    },
+    MainRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const MainScreen()),
+      );
+    },
     MyTargetRoute.name: (routeData) {
       final args = routeData.argsAs<MyTargetRouteArgs>(
           orElse: () => const MyTargetRouteArgs());
@@ -39,30 +83,6 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
-    CreateNewAthleteRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: WrappedRoute(child: const CreateNewAthleteScreen()),
-      );
-    },
-    DiaryRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: WrappedRoute(child: const DiaryScreen()),
-      );
-    },
-    ExercisesRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: WrappedRoute(child: const ExercisesScreen()),
-      );
-    },
-    RecoverPasswordRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: WrappedRoute(child: const RecoverPasswordScreen()),
-      );
-    },
     ProfileRoute.name: (routeData) {
       final args = routeData.argsAs<ProfileRouteArgs>(
           orElse: () => const ProfileRouteArgs());
@@ -75,18 +95,10 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
-    MainRoute.name: (routeData) {
+    RecoverPasswordRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const MainScreen()),
-      );
-    },
-    AuthRoute.name: (routeData) {
-      final args =
-          routeData.argsAs<AuthRouteArgs>(orElse: () => const AuthRouteArgs());
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: WrappedRoute(child: AuthScreen(key: args.key)),
+        child: WrappedRoute(child: const RecoverPasswordScreen()),
       );
     },
     RegistrationRoute.name: (routeData) {
@@ -95,12 +107,6 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(child: RegistrationScreen(key: args.key)),
-      );
-    },
-    MyParamsRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: WrappedRoute(child: const MyParamsScreen()),
       );
     },
     BirthdayRoute.name: (routeData) {
@@ -115,13 +121,135 @@ abstract class _$AppRouter extends RootStackRouter {
         child: WrappedRoute(child: const IdConfirmationScreen()),
       );
     },
-    AthletesRoute.name: (routeData) {
+    MyParamsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const AthletesScreen()),
+        child: WrappedRoute(child: const MyParamsScreen()),
       );
     },
   };
+}
+
+/// generated route for
+/// [AthletesScreen]
+class AthletesRoute extends PageRouteInfo<AthletesRouteArgs> {
+  AthletesRoute({
+    Key? key,
+    bool isChoiceAthlete = false,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AthletesRoute.name,
+          args: AthletesRouteArgs(
+            key: key,
+            isChoiceAthlete: isChoiceAthlete,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'AthletesRoute';
+
+  static const PageInfo<AthletesRouteArgs> page =
+      PageInfo<AthletesRouteArgs>(name);
+}
+
+class AthletesRouteArgs {
+  const AthletesRouteArgs({
+    this.key,
+    this.isChoiceAthlete = false,
+  });
+
+  final Key? key;
+
+  final bool isChoiceAthlete;
+
+  @override
+  String toString() {
+    return 'AthletesRouteArgs{key: $key, isChoiceAthlete: $isChoiceAthlete}';
+  }
+}
+
+/// generated route for
+/// [AuthScreen]
+class AuthRoute extends PageRouteInfo<AuthRouteArgs> {
+  AuthRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AuthRoute.name,
+          args: AuthRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'AuthRoute';
+
+  static const PageInfo<AuthRouteArgs> page = PageInfo<AuthRouteArgs>(name);
+}
+
+class AuthRouteArgs {
+  const AuthRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AuthRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [CreateNewAthleteScreen]
+class CreateNewAthleteRoute extends PageRouteInfo<void> {
+  const CreateNewAthleteRoute({List<PageRouteInfo>? children})
+      : super(
+          CreateNewAthleteRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CreateNewAthleteRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [DiaryScreen]
+class DiaryRoute extends PageRouteInfo<void> {
+  const DiaryRoute({List<PageRouteInfo>? children})
+      : super(
+          DiaryRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'DiaryRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ExercisesScreen]
+class ExercisesRoute extends PageRouteInfo<void> {
+  const ExercisesRoute({List<PageRouteInfo>? children})
+      : super(
+          ExercisesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ExercisesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [MainScreen]
+class MainRoute extends PageRouteInfo<void> {
+  const MainRoute({List<PageRouteInfo>? children})
+      : super(
+          MainRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MainRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -201,62 +329,6 @@ class ProfileImageRouteArgs {
 }
 
 /// generated route for
-/// [CreateNewAthleteScreen]
-class CreateNewAthleteRoute extends PageRouteInfo<void> {
-  const CreateNewAthleteRoute({List<PageRouteInfo>? children})
-      : super(
-          CreateNewAthleteRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'CreateNewAthleteRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [DiaryScreen]
-class DiaryRoute extends PageRouteInfo<void> {
-  const DiaryRoute({List<PageRouteInfo>? children})
-      : super(
-          DiaryRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'DiaryRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [ExercisesScreen]
-class ExercisesRoute extends PageRouteInfo<void> {
-  const ExercisesRoute({List<PageRouteInfo>? children})
-      : super(
-          ExercisesRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ExercisesRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [RecoverPasswordScreen]
-class RecoverPasswordRoute extends PageRouteInfo<void> {
-  const RecoverPasswordRoute({List<PageRouteInfo>? children})
-      : super(
-          RecoverPasswordRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'RecoverPasswordRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [ProfileScreen]
 class ProfileRoute extends PageRouteInfo<ProfileRouteArgs> {
   ProfileRoute({
@@ -295,45 +367,17 @@ class ProfileRouteArgs {
 }
 
 /// generated route for
-/// [MainScreen]
-class MainRoute extends PageRouteInfo<void> {
-  const MainRoute({List<PageRouteInfo>? children})
+/// [RecoverPasswordScreen]
+class RecoverPasswordRoute extends PageRouteInfo<void> {
+  const RecoverPasswordRoute({List<PageRouteInfo>? children})
       : super(
-          MainRoute.name,
+          RecoverPasswordRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'MainRoute';
+  static const String name = 'RecoverPasswordRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [AuthScreen]
-class AuthRoute extends PageRouteInfo<AuthRouteArgs> {
-  AuthRoute({
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
-          AuthRoute.name,
-          args: AuthRouteArgs(key: key),
-          initialChildren: children,
-        );
-
-  static const String name = 'AuthRoute';
-
-  static const PageInfo<AuthRouteArgs> page = PageInfo<AuthRouteArgs>(name);
-}
-
-class AuthRouteArgs {
-  const AuthRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'AuthRouteArgs{key: $key}';
-  }
 }
 
 /// generated route for
@@ -366,20 +410,6 @@ class RegistrationRouteArgs {
 }
 
 /// generated route for
-/// [MyParamsScreen]
-class MyParamsRoute extends PageRouteInfo<void> {
-  const MyParamsRoute({List<PageRouteInfo>? children})
-      : super(
-          MyParamsRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'MyParamsRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [BirthdayScreen]
 class BirthdayRoute extends PageRouteInfo<void> {
   const BirthdayRoute({List<PageRouteInfo>? children})
@@ -408,15 +438,15 @@ class IdConfirmationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [AthletesScreen]
-class AthletesRoute extends PageRouteInfo<void> {
-  const AthletesRoute({List<PageRouteInfo>? children})
+/// [MyParamsScreen]
+class MyParamsRoute extends PageRouteInfo<void> {
+  const MyParamsRoute({List<PageRouteInfo>? children})
       : super(
-          AthletesRoute.name,
+          MyParamsRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'AthletesRoute';
+  static const String name = 'MyParamsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

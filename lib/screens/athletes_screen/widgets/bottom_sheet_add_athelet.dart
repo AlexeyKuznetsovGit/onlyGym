@@ -1,20 +1,14 @@
-import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
-import 'package:onlygym/project_widgets/pj_buttons/pj_filled_button.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_long_button.dart';
-import 'package:onlygym/project_widgets/pj_qr.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 import 'package:onlygym/router/router.dart';
 import 'package:onlygym/screens/athletes_screen/cubit/cb_athletes_screen.dart';
-import 'package:onlygym/screens/profile_screen/widgets/volumeDiagram.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-
-import '../../../project_widgets/pj_text_field.dart';
 
 class BottomSheetAddAthelet extends StatefulWidget {
   final String title;
@@ -172,7 +166,7 @@ class _BottomSheetAddAtheletState extends State<BottomSheetAddAthelet> {
                       builder: (BuildContext context) {
                         return BottomSheetAddAthelet(
                           cubit: widget.cubit,
-                          height: 480.w,
+                          height: 480.h,
                           title: 'Поместите QR-код в рамку',
                           isQr: true,
                         );
