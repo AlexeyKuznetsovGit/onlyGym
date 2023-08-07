@@ -139,8 +139,13 @@ class _BottomSheetAddTrainingState extends State<BottomSheetAddTraining> {
                 Form(
                     key: _formKey,
                     child: PjTextField(
-                        type: PjTextFieldStyle.date, // пока так
-                        title: "Дата рождения",
+                      onChanged: (val){
+                        setState(() {
+
+                        });
+                      },
+                        type: PjTextFieldStyle.time, // пока так
+                        title: "Время тренировки",
                         controller: controller)),
                 if (isPressed &&
                     _formKey.currentState != null &&
@@ -161,6 +166,7 @@ class _BottomSheetAddTrainingState extends State<BottomSheetAddTraining> {
                     text: "Продолжить",
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        print('success');
                       } else {
                         setState(() {
                           isPressed = true;

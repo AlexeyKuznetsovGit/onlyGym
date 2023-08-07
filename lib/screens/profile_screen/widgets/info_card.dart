@@ -35,9 +35,12 @@ class _InfoCardState extends State<InfoCard> {
           isActive = !isActive;
         });
         await widget.callback();
-        setState(() {
-          isActive = !isActive;
-        });
+        if(mounted){
+          setState(() {
+            isActive = !isActive;
+          });
+        }
+
 
       },
       behavior: HitTestBehavior.translucent,

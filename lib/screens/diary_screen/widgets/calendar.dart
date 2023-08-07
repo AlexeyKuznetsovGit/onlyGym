@@ -158,7 +158,8 @@ class _CalendarState extends State<Calendar> {
         break;
       }
     }
-    return findedIndex - 3;
+
+    return findedIndex - current.weekday + 1;
   }
 
   /// обработка тапа
