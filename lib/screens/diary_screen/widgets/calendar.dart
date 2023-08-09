@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -6,13 +7,15 @@ import 'package:intl/intl.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/screens/current_exercises_screen/widget/current_exercise_card.dart';
+import 'package:onlygym/screens/diary_screen/cubit/cb_diary_screen.dart';
 import 'package:onlygym/screens/diary_screen/widgets/bottom_sheet_add_training.dart';
 
 import '../../../../project_utils/pj_icons.dart';
 import 'calendar_item.dart';
 
 class Calendar extends StatefulWidget {
-  const Calendar({Key? key}) : super(key: key);
+  final List<String> dateList;
+  const Calendar({Key? key, required this.dateList}) : super(key: key);
 
   @override
   State<Calendar> createState() => _CalendarState();
@@ -20,7 +23,7 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   //Отвечает за выбранный день
-  DateTime currentDate = DateTime.now();
+ // DateTime currentDate = DateTime.now();
 
   DateTime dateTineNow = DateTime.now();
 
@@ -38,9 +41,10 @@ class _CalendarState extends State<Calendar> {
 
   @override
   void initState() {
+    print('da');
     days = generateDays();
     controllerPage = PageController(
-        viewportFraction: 0.145, initialPage: getCurrentIndex(currentDate));
+        viewportFraction: 0.145, initialPage: getCurrentIndex(context.read<CbDiaryScreen>().currentDate));
     label = 'Сегодня';
     super.initState();
     /* WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -132,10 +136,11 @@ class _CalendarState extends State<Calendar> {
               children: List.generate(
                   days.length,
                   (index) => CalendarItem(
-                      isContainsTraining: index % 2 == 0,
+                      isContainsTraining: widget.dateList.contains(DateFormat("yyyy-MM-dd").format(days[index])),
                       date: days[index],
-                      selectedDate: currentDate,
+                      selectedDate: context.read<CbDiaryScreen>().currentDate,
                       onItemTap: () {
+
                         onTapItem(index);
                       })),
             )),
@@ -165,13 +170,13 @@ class _CalendarState extends State<Calendar> {
   /// обработка тапа
   void onTapItem(int index) {
     setState(() {
-      currentDate = days[index];
-      if(currentDate.day == dateTineNow.day &&currentDate.month == dateTineNow.month &&currentDate.year == dateTineNow.year){
+      context.read<CbDiaryScreen>().currentDate = days[index];
+      if(context.read<CbDiaryScreen>().currentDate.day == dateTineNow.day &&context.read<CbDiaryScreen>().currentDate.month == dateTineNow.month &&context.read<CbDiaryScreen>().currentDate.year == dateTineNow.year){
         label = 'Сегодня';
       } else {
-        label = DateFormat("d MMMM yyyy", 'ru').format(currentDate);
+        label = DateFormat("d MMMM yyyy", 'ru').format(context.read<CbDiaryScreen>().currentDate);
       }
-
+      context.read<CbDiaryScreen>().getData(DateFormat("yyyy-MM-dd").format(context.read<CbDiaryScreen>().currentDate), true);
     });
   }
 

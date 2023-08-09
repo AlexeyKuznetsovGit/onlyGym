@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:onlygym/models/training_model.dart';
 import 'package:onlygym/project_widgets/error_dialog.dart';
+import 'package:onlygym/project_widgets/loader_dialog.dart';
 import 'package:onlygym/project_widgets/pj_appbar.dart';
 import 'package:onlygym/project_widgets/pj_loader.dart';
 import 'package:onlygym/screens/current_exercises_screen/widget/current_exercise_card.dart';
@@ -22,7 +24,8 @@ class DiaryScreen extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider<CbDiaryScreen>(
-      create: (context) => CbDiaryScreen()..getData(),
+      create: (context) => CbDiaryScreen()
+        ..getData(DateFormat("yyyy-MM-dd").format(DateTime.now())),
       child: this,
     );
   }
@@ -30,7 +33,7 @@ class DiaryScreen extends StatefulWidget implements AutoRouteWrapper {
 
 class _DiaryScreenState extends State<DiaryScreen> {
   DateTime dateTimeNow = DateTime.now();
-
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,36 +41,48 @@ class _DiaryScreenState extends State<DiaryScreen> {
         listener: (context, state) {
           state.maybeWhen(
               orElse: () {},
+              loaded: (_) {
+                if (loading) {
+                  Navigator.pop(context);
+                  loading = false;
+                }
+              },
+              loading: () {
+                loading = true;
+                showLoader(context);
+              },
               error: (code, message) {
-                showAlertDialog(context, message!);
+                showAlertDialog(context, message ?? '');
               });
         },
         builder: (context, state) => state.maybeWhen(
-          orElse: () => Container(),
-          loading: () => const PjLoader(),
-          loaded: () => _buildBodyContent(context),
+          orElse: () =>_buildBodyContent(context, context.read<CbDiaryScreen>().training),
+          init: () => PjLoader(),
+          loaded: (training) => _buildBodyContent(context, training),
         ),
       ),
     );
   }
-  Widget _buildBodyContent(BuildContext context) {
+
+  Widget _buildBodyContent(BuildContext context, TrainingModel training) {
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Calendar(),
-          Expanded(child: SingleChildScrollView(
+          Calendar(dateList: training.dateList!,),
+          Expanded(
+              child: SingleChildScrollView(
             child: Column(
               children: [
                 ...List.generate(
-                    10,
-                        (index) => Padding(
+                    training.trainingList!.length,
+                    (index) => Padding(
                           padding: EdgeInsets.only(bottom: 20.h),
                           child: MyTrainingCard(
-                      title: "Моя тренировка",
-                      time: "16:00",
-                      callback: () {},
-                    ),
+                            title: training.trainingList![index].name!,
+                            time: training.trainingList![index].time!,
+                            callback: () {},
+                          ),
                         )),
               ],
             ),

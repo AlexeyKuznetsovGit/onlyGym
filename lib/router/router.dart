@@ -34,7 +34,7 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: CreateNewAthleteRoute.page),
         AutoRoute(page: IdConfirmationRoute.page),
         AutoRoute(page: MainRoute.page, initial: Api.tokenIsNotEmpty, children: [
-          AutoRoute(page: DiaryRoute.page),
+          AutoRoute(page: DiaryRoute.page,maintainState: false),
           AutoRoute(page: ExercisesRoute.page),
           AutoRoute(page: AthletesRoute.page, maintainState: false),
           AutoRoute(page: ProfileRoute.page, initial: true)

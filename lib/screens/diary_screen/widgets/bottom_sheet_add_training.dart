@@ -163,7 +163,7 @@ class _BottomSheetAddTrainingState extends State<BottomSheetAddTraining> {
                   height: 20.h,
                 ),
                 PjFilledButton(
-                    text: "Продолжить",
+                    text: "Применить изменения",
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         print('success');

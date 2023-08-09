@@ -10,7 +10,7 @@ import '../project_utils/pj_colors.dart';
 
 void showLoader(BuildContext context, [bool back = false]) {
   showDialog(
-    barrierDismissible: true, // poka pust true
+    barrierDismissible: false, // poka pust true
     context: context,
     builder: (context) => PjLoader()
        /* AlertDialog(
