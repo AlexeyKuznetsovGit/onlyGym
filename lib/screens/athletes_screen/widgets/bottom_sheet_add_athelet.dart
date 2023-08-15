@@ -1,9 +1,12 @@
 
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
+import 'package:onlygym/project_utils/singletons/sg_app_data.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_long_button.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 import 'package:onlygym/router/router.dart';
@@ -189,8 +192,9 @@ class _BottomSheetAddAtheletState extends State<BottomSheetAddAthelet> {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) async {
       if (scanData.format == BarcodeFormat.qrcode && scanData.code != null) {
-        if( scanData.code!.isNotEmpty && isNumeric(scanData.code!)){
+        if(scanData.code!.isNotEmpty && isNumeric(scanData.code!) && scanData.code != SgAppData.instance.user.id.toString()){
           controller.stopCamera();
+          log(scanData.code!, name: "QR-code DATA");
          await widget.cubit.addAthleteByQr(int.parse(scanData.code!));
          context.router.pop();
          context.router.pop();

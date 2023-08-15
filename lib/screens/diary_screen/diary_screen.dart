@@ -52,7 +52,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
                 showLoader(context);
               },
               error: (code, message) {
-                showAlertDialog(context, message ?? '');
+                showAlertDialog(context, message ?? '', true);
               });
         },
         builder: (context, state) => state.maybeWhen(
@@ -72,6 +72,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
           Calendar(dateList: training.dateList!,),
           Expanded(
               child: SingleChildScrollView(
+                physics: ClampingScrollPhysics(),
             child: Column(
               children: [
                 ...List.generate(

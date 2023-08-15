@@ -100,8 +100,10 @@ class _CalendarState extends State<Calendar> {
                         isScrollControlled: true,
                         barrierColor: PjColors.black.withOpacity(0.5),
                         context: context,
-                        builder: (BuildContext context) {
+                        builder: (ctx) {
+                          CbDiaryScreen cubit = BlocProvider.of<CbDiaryScreen>(context);
                           return BottomSheetAddTraining(
+                            cubit: cubit,
                             isNewTraining: true,
                             height: 270.h,
                             title: 'Новая тренировка',

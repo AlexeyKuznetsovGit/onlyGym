@@ -27,4 +27,14 @@ class CbDiaryScreen extends Cubit<StDiaryScreen> {
       emit(StDiaryScreen.error(e.code, 'Что-то пошло не так!'));
     }
   }
+  Future<void> addTraining(int? athleteId,String date, String time) async {
+    try {
+      emit(StDiaryScreen.loading());
+      await (getIt<TrainingRepository>().addTraining(athleteId, date, time));
+      training = await (getIt<TrainingRepository>().getTraining(date));
+      emit( StDiaryScreen.loaded(training));
+    } on APIException catch (e) {
+      emit(StDiaryScreen.error(e.code, 'Что-то пошло не так!'));
+    }
+  }
 }

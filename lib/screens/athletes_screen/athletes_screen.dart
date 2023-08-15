@@ -120,8 +120,9 @@ class _AthletesScreenState extends State<AthletesScreen> {
               physics: ClampingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.w),
               itemBuilder: (context, index) => AvatarCard(
+                isChoiceAthlete: widget.isChoiceAthlete,
                 callback: () {
-                  context.router.push(ProfileRoute(athleteId: filtered[index].id));
+                 widget.isChoiceAthlete ? Navigator.pop(context, filtered[index].id) : context.router.push(ProfileRoute(athleteId: filtered[index].id));
                 },
                 user: filtered[index],
               ),
