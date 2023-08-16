@@ -41,7 +41,6 @@ class _CalendarState extends State<Calendar> {
 
   @override
   void initState() {
-    print('da');
     days = generateDays();
     controllerPage = PageController(
         viewportFraction: 0.145, initialPage: getCurrentIndex(context.read<CbDiaryScreen>().currentDate));

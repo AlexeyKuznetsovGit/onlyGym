@@ -13,10 +13,16 @@ class CbAthletesScreen extends Cubit<StAthletesScreen> {
 
   CbAthletesScreen() : super(const StAthletesScreen.loading());
   List<UserModel> list = [];
+  List<String> athletesId = [];
   Future<void> getData() async {
     try {
       list = [];
       list = await (getIt<AthleteRepository>().getAll());
+      if(list.isNotEmpty){ // Получить список id уже добавленых атлетов
+        for(UserModel users in list){
+          athletesId.add(users.id.toString());
+        }
+      }
       emit(StAthletesScreen.loaded(list));
     } on APIException catch (e) {
       emit(StAthletesScreen.error(e.code, 'Что-то пошло не так!'));

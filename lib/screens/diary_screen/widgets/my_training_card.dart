@@ -19,23 +19,12 @@ class MyTrainingCard extends StatefulWidget {
 }
 
 class _MyTrainingCardState extends State<MyTrainingCard> {
-  late bool isTouch;
-
-  @override
-  void initState() {
-    isTouch = false;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onPanStart: (_) {
-        setState(() => isTouch = true);
-      },
-      onPanEnd: (_) {
-        setState(() => isTouch = false);
+      onTap: (){
         widget.callback();
       },
       child: Container(

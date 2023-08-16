@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
@@ -19,7 +18,8 @@ class BottomSheetAddAthelet extends StatefulWidget {
   final bool isQr;
   final CbAthletesScreen cubit;
 
-  const BottomSheetAddAthelet({Key? key, required this.title, required this.cubit, required this.height, this.isQr = false})
+  const BottomSheetAddAthelet(
+      {Key? key, required this.title, required this.cubit, required this.height, this.isQr = false})
       : super(key: key);
 
   @override
@@ -32,7 +32,6 @@ class _BottomSheetAddAtheletState extends State<BottomSheetAddAthelet> {
 
   MaterialStatesController changeController = MaterialStatesController();
   MaterialStatesController statisticsController = MaterialStatesController();
-
 
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
@@ -192,16 +191,20 @@ class _BottomSheetAddAtheletState extends State<BottomSheetAddAthelet> {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) async {
       if (scanData.format == BarcodeFormat.qrcode && scanData.code != null) {
-        if(scanData.code!.isNotEmpty && isNumeric(scanData.code!) && scanData.code != SgAppData.instance.user.id.toString()){
+        if (scanData.code!.isNotEmpty &&
+            isNumeric(scanData.code!) &&
+            scanData.code != SgAppData.instance.user.id.toString() &&
+            !widget.cubit.athletesId.contains(scanData.code)) {
           controller.stopCamera();
           log(scanData.code!, name: "QR-code DATA");
-         await widget.cubit.addAthleteByQr(int.parse(scanData.code!));
-         context.router.pop();
-         context.router.pop();
+          await widget.cubit.addAthleteByQr(int.parse(scanData.code!));
+          context.router.pop();
+          context.router.pop();
         }
       }
     });
   }
+
   bool isNumeric(String str) {
     return num.tryParse(str) != null;
   }

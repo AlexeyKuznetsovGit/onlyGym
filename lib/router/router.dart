@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:eticon_api/eticon_api.dart';
 import 'package:flutter/material.dart';
+import 'package:onlygym/models/training_model.dart';
 import 'package:onlygym/screens/athletes_screen/athletes_screen.dart';
 import 'package:onlygym/screens/auth_screen/auth_screen.dart';
 import 'package:onlygym/screens/diary_screen/diary_screen.dart';
@@ -15,6 +16,7 @@ import 'package:onlygym/screens/registration_screen/widgets/Id_confirmation_scre
 import 'package:onlygym/screens/registration_screen/widgets/birthday_screen/birthday_screen.dart';
 import 'package:onlygym/screens/registration_screen/widgets/my_params_screen/my_params_screen.dart';
 import 'package:onlygym/models/user_model.dart';
+import 'package:onlygym/screens/training_screen/training_screen.dart';
 
 import '../screens/create_new_athlete_screen/create_new_athlete_screen.dart';
 
@@ -34,12 +36,13 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: CreateNewAthleteRoute.page),
         AutoRoute(page: IdConfirmationRoute.page),
         AutoRoute(page: MainRoute.page, initial: Api.tokenIsNotEmpty, children: [
-          AutoRoute(page: DiaryRoute.page,maintainState: false),
+          AutoRoute(page: DiaryRoute.page, maintainState: false),
           AutoRoute(page: ExercisesRoute.page),
           AutoRoute(page: AthletesRoute.page, maintainState: false),
           AutoRoute(page: ProfileRoute.page, initial: true)
         ]),
         AutoRoute(page: ProfileRoute.page),
-        AutoRoute(page: AthletesRoute.page)
+        AutoRoute(page: AthletesRoute.page),
+        AutoRoute(page: TrainingRoute.page)
       ];
 }
