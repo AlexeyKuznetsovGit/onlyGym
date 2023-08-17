@@ -1,0 +1,1 @@
+{"className":"ParametersModel","fileName":"user_model.dart","imports":["package:onlygym/models/photos_model.dart"],"fields":[{"json_field":"name","name":"name","isSnakeCase":true,"type":"String?"},{"json_field":"value","name":"value","isSnakeCase":true,"type":"double?"},{"json_field":"unit","name":"unit","isSnakeCase":true,"type":"String?"}]}

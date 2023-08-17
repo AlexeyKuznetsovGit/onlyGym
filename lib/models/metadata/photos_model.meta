@@ -1,0 +1,1 @@
+{"className":"PhotosModel","fileName":"photos_model.dart","imports":[],"fields":[{"json_field":"url","name":"url","isSnakeCase":true,"type":"String?"},{"json_field":"is_avatar","name":"isAvatar","isSnakeCase":true,"type":"bool?"},{"json_field":"pub_date","name":"pubDate","isSnakeCase":true,"type":"String?"}]}

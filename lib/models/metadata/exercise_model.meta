@@ -1,0 +1,1 @@
+{"className":"ExerciseModel","fileName":"exercise_model.dart","imports":["groups_model.dart"],"fields":[{"json_field":"id","name":"id","isSnakeCase":true,"type":"int?"},{"json_field":"name","name":"name","isSnakeCase":true,"type":"String?"},{"json_field":"groups","name":"groups","isSnakeCase":true,"type":"List<GroupsModel>?"}]}

@@ -45,12 +45,15 @@ class _ExerciseCardState extends State<ExerciseCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onPanStart: (_) {
-        setState(() => isTouch = true);
-      },
-      onPanEnd: (_) {
-        setState(() => isTouch = false);
-        if (widget.type == _ExerciseCardType.checkbox) isCheck = !isCheck;
+      // onPanStart: (_) {
+      //   setState(() => isTouch = true);
+      // },
+      // onPanEnd: (_) {
+      //   setState(() => isTouch = false);
+      //   if (widget.type == _ExerciseCardType.checkbox) isCheck = !isCheck;
+      //   widget.callback();
+      // },
+      onTap: (){
         widget.callback();
       },
       child: Container(
@@ -79,6 +82,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                   width: 211.w,
                   child: PjText("Канаты - чередование волн в полуприседе",
                       style: PjTextStyle.bold,
+                      dontUseHeightBlyad: true,
                       color: widget.type == _ExerciseCardType.checkbox
                           ? PjColors.black
                           : (isTouch ? PjColors.gray : PjColors.black))),
