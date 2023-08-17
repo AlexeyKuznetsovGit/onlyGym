@@ -7,4 +7,10 @@ class UserRepository {
     Map<String, dynamic> response = await Api.get('me', urlIndex: ApiUrls.users, testMode: true, isAuth: true);
     return UserModel.fromJson(response);
   }
+
+  Future<UserModel> getUser(int id) async {
+    Map<String, dynamic> response = await Api.get('user',query: {"athlete_id": id}, urlIndex: ApiUrls.users, testMode: true, isAuth: true);
+    return UserModel.fromJson(response);
+  }
+
 }

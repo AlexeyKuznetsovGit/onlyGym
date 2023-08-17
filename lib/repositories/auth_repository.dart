@@ -17,7 +17,7 @@ class AuthRepository {
       String? namePhoto}) async {
     var formData = pathPhoto != null
         ? FormData.fromMap({
-            'email': email,
+            'email': email.toLowerCase(),
             'password': password,
             'first_name': firstName,
             'last_name': lastName,
@@ -32,7 +32,7 @@ class AuthRepository {
             )
           })
         : FormData.fromMap({
-            'email': email,
+            'email': email.toLowerCase(),
             'password': password,
             'first_name': firstName,
             'last_name': lastName,
@@ -48,14 +48,19 @@ class AuthRepository {
   }
 
   Future<void> login({required String email, required String password}) async {
-    Map<String, dynamic> response =
-        await Api.post('sign-in', body: {"email": email, "password": password}, urlIndex: ApiUrls.auth, testMode: true);
+    Map<String, dynamic> response = await Api.post('sign-in',
+        body: {"email": email.toLowerCase(), "password": password}, urlIndex: ApiUrls.auth, testMode: true);
     Api.setToken(response['access_token']);
   }
 
   Future<int> sendCode({required String email}) async {
     Map<String, dynamic> response =
-        await Api.post('sendCode', query: {"email": email}, urlIndex: ApiUrls.auth, testMode: true);
+        await Api.post('sendCode', query: {"email": email.toLowerCase()}, urlIndex: ApiUrls.auth, testMode: true);
     return response['code'];
+  }
+
+  Future<void> recoverPassword({required String email}) async {
+    Map<String, dynamic> response =
+    await Api.post('recoverPassword', body: {"email": email.toLowerCase()}, urlIndex: ApiUrls.auth, testMode: true);
   }
 }

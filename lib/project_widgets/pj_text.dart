@@ -6,7 +6,7 @@ enum PjTextStyle { h1, title, bold, regular, medium, tiny, downmenu }
 
 class PjText extends StatelessWidget {
   const PjText(this.text,
-      {Key? key, required this.style, this.color = PjColors.black,  this.align = TextAlign.start, this.dontUseHeightBlyad = false})
+      {Key? key, required this.style, this.color = PjColors.black,  this.align = TextAlign.start})
       : super(key: key);
 
 
@@ -14,7 +14,6 @@ class PjText extends StatelessWidget {
   final Color? color;
   final PjTextStyle style;
   final TextAlign align;
-  final bool dontUseHeightBlyad;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +21,9 @@ class PjText extends StatelessWidget {
       text,
       textAlign: align,
       style: TextStyle(
-        height: dontUseHeightBlyad ? 1.0 :height.h,
+        height: height,
         fontWeight: fontWeight,
-        fontSize: fontSize,
+        fontSize: fontSize.sp,
         color: color,
         leadingDistribution: TextLeadingDistribution.even,
        // height: height,
@@ -57,7 +56,7 @@ class PjText extends StatelessWidget {
     if (style == PjTextStyle.h1) return 28 / 22;
     if (style == PjTextStyle.title) return 20 / 22;
     if (style == PjTextStyle.bold || style == PjTextStyle.regular)
-      return 16/ 22;
+      return 16 / 22;
     if (style == PjTextStyle.medium) return 14 / 22;
     if (style == PjTextStyle.tiny) return 12 / 20;
     if (style == PjTextStyle.downmenu) return 10 / 12;

@@ -16,9 +16,7 @@ class ExerciseCard extends StatefulWidget {
     type = _ExerciseCardType.checkbox;
   }
 
-  ExerciseCard.delete(
-      {Key? key, required this.callback, required this.deleteCallback})
-      : super(key: key) {
+  ExerciseCard.delete({Key? key, required this.callback, required this.deleteCallback}) : super(key: key) {
     type = _ExerciseCardType.delete;
   }
 
@@ -80,20 +78,28 @@ class _ExerciseCardState extends State<ExerciseCard> {
               ),
               Container(
                   width: 211.w,
-                  child: PjText("Канаты - чередование волн в полуприседе",
+                  child: Text("Канаты - чередование волн в полуприседе", //Пока так оставлю
+                      style: TextStyle(
+                          color: widget.type == _ExerciseCardType.checkbox
+                              ? PjColors.black
+                              : (isTouch ? PjColors.gray : PjColors.black),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16.sp,
+                          fontFamily: "PtRoot",
+                          leadingDistribution: TextLeadingDistribution
+                              .even)) /*PjText("Канаты - чередование волн в полуприседе",
                       style: PjTextStyle.bold,
                       dontUseHeightBlyad: true,
                       color: widget.type == _ExerciseCardType.checkbox
                           ? PjColors.black
-                          : (isTouch ? PjColors.gray : PjColors.black))),
+                          : (isTouch ? PjColors.gray : PjColors.black))*/
+                  ),
               const Spacer(),
               if (widget.type == _ExerciseCardType.checkbox) ...[
                 SvgPicture.asset(isCheck ? PjIcons.check : PjIcons.notCheck),
               ],
               if (widget.type == _ExerciseCardType.delete) ...[
-                Icon(CustomIcons.small_cross,
-                    color:
-                        isTouch ? PjColors.ultraLightBlue : PjColors.lightBlue)
+                Icon(CustomIcons.small_cross, color: isTouch ? PjColors.ultraLightBlue : PjColors.lightBlue)
               ]
             ],
           ),

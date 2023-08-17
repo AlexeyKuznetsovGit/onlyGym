@@ -151,7 +151,7 @@ class _MyParamsScreenState extends State<MyParamsScreen> {
                       ParametersModel(name: "Рост", value: double.parse(heightController.text), unit: 'см'),
                       ParametersModel(name: "Вес", value: double.parse(weightController.text), unit: 'кг')
                     ];
-                    context.router.push(const MyTargetRoute());
+                    context.router.push(MyTargetRoute());
                   } else {
                     setState(() {
                       isPressed = true;

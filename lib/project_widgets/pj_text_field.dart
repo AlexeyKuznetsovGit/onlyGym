@@ -6,8 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_input_formatter.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
+import 'package:regexed_validator/regexed_validator.dart';
 
-enum PjTextFieldStyle { password, email, date, text, number, params }
+enum PjTextFieldStyle { password, email, date, text, number, params, time }
 
 class PjTextField extends StatefulWidget {
   const PjTextField({
@@ -34,26 +35,24 @@ class PjTextField extends StatefulWidget {
 }
 
 class _PjTextFieldState extends State<PjTextField> {
-  late bool isShow;
-
-  @override
-  void initState() {
-    isShow = false;
-    super.initState();
-  }
+  bool isShow = true;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 334.w,
       child: TextFormField(
+        textCapitalization: widget.type == PjTextFieldStyle.text
+            ? TextCapitalization.sentences
+            : TextCapitalization.none,
         onChanged: widget.onChanged,
         autovalidateMode: AutovalidateMode.disabled,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return '';
           }
-          if (widget.type == PjTextFieldStyle.email && !GetUtils.isEmail(value)) {
+          if (widget.type == PjTextFieldStyle.email &&
+              !GetUtils.isEmail(value)) {
             return '';
           }
           if (widget.type == PjTextFieldStyle.password &&
@@ -61,17 +60,24 @@ class _PjTextFieldState extends State<PjTextField> {
               (value.length < 6 || value != widget.repeatPassword)) {
             return '';
           }
-          if (widget.type == PjTextFieldStyle.password && widget.repeatPassword.isEmpty && value.length < 6) {
+          if (widget.type == PjTextFieldStyle.password &&
+              widget.repeatPassword.isEmpty &&
+              value.length < 6) {
             return '';
           }
           if (widget.type == PjTextFieldStyle.date && !_validateDate(value)) {
             return '';
           }
-          if (widget.type == PjTextFieldStyle.params && (value == '0' || value == '0.0' || value.endsWith('.'))) {
+          if (widget.type == PjTextFieldStyle.time && !_validateTime(value)) {
+            return '';
+          }
+          if (widget.type == PjTextFieldStyle.params &&
+              (value == '0' || value == '0.0' || value.endsWith('.'))) {
             return '';
           }
           if (widget.type == PjTextFieldStyle.number &&
-              (widget.checkCode != null && widget.checkCode != int.parse(widget.controller.text))) {
+              (widget.checkCode != null &&
+                  widget.checkCode != int.parse(widget.controller.text))) {
             return '';
           }
         },
@@ -82,29 +88,51 @@ class _PjTextFieldState extends State<PjTextField> {
               ]
             : widget.type == PjTextFieldStyle.params
                 ? [
-          DecimalInputFormatter(),//FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    DecimalInputFormatter(),
+                    //FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                   ]
-                : null,
+                : widget.type == PjTextFieldStyle.time
+                    ? [
+                        TimeTextFormatter(),
+                        //FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      ]
+                    : null,
         keyboardType: getTextInputType(widget.type),
-        style: TextStyle(fontFamily: "PtRoot", fontSize: 14.h, fontWeight: FontWeight.w500, color: PjColors.black),
+        style: TextStyle(
+            fontFamily: "PtRoot",
+            fontSize: 14.h,
+            fontWeight: FontWeight.w500,
+            color: PjColors.black),
         decoration: InputDecoration(
           suffixText: widget.suffixText,
-          suffixStyle: TextStyle(fontFamily: "PtRoot", fontSize: 14.h, fontWeight: FontWeight.w500, color: PjColors.black),
+          suffixStyle: TextStyle(
+              fontFamily: "PtRoot",
+              fontSize: 14.h,
+              fontWeight: FontWeight.w500,
+              color: PjColors.black),
           errorStyle: TextStyle(height: 0, color: Colors.transparent),
           labelText: widget.title,
           floatingLabelBehavior: FloatingLabelBehavior.never,
           isDense: true,
-          labelStyle:
-              TextStyle(fontFamily: "PtRoot", fontSize: 14.h, fontWeight: FontWeight.w500, color: PjColors.gray),
-          focusedErrorBorder:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(30.r), borderSide: BorderSide(color: Colors.red)),
-          errorBorder:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(30.r), borderSide: BorderSide(color: Colors.red)),
+          labelStyle: TextStyle(
+              fontFamily: "PtRoot",
+              fontSize: 14.h,
+              fontWeight: FontWeight.w500,
+              color: PjColors.gray),
+          focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.r),
+              borderSide: BorderSide(color: Colors.red)),
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.r),
+              borderSide: BorderSide(color: Colors.red)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.r), borderSide: BorderSide(color: PjColors.ultraLightBlue)),
+              borderRadius: BorderRadius.circular(30.r),
+              borderSide: BorderSide(color: PjColors.ultraLightBlue)),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.r), borderSide: BorderSide(color: PjColors.ultraLightBlue)),
-          contentPadding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
+              borderRadius: BorderRadius.circular(30.r),
+              borderSide: BorderSide(color: PjColors.ultraLightBlue)),
+          contentPadding:
+              EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
           suffixIcon: widget.type == PjTextFieldStyle.password
               ? GestureDetector(
                   onTap: () {
@@ -136,12 +164,21 @@ class _PjTextFieldState extends State<PjTextField> {
         return TextInputType.number;
       case PjTextFieldStyle.params:
         return TextInputType.datetime;
+      case PjTextFieldStyle.time:
+        return TextInputType.number;
       default:
         return TextInputType.text;
     }
   }
+  bool _validateTime(String input) {
+    if (validator.time(input)) {
+      return true;
+    } else {
+     return false;
+    }
+  }
 
-  bool _validateDate(String date) {
+  /*bool _validateDate(String date) {
     DateFormat _dateFormat = DateFormat("dd.MM.yyyy");
     try {
       DateTime parsedDate = _dateFormat.parseStrict(date);
@@ -152,6 +189,25 @@ class _PjTextFieldState extends State<PjTextField> {
       }
     } catch (e) {
       return false; //Некорректный формат даты
+    }
+  }*/
+  bool _validateDate(String date) {
+    DateFormat _dateFormat = DateFormat("dd.MM.yyyy");
+    try {
+      DateTime parsedDate = _dateFormat.parseLoose(date);
+
+      // Проверяем, что год рождения не позднее 1900
+      if (parsedDate.year >= 1900) {
+        if (parsedDate.isBefore(DateTime.now())) {
+          return true; // Дата в прошлом или настоящем - допустимая дата рождения
+        } else {
+          return false; // Дата рождения должна быть в прошлом
+        }
+      } else {
+        return false; // Недопустимый год рождения
+      }
+    } catch (e) {
+      return false; // Некорректный формат даты
     }
   }
 }

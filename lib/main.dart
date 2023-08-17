@@ -6,9 +6,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:eticon_api/eticon_api.dart';
+import 'package:onlygym/repositories/athlete_repository.dart';
 import 'package:onlygym/repositories/auth_repository.dart';
-import 'package:onlygym/repositories/exercise_repository.dart';
 import 'package:onlygym/repositories/get_it.dart';
+import 'package:onlygym/repositories/training_repository.dart';
 import 'package:onlygym/repositories/user_repository.dart';
 import 'package:onlygym/router/router.dart';
 import 'package:onlygym/screens/main_screen/main_screen.dart';
@@ -18,14 +19,15 @@ BuildContext? contextForGlobalError;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  await Api.init(urls: ['http://88.204.74.60:33333/v1/api/users', 'http://88.204.74.60:33333/v1/auth', 'http://88.204.74.60:33333/v1/api/exercise'], onAllError: (e){
+  await Api.init(urls: ['http://88.204.74.60:33333/v1/api/users', 'http://88.204.74.60:33333/v1/auth','http://88.204.74.60:33333/v1/api/athlete','http://88.204.74.60:33333/v1/api/training'], onAllError: (e){
     if(e.code == 401 && contextForGlobalError != null){
       AutoRouter.of(contextForGlobalError!).pushAndPopUntil(AuthRoute(), predicate: (e)=>false);
     }
   });
   getIt.registerLazySingleton(() => UserRepository());
   getIt.registerLazySingleton(() => AuthRepository());
-  getIt.registerLazySingleton(() => ExerciseRepository());
+  getIt.registerLazySingleton(() => AthleteRepository());
+  getIt.registerLazySingleton(() => TrainingRepository());
   runApp(App());
 }
 
@@ -35,6 +37,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
+      useInheritedMediaQuery: true,
       designSize: const Size(390, 844),
       builder: (context, child) {
         return /*MaterialApp.router(
@@ -66,7 +69,8 @@ class App extends StatelessWidget {
 class ApiUrls{
   static int users = 0;
   static int auth = 1;
-  static int exercise = 2;
+  static int athlete = 2;
+  static int training = 3;
 }
 
 /*class Scr extends StatefulWidget {

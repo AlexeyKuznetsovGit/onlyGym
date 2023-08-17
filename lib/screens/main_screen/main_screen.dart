@@ -33,9 +33,9 @@ class _MainScreenState extends State<MainScreen> {
     return BlocBuilder<CbMainScreen, StMainScreen>(
         builder: (context, state) => state.maybeWhen(
             orElse: () => Container(),
-            loading: () => const PjLoader(),
+            loading: () => Scaffold(body: PjLoader()),
             loaded: (user) => AutoTabsScaffold(
-                routes: const [DiaryRoute(), ExercisesRoute(), AthletesRoute(), ProfileRoute()],
+                routes:  [DiaryRoute(), ExercisesRoute(), AthletesRoute(), ProfileRoute()],
                 bottomNavigationBuilder: (_, tabsRouter) {
                   return BottomNavigationBar(
                     backgroundColor: PjColors.white,

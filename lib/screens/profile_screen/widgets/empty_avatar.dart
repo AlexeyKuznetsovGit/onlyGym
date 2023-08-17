@@ -5,7 +5,10 @@ import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_utils/singletons/sg_app_data.dart';
 
 class EmptyAvatar extends StatelessWidget {
+  final int? athleteId;
+
   const EmptyAvatar({
+    this.athleteId,
     super.key,
   });
 
@@ -15,19 +18,22 @@ class EmptyAvatar extends StatelessWidget {
       alignment: Alignment.bottomRight,
       children: [
         Icon(
-          SgAppData.instance.localAvatar,
+          athleteId != null ? CustomIcons.avatar : SgAppData.instance.localAvatar,
+          // Потому что не знаем какой локальный аватар выбран
           size: 98.w,
           color: PjColors.neonBlue,
         ),
-        Container(
-          width: 24.w,
-          height: 24.h,
-          decoration: const BoxDecoration(shape: BoxShape.circle, color: PjColors.lightBlue),
-          child: const Icon(
-            CustomIcons.plus_small,
-            color: PjColors.white,
-          ),
-        )
+        if (athleteId == null) ...[
+          Container(
+            width: 24.w,
+            height: 24.h,
+            decoration: const BoxDecoration(shape: BoxShape.circle, color: PjColors.lightBlue),
+            child: const Icon(
+              CustomIcons.plus_small,
+              color: PjColors.white,
+            ),
+          )
+        ]
       ],
     );
   }

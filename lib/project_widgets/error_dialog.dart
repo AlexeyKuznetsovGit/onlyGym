@@ -7,7 +7,7 @@ import 'package:onlygym/project_widgets/pj_text.dart';
 
 import '../project_utils/pj_colors.dart';
 
-void showAlertDialog(BuildContext context, String message, [bool back = false]) {
+void showAlertDialog(BuildContext context, String message, [bool back = false, Function? callback]) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
@@ -21,6 +21,9 @@ void showAlertDialog(BuildContext context, String message, [bool back = false]) 
   ).then((value) {
     if(back){
       Navigator.pop(context);
+    }
+    if(callback != null){
+      callback();
     }
   });
   /*Get.dialog(
