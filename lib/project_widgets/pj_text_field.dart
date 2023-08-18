@@ -41,6 +41,7 @@ class _PjTextFieldState extends State<PjTextField> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 334.w,
+      height: 42.h,
       child: TextFormField(
         textCapitalization: widget.type == PjTextFieldStyle.text
             ? TextCapitalization.sentences

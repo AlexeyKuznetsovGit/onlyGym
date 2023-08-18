@@ -12,7 +12,7 @@ part 'cb_exercises_screen.freezed.dart';
 class CbExercisesScreen extends Cubit<StExercisesScreen> {
 
   List<ExerciseModel> exercise = [];
-  CbExercisesScreen() : super(const StExercisesScreen.loaded());
+  CbExercisesScreen() : super(const StExercisesScreen.init());
 
   Future<void> getData() async {
     print("Keks");

@@ -19,7 +19,7 @@ class TypeExercisesCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.r),
         ),
         width: 334.w,
-        height: 238.h,
+        height: 208.h,
         child: Stack(
           children: [
             ClipRRect(
@@ -27,7 +27,7 @@ class TypeExercisesCard extends StatelessWidget {
               child: Image.asset(
                 "assets/images/exercise.png",
                 width: 334.w,
-                height: 208.h,
+                height: 176.h,
                 fit: BoxFit.cover,
               ),
             ),

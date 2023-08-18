@@ -6,11 +6,12 @@ import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 
 class PjAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const PjAppBar({Key? key, this.leading, this.title = "", this.actions})
+  const PjAppBar({Key? key, this.leading, this.title = "", this.actions, this.searchTitle})
       : super(key: key);
 
   final Function? leading;
   final String title;
+  final Widget? searchTitle;
   final List<Widget>? actions;
 
   @override
@@ -23,7 +24,7 @@ class PjAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       backgroundColor: PjColors.white,
       automaticallyImplyLeading: false,
-      title: PjText(
+      title: searchTitle ?? PjText(
         title,
         style: PjTextStyle.title,
       ),

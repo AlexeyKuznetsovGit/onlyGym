@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/models/exercise_model.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
+import 'package:onlygym/router/router.dart';
 import 'package:onlygym/screens/exercises_screen/widgets/type_exercises_card.dart';
 
 class Carousel extends StatefulWidget {
@@ -25,7 +27,7 @@ class _CarouselState extends State<Carousel> {
     _current = 0;
     super.initState();
   }
-
+  final _appRouter = AppRouter();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -34,7 +36,12 @@ class _CarouselState extends State<Carousel> {
           carouselController: _ctrl,
           items: [
             for (ExerciseModel elem in widget.exercises)
-              TypeExercisesCard(callback: () {}, model: elem)
+              GestureDetector(
+                onTap: () {
+                 context.router.push(CurrentExercisesRoute(exercise: elem));
+                },
+                child: TypeExercisesCard(callback: () {}, model: elem),
+              )
           ],
           options: CarouselOptions(
             onPageChanged: (index, reason) {
@@ -44,7 +51,7 @@ class _CarouselState extends State<Carousel> {
               });
             },
             viewportFraction: 1,
-            height: 180,
+            height: 208.h,
             initialPage: 0,
             enableInfiniteScroll: true,
             reverse: false,
@@ -56,10 +63,10 @@ class _CarouselState extends State<Carousel> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            for (ExerciseModel elem in widget.exercises)
-              TypeExercisesCard(callback: () {}, model: elem)
-          ].asMap().entries.map((entry) {
+          children: [for (ExerciseModel elem in widget.exercises) TypeExercisesCard(callback: () {}, model: elem)]
+              .asMap()
+              .entries
+              .map((entry) {
             return GestureDetector(
               onTap: () => _ctrl.animateToPage(entry.key),
               child: Container(

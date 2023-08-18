@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:eticon_api/eticon_api.dart';
 import 'package:onlygym/repositories/athlete_repository.dart';
 import 'package:onlygym/repositories/auth_repository.dart';
+import 'package:onlygym/repositories/exercise_repository.dart';
 import 'package:onlygym/repositories/get_it.dart';
 import 'package:onlygym/repositories/training_repository.dart';
 import 'package:onlygym/repositories/user_repository.dart';
@@ -28,6 +29,7 @@ void main() async {
   getIt.registerLazySingleton(() => AuthRepository());
   getIt.registerLazySingleton(() => AthleteRepository());
   getIt.registerLazySingleton(() => TrainingRepository());
+  getIt.registerLazySingleton(() => ExerciseRepository());
   runApp(App());
 }
 

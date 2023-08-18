@@ -1,13 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:eticon_api/eticon_api.dart';
 import 'package:flutter/material.dart';
+import 'package:onlygym/models/exercise_model.dart';
 import 'package:onlygym/models/training_model.dart';
 import 'package:onlygym/screens/athletes_screen/athletes_screen.dart';
 import 'package:onlygym/screens/auth_screen/auth_screen.dart';
+import 'package:onlygym/screens/current_exercises_screen/current_exercises_screen.dart';
 import 'package:onlygym/screens/diary_screen/diary_screen.dart';
 import 'package:onlygym/screens/exercises_screen/exercises_screen.dart';
 import 'package:onlygym/screens/main_screen/main_screen.dart';
 import 'package:onlygym/screens/my_target_screen/my_target_screen.dart';
+import 'package:onlygym/screens/new_exercise_screen/new_exercise_screen.dart';
 import 'package:onlygym/screens/profile_image_screen/profile_image_screen.dart';
 import 'package:onlygym/screens/profile_screen/profile_screen.dart';
 import 'package:onlygym/screens/recover_password_screen/recover_password_screen.dart';
@@ -37,12 +40,21 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: IdConfirmationRoute.page),
         AutoRoute(page: MainRoute.page, initial: Api.tokenIsNotEmpty, children: [
           AutoRoute(page: DiaryRoute.page, maintainState: false),
-          AutoRoute(page: ExercisesRoute.page),
+          AutoRoute(
+            page: ExercisesRoute.page,
+            maintainState: false,
+          ),
           AutoRoute(page: AthletesRoute.page, maintainState: false),
           AutoRoute(page: ProfileRoute.page, initial: true)
         ]),
         AutoRoute(page: ProfileRoute.page),
-        AutoRoute(page: AthletesRoute.page),
-        AutoRoute(page: TrainingRoute.page)
+        AutoRoute(page: TrainingRoute.page),
+        AutoRoute(page: AthletesRoute.page, maintainState: false),
+        AutoRoute(
+          page: CurrentExercisesRoute.page,
+        ),
+        AutoRoute(
+          page: NewExerciseRoute.page,
+        ),
       ];
 }

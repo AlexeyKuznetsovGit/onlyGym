@@ -18,13 +18,14 @@ class ButtonExerciseList extends StatelessWidget {
         behavior: HitTestBehavior.translucent,
         onTap: callback,
         child: Container(
+          alignment: Alignment.center,
           decoration: BoxDecoration(
             color: isActive ? PjColors.neonBlue : PjColors.white,
             borderRadius: BorderRadius.circular(30.r),
             border: Border.all(color: isActive ? PjColors.neonBlue :PjColors.ultraLightBlue)
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: PjText(text, style: PjTextStyle.regular, color: isActive ? PjColors.white : PjColors.black),
           ),
         ),

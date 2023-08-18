@@ -5,20 +5,20 @@ import 'package:onlygym/models/exercise_model.dart';
 import 'package:onlygym/repositories/exercise_repository.dart';
 import 'package:onlygym/repositories/get_it.dart';
 
-part 'st_current_exercises_screen.dart';
+part 'st_new_exercise_screen.dart';
 
-part 'cb_current_exercises_screen.freezed.dart';
+part 'cb_new_exercise_screen.freezed.dart';
 
-class CbCurrentExercisesScreen extends Cubit<StCurrentExercisesScreen> {
+class CbNewExerciseScreen extends Cubit<StNewExerciseScreen> {
 
   List<ExerciseModel> exercise = [];
-  CbCurrentExercisesScreen() : super(const StCurrentExercisesScreen.loaded());
+  CbNewExerciseScreen() : super(const StNewExerciseScreen.loaded());
 
   Future<void> getData() async {
     try {
-      emit(StCurrentExercisesScreen.loaded());
+      emit(StNewExerciseScreen.loaded());
     } on APIException catch (e) {
-      emit(StCurrentExercisesScreen.error(e.code, 'Что-то пошло не так!'));
+      emit(StNewExerciseScreen.error(e.code, 'Что-то пошло не так!'));
     }
   }
 }

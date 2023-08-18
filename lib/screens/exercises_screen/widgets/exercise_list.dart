@@ -52,7 +52,7 @@ class _ExerciseListState extends State<ExerciseList> {
         SizedBox(height: 20.h,),
         Flexible(
           child: ListView.separated(
-            itemCount: 5,
+            itemCount: widget.exercises[widget.trainType].groups![group].values!.length,
               shrinkWrap: true,
               itemBuilder: (context, index){
             return Padding(

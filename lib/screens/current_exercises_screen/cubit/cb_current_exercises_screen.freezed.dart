@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'cb_exercises_screen.dart';
+part of 'cb_current_exercises_screen.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$StExercisesScreen {
+mixin _$StCurrentExercisesScreen {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
@@ -69,16 +69,17 @@ mixin _$StExercisesScreen {
 }
 
 /// @nodoc
-abstract class $StExercisesScreenCopyWith<$Res> {
-  factory $StExercisesScreenCopyWith(
-          StExercisesScreen value, $Res Function(StExercisesScreen) then) =
-      _$StExercisesScreenCopyWithImpl<$Res, StExercisesScreen>;
+abstract class $StCurrentExercisesScreenCopyWith<$Res> {
+  factory $StCurrentExercisesScreenCopyWith(StCurrentExercisesScreen value,
+          $Res Function(StCurrentExercisesScreen) then) =
+      _$StCurrentExercisesScreenCopyWithImpl<$Res, StCurrentExercisesScreen>;
 }
 
 /// @nodoc
-class _$StExercisesScreenCopyWithImpl<$Res, $Val extends StExercisesScreen>
-    implements $StExercisesScreenCopyWith<$Res> {
-  _$StExercisesScreenCopyWithImpl(this._value, this._then);
+class _$StCurrentExercisesScreenCopyWithImpl<$Res,
+        $Val extends StCurrentExercisesScreen>
+    implements $StCurrentExercisesScreenCopyWith<$Res> {
+  _$StCurrentExercisesScreenCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -95,7 +96,7 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$StExercisesScreenCopyWithImpl<$Res, _$_Loading>
+    extends _$StCurrentExercisesScreenCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
       : super(_value, _then);
@@ -108,7 +109,7 @@ class _$_Loading implements _Loading {
 
   @override
   String toString() {
-    return 'StExercisesScreen.loading()';
+    return 'StCurrentExercisesScreen.loading()';
   }
 
   @override
@@ -195,7 +196,7 @@ class _$_Loading implements _Loading {
   }
 }
 
-abstract class _Loading implements StExercisesScreen {
+abstract class _Loading implements StCurrentExercisesScreen {
   const factory _Loading() = _$_Loading;
 }
 
@@ -209,7 +210,7 @@ abstract class _$$_ErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$StExercisesScreenCopyWithImpl<$Res, _$_Error>
+    extends _$StCurrentExercisesScreenCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
       : super(_value, _then);
@@ -245,7 +246,7 @@ class _$_Error implements _Error {
 
   @override
   String toString() {
-    return 'StExercisesScreen.error(error: $error, message: $message)';
+    return 'StCurrentExercisesScreen.error(error: $error, message: $message)';
   }
 
   @override
@@ -341,7 +342,7 @@ class _$_Error implements _Error {
   }
 }
 
-abstract class _Error implements StExercisesScreen {
+abstract class _Error implements StCurrentExercisesScreen {
   const factory _Error(final int? error, final String? message) = _$_Error;
 
   int? get error;
@@ -359,7 +360,7 @@ abstract class _$$_LoadedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadedCopyWithImpl<$Res>
-    extends _$StExercisesScreenCopyWithImpl<$Res, _$_Loaded>
+    extends _$StCurrentExercisesScreenCopyWithImpl<$Res, _$_Loaded>
     implements _$$_LoadedCopyWith<$Res> {
   __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
       : super(_value, _then);
@@ -372,7 +373,7 @@ class _$_Loaded implements _Loaded {
 
   @override
   String toString() {
-    return 'StExercisesScreen.loaded()';
+    return 'StCurrentExercisesScreen.loaded()';
   }
 
   @override
@@ -459,7 +460,7 @@ class _$_Loaded implements _Loaded {
   }
 }
 
-abstract class _Loaded implements StExercisesScreen {
+abstract class _Loaded implements StCurrentExercisesScreen {
   const factory _Loaded() = _$_Loaded;
 }
 
@@ -471,7 +472,7 @@ abstract class _$$_InitCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitCopyWithImpl<$Res>
-    extends _$StExercisesScreenCopyWithImpl<$Res, _$_Init>
+    extends _$StCurrentExercisesScreenCopyWithImpl<$Res, _$_Init>
     implements _$$_InitCopyWith<$Res> {
   __$$_InitCopyWithImpl(_$_Init _value, $Res Function(_$_Init) _then)
       : super(_value, _then);
@@ -484,7 +485,7 @@ class _$_Init implements _Init {
 
   @override
   String toString() {
-    return 'StExercisesScreen.init()';
+    return 'StCurrentExercisesScreen.init()';
   }
 
   @override
@@ -571,6 +572,6 @@ class _$_Init implements _Init {
   }
 }
 
-abstract class _Init implements StExercisesScreen {
+abstract class _Init implements StCurrentExercisesScreen {
   const factory _Init() = _$_Init;
 }

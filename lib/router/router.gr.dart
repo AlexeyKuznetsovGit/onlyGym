@@ -139,6 +139,23 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
+    CurrentExercisesRoute.name: (routeData) {
+      final args = routeData.argsAs<CurrentExercisesRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: CurrentExercisesScreen(
+          key: args.key,
+          exercise: args.exercise,
+        )),
+      );
+    },
+    NewExerciseRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const NewExerciseScreen()),
+      );
+    },
   };
 }
 
@@ -504,4 +521,56 @@ class AthletesRouteArgs {
   String toString() {
     return 'AthletesRouteArgs{key: $key, isChoiceAthlete: $isChoiceAthlete}';
   }
+}
+
+/// generated route for
+/// [CurrentExercisesScreen]
+class CurrentExercisesRoute extends PageRouteInfo<CurrentExercisesRouteArgs> {
+  CurrentExercisesRoute({
+    Key? key,
+    required ExerciseModel exercise,
+    List<PageRouteInfo>? children,
+  }) : super(
+          CurrentExercisesRoute.name,
+          args: CurrentExercisesRouteArgs(
+            key: key,
+            exercise: exercise,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'CurrentExercisesRoute';
+
+  static const PageInfo<CurrentExercisesRouteArgs> page =
+      PageInfo<CurrentExercisesRouteArgs>(name);
+}
+
+class CurrentExercisesRouteArgs {
+  const CurrentExercisesRouteArgs({
+    this.key,
+    required this.exercise,
+  });
+
+  final Key? key;
+
+  final ExerciseModel exercise;
+
+  @override
+  String toString() {
+    return 'CurrentExercisesRouteArgs{key: $key, exercise: $exercise}';
+  }
+}
+
+/// generated route for
+/// [NewExerciseScreen]
+class NewExerciseRoute extends PageRouteInfo<void> {
+  const NewExerciseRoute({List<PageRouteInfo>? children})
+      : super(
+          NewExerciseRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NewExerciseRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
