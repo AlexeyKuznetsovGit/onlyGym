@@ -20,6 +20,8 @@ class PjTextField extends StatefulWidget {
     required this.controller,
     this.suffixText,
     this.checkCode,
+    this.height = 42,
+    this.maxLines = 1
   }) : super(key: key);
 
   final PjTextFieldStyle type;
@@ -29,6 +31,8 @@ class PjTextField extends StatefulWidget {
   final String repeatPassword;
   final TextEditingController controller;
   final String? suffixText;
+  final double height;
+  final int? maxLines;
 
   @override
   State<PjTextField> createState() => _PjTextFieldState();
@@ -39,14 +43,15 @@ class _PjTextFieldState extends State<PjTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: 334.w,
-      height: 42.h,
       child: TextFormField(
         textCapitalization: widget.type == PjTextFieldStyle.text
             ? TextCapitalization.sentences
             : TextCapitalization.none,
         onChanged: widget.onChanged,
+       maxLines: widget.maxLines,
+       // maxLength: 40, //Если вводить больше символов, то появляется отступ который на половину перекрывает текст
         autovalidateMode: AutovalidateMode.disabled,
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -105,6 +110,7 @@ class _PjTextFieldState extends State<PjTextField> {
             fontWeight: FontWeight.w500,
             color: PjColors.black),
         decoration: InputDecoration(
+          alignLabelWithHint: true,
           suffixText: widget.suffixText,
           suffixStyle: TextStyle(
               fontFamily: "PtRoot",
@@ -112,6 +118,7 @@ class _PjTextFieldState extends State<PjTextField> {
               fontWeight: FontWeight.w500,
               color: PjColors.black),
           errorStyle: TextStyle(height: 0, color: Colors.transparent),
+          isCollapsed: true,
           labelText: widget.title,
           floatingLabelBehavior: FloatingLabelBehavior.never,
           isDense: true,
@@ -147,7 +154,7 @@ class _PjTextFieldState extends State<PjTextField> {
                     color: PjColors.lightBlue,
                   ),
                 )
-              : SizedBox(),
+              : null,
         ),
         controller: widget.controller,
         obscureText: widget.type == PjTextFieldStyle.password ? isShow : false,

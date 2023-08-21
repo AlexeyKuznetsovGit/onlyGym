@@ -131,6 +131,7 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
                             context: context,
                             builder: (BuildContext context) {
                               return BottomSheetPhotoWidget(
+                                title: 'Фото',
                                 changePhoto: false,
                               );
                             },
@@ -189,6 +190,7 @@ class _ProfileImageScreenState extends State<ProfileImageScreen> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return BottomSheetPhotoWidget(
+                                    title: 'Фото',
                                     changePhoto: true,
                                   );
                                 },

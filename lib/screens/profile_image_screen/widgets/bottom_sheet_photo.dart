@@ -11,8 +11,9 @@ import 'package:onlygym/project_widgets/pj_text.dart';
 
 class BottomSheetPhotoWidget extends StatefulWidget {
   final bool changePhoto;
+  final String title;
 
-  BottomSheetPhotoWidget({Key? key, required this.changePhoto}) : super(key: key);
+  BottomSheetPhotoWidget({Key? key, required this.changePhoto, required this.title}) : super(key: key);
 
   @override
   State<BottomSheetPhotoWidget> createState() => _BottomSheetPhotoWidgetState();
@@ -64,7 +65,7 @@ class _BottomSheetPhotoWidgetState extends State<BottomSheetPhotoWidget> {
                       Padding(
                         padding: EdgeInsets.only(left: 16.w),
                         child: PjText(
-                          'Фото',
+                          widget.title,
                           style: PjTextStyle.title,
                         ),
                       ),
@@ -78,7 +79,7 @@ class _BottomSheetPhotoWidgetState extends State<BottomSheetPhotoWidget> {
             ),
               PjLongButton(
                 text: 'Сделать снимок',
-                icon: CustomIcons.plus,
+                icon: CustomIcons.camera,
                 controller: firstBtnController,
                 onPressed: () async {
                   if (!(await getCameraPermission())) {
