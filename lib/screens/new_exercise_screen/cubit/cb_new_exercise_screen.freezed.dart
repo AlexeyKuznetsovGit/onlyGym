@@ -20,24 +20,27 @@ mixin _$StNewExerciseScreen {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
-    required TResult Function() loaded,
+    required TResult Function(List<MuscleGroupModel> muscleGroups) loaded,
     required TResult Function() init,
+    required TResult Function() successful,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
-    TResult? Function()? loaded,
+    TResult? Function(List<MuscleGroupModel> muscleGroups)? loaded,
     TResult? Function()? init,
+    TResult? Function()? successful,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
-    TResult Function()? loaded,
+    TResult Function(List<MuscleGroupModel> muscleGroups)? loaded,
     TResult Function()? init,
+    TResult Function()? successful,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +50,7 @@ mixin _$StNewExerciseScreen {
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Init value) init,
+    required TResult Function(_Successful value) successful,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +59,7 @@ mixin _$StNewExerciseScreen {
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Init value)? init,
+    TResult? Function(_Successful value)? successful,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +68,7 @@ mixin _$StNewExerciseScreen {
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Init value)? init,
+    TResult Function(_Successful value)? successful,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -125,8 +131,9 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
-    required TResult Function() loaded,
+    required TResult Function(List<MuscleGroupModel> muscleGroups) loaded,
     required TResult Function() init,
+    required TResult Function() successful,
   }) {
     return loading();
   }
@@ -136,8 +143,9 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
-    TResult? Function()? loaded,
+    TResult? Function(List<MuscleGroupModel> muscleGroups)? loaded,
     TResult? Function()? init,
+    TResult? Function()? successful,
   }) {
     return loading?.call();
   }
@@ -147,8 +155,9 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
-    TResult Function()? loaded,
+    TResult Function(List<MuscleGroupModel> muscleGroups)? loaded,
     TResult Function()? init,
+    TResult Function()? successful,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -164,6 +173,7 @@ class _$_Loading implements _Loading {
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Init value) init,
+    required TResult Function(_Successful value) successful,
   }) {
     return loading(this);
   }
@@ -175,6 +185,7 @@ class _$_Loading implements _Loading {
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Init value)? init,
+    TResult? Function(_Successful value)? successful,
   }) {
     return loading?.call(this);
   }
@@ -186,6 +197,7 @@ class _$_Loading implements _Loading {
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Init value)? init,
+    TResult Function(_Successful value)? successful,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -271,8 +283,9 @@ class _$_Error implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
-    required TResult Function() loaded,
+    required TResult Function(List<MuscleGroupModel> muscleGroups) loaded,
     required TResult Function() init,
+    required TResult Function() successful,
   }) {
     return error(this.error, message);
   }
@@ -282,8 +295,9 @@ class _$_Error implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
-    TResult? Function()? loaded,
+    TResult? Function(List<MuscleGroupModel> muscleGroups)? loaded,
     TResult? Function()? init,
+    TResult? Function()? successful,
   }) {
     return error?.call(this.error, message);
   }
@@ -293,8 +307,9 @@ class _$_Error implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
-    TResult Function()? loaded,
+    TResult Function(List<MuscleGroupModel> muscleGroups)? loaded,
     TResult Function()? init,
+    TResult Function()? successful,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -310,6 +325,7 @@ class _$_Error implements _Error {
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Init value) init,
+    required TResult Function(_Successful value) successful,
   }) {
     return error(this);
   }
@@ -321,6 +337,7 @@ class _$_Error implements _Error {
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Init value)? init,
+    TResult? Function(_Successful value)? successful,
   }) {
     return error?.call(this);
   }
@@ -332,6 +349,7 @@ class _$_Error implements _Error {
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Init value)? init,
+    TResult Function(_Successful value)? successful,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -355,6 +373,8 @@ abstract class _Error implements StNewExerciseScreen {
 abstract class _$$_LoadedCopyWith<$Res> {
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<MuscleGroupModel> muscleGroups});
 }
 
 /// @nodoc
@@ -363,36 +383,69 @@ class __$$_LoadedCopyWithImpl<$Res>
     implements _$$_LoadedCopyWith<$Res> {
   __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? muscleGroups = null,
+  }) {
+    return _then(_$_Loaded(
+      null == muscleGroups
+          ? _value._muscleGroups
+          : muscleGroups // ignore: cast_nullable_to_non_nullable
+              as List<MuscleGroupModel>,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded();
+  const _$_Loaded(final List<MuscleGroupModel> muscleGroups)
+      : _muscleGroups = muscleGroups;
+
+  final List<MuscleGroupModel> _muscleGroups;
+  @override
+  List<MuscleGroupModel> get muscleGroups {
+    if (_muscleGroups is EqualUnmodifiableListView) return _muscleGroups;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_muscleGroups);
+  }
 
   @override
   String toString() {
-    return 'StNewExerciseScreen.loaded()';
+    return 'StNewExerciseScreen.loaded(muscleGroups: $muscleGroups)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Loaded);
+        (other.runtimeType == runtimeType &&
+            other is _$_Loaded &&
+            const DeepCollectionEquality()
+                .equals(other._muscleGroups, _muscleGroups));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_muscleGroups));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
-    required TResult Function() loaded,
+    required TResult Function(List<MuscleGroupModel> muscleGroups) loaded,
     required TResult Function() init,
+    required TResult Function() successful,
   }) {
-    return loaded();
+    return loaded(muscleGroups);
   }
 
   @override
@@ -400,10 +453,11 @@ class _$_Loaded implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
-    TResult? Function()? loaded,
+    TResult? Function(List<MuscleGroupModel> muscleGroups)? loaded,
     TResult? Function()? init,
+    TResult? Function()? successful,
   }) {
-    return loaded?.call();
+    return loaded?.call(muscleGroups);
   }
 
   @override
@@ -411,12 +465,13 @@ class _$_Loaded implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
-    TResult Function()? loaded,
+    TResult Function(List<MuscleGroupModel> muscleGroups)? loaded,
     TResult Function()? init,
+    TResult Function()? successful,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(muscleGroups);
     }
     return orElse();
   }
@@ -428,6 +483,7 @@ class _$_Loaded implements _Loaded {
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Init value) init,
+    required TResult Function(_Successful value) successful,
   }) {
     return loaded(this);
   }
@@ -439,6 +495,7 @@ class _$_Loaded implements _Loaded {
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Init value)? init,
+    TResult? Function(_Successful value)? successful,
   }) {
     return loaded?.call(this);
   }
@@ -450,6 +507,7 @@ class _$_Loaded implements _Loaded {
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Init value)? init,
+    TResult Function(_Successful value)? successful,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -460,7 +518,12 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements StNewExerciseScreen {
-  const factory _Loaded() = _$_Loaded;
+  const factory _Loaded(final List<MuscleGroupModel> muscleGroups) = _$_Loaded;
+
+  List<MuscleGroupModel> get muscleGroups;
+  @JsonKey(ignore: true)
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -501,8 +564,9 @@ class _$_Init implements _Init {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(int? error, String? message) error,
-    required TResult Function() loaded,
+    required TResult Function(List<MuscleGroupModel> muscleGroups) loaded,
     required TResult Function() init,
+    required TResult Function() successful,
   }) {
     return init();
   }
@@ -512,8 +576,9 @@ class _$_Init implements _Init {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(int? error, String? message)? error,
-    TResult? Function()? loaded,
+    TResult? Function(List<MuscleGroupModel> muscleGroups)? loaded,
     TResult? Function()? init,
+    TResult? Function()? successful,
   }) {
     return init?.call();
   }
@@ -523,8 +588,9 @@ class _$_Init implements _Init {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(int? error, String? message)? error,
-    TResult Function()? loaded,
+    TResult Function(List<MuscleGroupModel> muscleGroups)? loaded,
     TResult Function()? init,
+    TResult Function()? successful,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -540,6 +606,7 @@ class _$_Init implements _Init {
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Init value) init,
+    required TResult Function(_Successful value) successful,
   }) {
     return init(this);
   }
@@ -551,6 +618,7 @@ class _$_Init implements _Init {
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Init value)? init,
+    TResult? Function(_Successful value)? successful,
   }) {
     return init?.call(this);
   }
@@ -562,6 +630,7 @@ class _$_Init implements _Init {
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Init value)? init,
+    TResult Function(_Successful value)? successful,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -573,4 +642,124 @@ class _$_Init implements _Init {
 
 abstract class _Init implements StNewExerciseScreen {
   const factory _Init() = _$_Init;
+}
+
+/// @nodoc
+abstract class _$$_SuccessfulCopyWith<$Res> {
+  factory _$$_SuccessfulCopyWith(
+          _$_Successful value, $Res Function(_$_Successful) then) =
+      __$$_SuccessfulCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_SuccessfulCopyWithImpl<$Res>
+    extends _$StNewExerciseScreenCopyWithImpl<$Res, _$_Successful>
+    implements _$$_SuccessfulCopyWith<$Res> {
+  __$$_SuccessfulCopyWithImpl(
+      _$_Successful _value, $Res Function(_$_Successful) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_Successful implements _Successful {
+  const _$_Successful();
+
+  @override
+  String toString() {
+    return 'StNewExerciseScreen.successful()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Successful);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function(int? error, String? message) error,
+    required TResult Function(List<MuscleGroupModel> muscleGroups) loaded,
+    required TResult Function() init,
+    required TResult Function() successful,
+  }) {
+    return successful();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loading,
+    TResult? Function(int? error, String? message)? error,
+    TResult? Function(List<MuscleGroupModel> muscleGroups)? loaded,
+    TResult? Function()? init,
+    TResult? Function()? successful,
+  }) {
+    return successful?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(int? error, String? message)? error,
+    TResult Function(List<MuscleGroupModel> muscleGroups)? loaded,
+    TResult Function()? init,
+    TResult Function()? successful,
+    required TResult orElse(),
+  }) {
+    if (successful != null) {
+      return successful();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Init value) init,
+    required TResult Function(_Successful value) successful,
+  }) {
+    return successful(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Init value)? init,
+    TResult? Function(_Successful value)? successful,
+  }) {
+    return successful?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Init value)? init,
+    TResult Function(_Successful value)? successful,
+    required TResult orElse(),
+  }) {
+    if (successful != null) {
+      return successful(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Successful implements StNewExerciseScreen {
+  const factory _Successful() = _$_Successful;
 }

@@ -10,15 +10,17 @@ part 'st_current_exercises_screen.dart';
 part 'cb_current_exercises_screen.freezed.dart';
 
 class CbCurrentExercisesScreen extends Cubit<StCurrentExercisesScreen> {
-
-  List<ExerciseModel> exercise = [];
   CbCurrentExercisesScreen() : super(const StCurrentExercisesScreen.loaded());
 
-  Future<void> getData() async {
+  Future<ExerciseModel> getData(ExerciseModel exerciseOld, int exerciseId) async {
     try {
+      emit(StCurrentExercisesScreen.init());
+      ExerciseModel newExercise = await (getIt<ExerciseRepository>().getCurrentExercise(exerciseId: exerciseId));
       emit(StCurrentExercisesScreen.loaded());
+      return newExercise;
     } on APIException catch (e) {
       emit(StCurrentExercisesScreen.error(e.code, 'Что-то пошло не так!'));
     }
+    return exerciseOld;
   }
 }

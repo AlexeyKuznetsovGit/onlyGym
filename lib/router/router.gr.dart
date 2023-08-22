@@ -151,9 +151,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     NewExerciseRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
+      final args = routeData.argsAs<NewExerciseRouteArgs>();
+      return AutoRoutePage<bool>(
         routeData: routeData,
-        child: WrappedRoute(child: const NewExerciseScreen()),
+        child: WrappedRoute(
+            child: NewExerciseScreen(
+          key: args.key,
+          typeExercise: args.typeExercise,
+        )),
       );
     },
   };
@@ -563,14 +568,38 @@ class CurrentExercisesRouteArgs {
 
 /// generated route for
 /// [NewExerciseScreen]
-class NewExerciseRoute extends PageRouteInfo<void> {
-  const NewExerciseRoute({List<PageRouteInfo>? children})
-      : super(
+class NewExerciseRoute extends PageRouteInfo<NewExerciseRouteArgs> {
+  NewExerciseRoute({
+    Key? key,
+    required int typeExercise,
+    List<PageRouteInfo>? children,
+  }) : super(
           NewExerciseRoute.name,
+          args: NewExerciseRouteArgs(
+            key: key,
+            typeExercise: typeExercise,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'NewExerciseRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<NewExerciseRouteArgs> page =
+      PageInfo<NewExerciseRouteArgs>(name);
+}
+
+class NewExerciseRouteArgs {
+  const NewExerciseRouteArgs({
+    this.key,
+    required this.typeExercise,
+  });
+
+  final Key? key;
+
+  final int typeExercise;
+
+  @override
+  String toString() {
+    return 'NewExerciseRouteArgs{key: $key, typeExercise: $typeExercise}';
+  }
 }

@@ -8,9 +8,7 @@ class ExerciseList extends StatefulWidget {
   final List<ExerciseModel> exercises;
   final int trainType;
 
-  const ExerciseList(
-      {Key? key, required this.exercises, required this.trainType})
-      : super(key: key);
+  const ExerciseList({Key? key, required this.exercises, required this.trainType}) : super(key: key);
 
   @override
   State<ExerciseList> createState() => _ExerciseListState();
@@ -49,22 +47,29 @@ class _ExerciseListState extends State<ExerciseList> {
             },
           ),
         ),
-        SizedBox(height: 20.h,),
+        SizedBox(
+          height: 20.h,
+        ),
         Flexible(
           child: ListView.separated(
             itemCount: widget.exercises[widget.trainType].groups![group].values!.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index){
-            return Padding(
-              padding:EdgeInsets.symmetric(horizontal: 28.w),
-              child: ExerciseCard(callback: (){
-                print("Гена пидор");
-              }),
-            );
-          },
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 28.w),
+                child: ExerciseCard(
+                    value: widget.exercises[widget.trainType].groups![group].values![index],
+                    callback: () {
+                      print("Гена пидор");
+                    }),
+              );
+            },
             separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(height: 10.h,);
-            },),
+              return SizedBox(
+                height: 10.h,
+              );
+            },
+          ),
         ),
       ],
     );

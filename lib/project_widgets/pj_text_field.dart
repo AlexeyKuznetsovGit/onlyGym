@@ -20,7 +20,6 @@ class PjTextField extends StatefulWidget {
     required this.controller,
     this.suffixText,
     this.checkCode,
-    this.height = 42,
     this.maxLines = 1
   }) : super(key: key);
 
@@ -31,7 +30,6 @@ class PjTextField extends StatefulWidget {
   final String repeatPassword;
   final TextEditingController controller;
   final String? suffixText;
-  final double height;
   final int? maxLines;
 
   @override
@@ -43,7 +41,7 @@ class _PjTextFieldState extends State<PjTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 334.w,
       child: TextFormField(
         textCapitalization: widget.type == PjTextFieldStyle.text

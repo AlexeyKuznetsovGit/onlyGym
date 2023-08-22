@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onlygym/models/exercise_model.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_utils/pj_utils.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
@@ -8,7 +9,7 @@ import 'package:onlygym/project_widgets/pj_text.dart';
 enum _ExerciseCardType { base, checkbox, delete }
 
 class ExerciseCard extends StatefulWidget {
-  ExerciseCard({Key? key, required this.callback}) : super(key: key) {
+  ExerciseCard({Key? key, required this.callback, this.value}) : super(key: key) {
     type = _ExerciseCardType.base;
   }
 
@@ -22,6 +23,7 @@ class ExerciseCard extends StatefulWidget {
 
   late _ExerciseCardType type;
   final Function callback;
+  ValuesModel? value;
   Function? deleteCallback;
 
   @override
@@ -67,9 +69,9 @@ class _ExerciseCardState extends State<ExerciseCard> {
               ClipRRect(
                   borderRadius: BorderRadius.circular(100),
                   child: Image.network(
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3DmL_9tM3aFKiBpqYvUmdvEMg105Vg7p0EjjjZxgsjA&s",
+                    "${PjUtils.imageUrl}${widget.value?.photos?[0].url}", // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3DmL_9tM3aFKiBpqYvUmdvEMg105Vg7p0EjjjZxgsjA&s",
                     width: 54.w,
-                    height: 54.w,
+                    height: 54.h,
                     fit: BoxFit.cover,
                     opacity: AlwaysStoppedAnimation(isTouch ? 0.6 : 1),
                   )),
@@ -78,7 +80,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
               ),
               Container(
                   width: 211.w,
-                  child: Text("Канаты - чередование волн в полуприседе", //Пока так оставлю
+                  child: Text( widget.value?.name ?? "Канаты - чередование волн в полуприседе", //Пока так оставлю
                       style: TextStyle(
                           color: widget.type == _ExerciseCardType.checkbox
                               ? PjColors.black

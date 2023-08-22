@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:onlygym/models/exercise_model.dart';
-import 'package:onlygym/models/groups_model.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_utils/pj_utils.dart';
 import 'package:onlygym/project_widgets/error_dialog.dart';
@@ -19,9 +18,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class CurrentExercisesScreen extends StatefulWidget implements AutoRouteWrapper {
-  final ExerciseModel exercise;
+  ExerciseModel exercise;
 
-  const CurrentExercisesScreen({Key? key, required this.exercise}) : super(key: key);
+  CurrentExercisesScreen({Key? key, required this.exercise}) : super(key: key);
 
   @override
   Widget wrappedRoute(BuildContext context) {
@@ -58,21 +57,28 @@ class _CurrentExercisesScreenState extends State<CurrentExercisesScreen> {
       },
       child: Scaffold(
         appBar: PjAppBar(
-          searchTitle: searchExercises ? PjTextField(
-            title: 'Поиск...',
-            type: PjTextFieldStyle.text,
-            controller: controller,
-            onChanged: (v) {
-              setState(() {});
-            },
-          ) : null,
+          searchTitle: searchExercises
+              ? PjTextField(
+                  title: 'Поиск...',
+                  type: PjTextFieldStyle.text,
+                  controller: controller,
+                  onChanged: (v) {
+                    setState(() {});
+                  },
+                )
+              : null,
           actions: searchExercises
               ? null
               : [
                   GestureDetector(
                     behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      context.router.push(NewExerciseRoute());
+                    onTap: () async {
+                      bool? res = await context.router.push<bool>(NewExerciseRoute(typeExercise: widget.exercise.id!));
+                      if (res != null && res) {
+                        widget.exercise = await context
+                            .read<CbCurrentExercisesScreen>()
+                            .getData(widget.exercise, widget.exercise.id!);
+                      }
                     },
                     child: Icon(
                       CustomIcons.plus,
@@ -111,7 +117,7 @@ class _CurrentExercisesScreenState extends State<CurrentExercisesScreen> {
           listener: (context, state) =>
               state.whenOrNull(error: (code, message) => showAlertDialog(context, message ?? '')),
           builder: (context, state) => state.maybeWhen(
-            orElse: () => Container(),
+            orElse: () => _buildBodyContent(context),
             init: () => const PjLoader(),
             loaded: () => _buildBodyContent(context),
           ),

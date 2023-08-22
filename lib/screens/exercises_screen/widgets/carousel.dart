@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/models/exercise_model.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/router/router.dart';
+import 'package:onlygym/screens/exercises_screen/cubit/cb_exercises_screen.dart';
 import 'package:onlygym/screens/exercises_screen/widgets/type_exercises_card.dart';
 
 class Carousel extends StatefulWidget {
@@ -27,7 +29,9 @@ class _CarouselState extends State<Carousel> {
     _current = 0;
     super.initState();
   }
+
   final _appRouter = AppRouter();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,8 +41,9 @@ class _CarouselState extends State<Carousel> {
           items: [
             for (ExerciseModel elem in widget.exercises)
               GestureDetector(
-                onTap: () {
-                 context.router.push(CurrentExercisesRoute(exercise: elem));
+                onTap: () async {
+                  await context.router.push(CurrentExercisesRoute(exercise: elem));
+                  context.read<CbExercisesScreen>().getData(loading: true);
                 },
                 child: TypeExercisesCard(callback: () {}, model: elem),
               )

@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:eticon_api/eticon_api.dart';
 import 'package:onlygym/repositories/athlete_repository.dart';
 import 'package:onlygym/repositories/auth_repository.dart';
+import 'package:onlygym/repositories/dictionary_repository.dart';
 import 'package:onlygym/repositories/exercise_repository.dart';
 import 'package:onlygym/repositories/get_it.dart';
 import 'package:onlygym/repositories/training_repository.dart';
@@ -20,16 +21,26 @@ BuildContext? contextForGlobalError;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  await Api.init(urls: ['http://88.204.74.60:33333/v1/api/users', 'http://88.204.74.60:33333/v1/auth','http://88.204.74.60:33333/v1/api/athlete','http://88.204.74.60:33333/v1/api/training', 'http://88.204.74.60:33333/v1/api/exercise'], onAllError: (e){
-    if(e.code == 401 && contextForGlobalError != null){
-      AutoRouter.of(contextForGlobalError!).pushAndPopUntil(AuthRoute(), predicate: (e)=>false);
-    }
-  });
+  await Api.init(
+      urls: [
+        'http://88.204.74.60:33333/v1/api/users',
+        'http://88.204.74.60:33333/v1/auth',
+        'http://88.204.74.60:33333/v1/api/athlete',
+        'http://88.204.74.60:33333/v1/api/training',
+        'http://88.204.74.60:33333/v1/api/exercise',
+        'http://88.204.74.60:33333/v1/api/dictionary/'
+      ],
+      onAllError: (e) {
+        if (e.code == 401 && contextForGlobalError != null) {
+          AutoRouter.of(contextForGlobalError!).pushAndPopUntil(AuthRoute(), predicate: (e) => false);
+        }
+      });
   getIt.registerLazySingleton(() => UserRepository());
   getIt.registerLazySingleton(() => AuthRepository());
   getIt.registerLazySingleton(() => AthleteRepository());
   getIt.registerLazySingleton(() => TrainingRepository());
   getIt.registerLazySingleton(() => ExerciseRepository());
+  getIt.registerLazySingleton(() => DictionaryRepository());
   runApp(App());
 }
 
@@ -68,12 +79,13 @@ class App extends StatelessWidget {
   }
 }
 
-class ApiUrls{
+class ApiUrls {
   static int users = 0;
   static int auth = 1;
   static int athlete = 2;
   static int training = 3;
   static int exercise = 4;
+  static int dictionary = 5;
 }
 
 /*class Scr extends StatefulWidget {

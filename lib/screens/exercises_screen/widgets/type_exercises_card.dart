@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/models/exercise_model.dart';
-import 'package:onlygym/models/groups_model.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 

@@ -53,8 +53,6 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
           page: CurrentExercisesRoute.page,
         ),
-        AutoRoute(
-          page: NewExerciseRoute.page,
-        ),
+        AutoRoute(page: NewExerciseRoute.page, maintainState: false),
       ];
 }

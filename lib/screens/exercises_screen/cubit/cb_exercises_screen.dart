@@ -10,13 +10,13 @@ part 'st_exercises_screen.dart';
 part 'cb_exercises_screen.freezed.dart';
 
 class CbExercisesScreen extends Cubit<StExercisesScreen> {
-
   List<ExerciseModel> exercise = [];
+
   CbExercisesScreen() : super(const StExercisesScreen.init());
 
-  Future<void> getData() async {
-    print("Keks");
+  Future<void> getData({bool loading = false}) async {
     try {
+      loading ? emit(StExercisesScreen.init()) : () {};
       exercise = await (getIt<ExerciseRepository>().getExercises());
       emit(StExercisesScreen.loaded());
     } on APIException catch (e) {
