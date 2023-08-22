@@ -162,7 +162,7 @@ class _CurrentExercisesScreenState extends State<CurrentExercisesScreen> {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 28.w),
-                  child: ExerciseCard(callback: () {
+                  child: ExerciseCard(value: widget.exercise.groups![group].values![index],callback: () {
                     print("Гена пидор");
                   }),
                 );
