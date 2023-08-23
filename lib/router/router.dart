@@ -19,6 +19,7 @@ import 'package:onlygym/screens/registration_screen/widgets/Id_confirmation_scre
 import 'package:onlygym/screens/registration_screen/widgets/birthday_screen/birthday_screen.dart';
 import 'package:onlygym/screens/registration_screen/widgets/my_params_screen/my_params_screen.dart';
 import 'package:onlygym/models/user_model.dart';
+import 'package:onlygym/screens/selected_exercise_screen/selected_exerice_screen.dart';
 import 'package:onlygym/screens/training_screen/training_screen.dart';
 
 import '../screens/create_new_athlete_screen/create_new_athlete_screen.dart';
@@ -54,5 +55,6 @@ class AppRouter extends _$AppRouter {
           page: CurrentExercisesRoute.page,
         ),
         AutoRoute(page: NewExerciseRoute.page, maintainState: false),
+        AutoRoute(page: SelectedExerciseRoute.page, maintainState: false),
       ];
 }

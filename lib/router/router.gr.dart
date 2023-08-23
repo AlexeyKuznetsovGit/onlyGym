@@ -161,6 +161,19 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
+    SelectedExerciseRoute.name: (routeData) {
+      final args = routeData.argsAs<SelectedExerciseRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: SelectedExerciseScreen(
+          key: args.key,
+          value: args.value,
+          exerciseTypeName: args.exerciseTypeName,
+          groupName: args.groupName,
+        )),
+      );
+    },
   };
 }
 
@@ -601,5 +614,53 @@ class NewExerciseRouteArgs {
   @override
   String toString() {
     return 'NewExerciseRouteArgs{key: $key, typeExercise: $typeExercise}';
+  }
+}
+
+/// generated route for
+/// [SelectedExerciseScreen]
+class SelectedExerciseRoute extends PageRouteInfo<SelectedExerciseRouteArgs> {
+  SelectedExerciseRoute({
+    Key? key,
+    required ValuesModel value,
+    required String exerciseTypeName,
+    required String groupName,
+    List<PageRouteInfo>? children,
+  }) : super(
+          SelectedExerciseRoute.name,
+          args: SelectedExerciseRouteArgs(
+            key: key,
+            value: value,
+            exerciseTypeName: exerciseTypeName,
+            groupName: groupName,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'SelectedExerciseRoute';
+
+  static const PageInfo<SelectedExerciseRouteArgs> page =
+      PageInfo<SelectedExerciseRouteArgs>(name);
+}
+
+class SelectedExerciseRouteArgs {
+  const SelectedExerciseRouteArgs({
+    this.key,
+    required this.value,
+    required this.exerciseTypeName,
+    required this.groupName,
+  });
+
+  final Key? key;
+
+  final ValuesModel value;
+
+  final String exerciseTypeName;
+
+  final String groupName;
+
+  @override
+  String toString() {
+    return 'SelectedExerciseRouteArgs{key: $key, value: $value, exerciseTypeName: $exerciseTypeName, groupName: $groupName}';
   }
 }

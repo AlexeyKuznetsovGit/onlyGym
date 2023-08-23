@@ -34,6 +34,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: PjColors.white,
       appBar: PjAppBar(title: widget.date, leading: (){context.router.pop();}, actions: [
         GestureDetector(
           onTap: () {

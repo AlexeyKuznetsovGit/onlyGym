@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onlygym/models/exercise_model.dart';
+import 'package:onlygym/router/router.dart';
 import 'package:onlygym/screens/exercises_screen/widgets/button_exercise_list.dart';
 import 'package:onlygym/screens/exercises_screen/widgets/exercise_card.dart';
 
@@ -60,6 +62,12 @@ class _ExerciseListState extends State<ExerciseList> {
                 child: ExerciseCard(
                     value: widget.exercises[widget.trainType].groups![group].values![index],
                     callback: () {
+                      context.router.push(
+                        SelectedExerciseRoute(
+                            value: widget.exercises[widget.trainType].groups![group].values![index],
+                            exerciseTypeName: widget.exercises[widget.trainType].name!,
+                            groupName: widget.exercises[widget.trainType].groups![group].name!),
+                      );
                       print("Гена пидор");
                     }),
               );

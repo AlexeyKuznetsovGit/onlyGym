@@ -13,7 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_filled_button.dart';
 import 'package:onlygym/project_widgets/pj_loader.dart';
 import 'package:onlygym/project_widgets/pj_text_field.dart';
-import 'package:onlygym/screens/exercises_screen/cubit/cb_exercises_screen.dart';
 import 'package:onlygym/screens/exercises_screen/widgets/button_exercise_list.dart';
 import 'package:onlygym/screens/new_exercise_screen/cubit/cb_new_exercise_screen.dart';
 import 'package:onlygym/screens/profile_image_screen/widgets/bottom_sheet_photo.dart';
@@ -50,6 +49,7 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        backgroundColor: PjColors.white,
         appBar: PjAppBar(
           leading: () {
             context.router.pop();
@@ -171,12 +171,13 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
           ),
           PjFilledButton(
               buttonColor:
-                  controllerTitle.text.isNotEmpty && selectedGroups.isNotEmpty ? PjColors.neonBlue : PjColors.white,
+                  controllerTitle.text.isNotEmpty && selectedGroups.isNotEmpty && controllerDescription.text.isNotEmpty ? PjColors.neonBlue : PjColors.white,
               text: 'Добавить упражнение',
-              onPressed: selectedGroups.isNotEmpty && controllerTitle.text.isNotEmpty
+              onPressed: selectedGroups.isNotEmpty && controllerTitle.text.isNotEmpty && controllerDescription.text.isNotEmpty
                   ? () {
                       context.read<CbNewExerciseScreen>().createNewExercise(
                           name: controllerTitle.text,
+                          description: controllerDescription.text,
                           typeExercise: widget.typeExercise,
                           groupsList: selectedGroups,
                           namePhoto: pathToPhoto.split('/').last,

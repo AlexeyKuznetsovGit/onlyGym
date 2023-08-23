@@ -15,12 +15,13 @@ class CbCurrentExercisesScreen extends Cubit<StCurrentExercisesScreen> {
   Future<ExerciseModel> getData(ExerciseModel exerciseOld, int exerciseId) async {
     try {
       emit(StCurrentExercisesScreen.init());
-      ExerciseModel newExercise = await (getIt<ExerciseRepository>().getCurrentExercise(exerciseId: exerciseId));
+      List<ExerciseModel> list = await (getIt<ExerciseRepository>().getExercises());
+      ExerciseModel newExercise = list[exerciseId];
       emit(StCurrentExercisesScreen.loaded());
       return newExercise;
     } on APIException catch (e) {
       emit(StCurrentExercisesScreen.error(e.code, 'Что-то пошло не так!'));
+      return exerciseOld;
     }
-    return exerciseOld;
   }
 }

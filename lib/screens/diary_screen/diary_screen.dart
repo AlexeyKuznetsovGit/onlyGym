@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:onlygym/models/training_model.dart';
+import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_widgets/error_dialog.dart';
 import 'package:onlygym/project_widgets/loader_dialog.dart';
 import 'package:onlygym/project_widgets/pj_appbar.dart';
@@ -38,6 +39,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: PjColors.white,
       body: BlocConsumer<CbDiaryScreen, StDiaryScreen>(
         listener: (context, state) {
           state.maybeWhen(

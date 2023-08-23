@@ -53,7 +53,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
       //   if (widget.type == _ExerciseCardType.checkbox) isCheck = !isCheck;
       //   widget.callback();
       // },
-      onTap: (){
+      onTap: () {
         widget.callback();
       },
       child: Container(
@@ -69,7 +69,9 @@ class _ExerciseCardState extends State<ExerciseCard> {
               ClipRRect(
                   borderRadius: BorderRadius.circular(100),
                   child: Image.network(
-                    "${PjUtils.imageUrl}${widget.value?.photos?[0].url}", // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3DmL_9tM3aFKiBpqYvUmdvEMg105Vg7p0EjjjZxgsjA&s",
+                    widget.value?.photos?[0].url != null
+                        ? "${PjUtils.imageUrl}${widget.value?.photos?[0].url}"
+                        : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3DmL_9tM3aFKiBpqYvUmdvEMg105Vg7p0EjjjZxgsjA&s",
                     width: 54.w,
                     height: 54.h,
                     fit: BoxFit.cover,
@@ -80,7 +82,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
               ),
               Container(
                   width: 211.w,
-                  child: Text( widget.value?.name ?? "Канаты - чередование волн в полуприседе", //Пока так оставлю
+                  child: Text(widget.value?.name ?? "Канаты - чередование волн в полуприседе", //Пока так оставлю
                       style: TextStyle(
                           color: widget.type == _ExerciseCardType.checkbox
                               ? PjColors.black

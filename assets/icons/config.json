@@ -77,20 +77,6 @@
       ]
     },
     {
-      "uid": "1f8829f6873213c5449cf34b737ac851",
-      "css": "back",
-      "code": 59397,
-      "src": "custom_icons",
-      "selected": true,
-      "svg": {
-        "path": "M647.3 146.5L293.8 500 647.3 853.5 706.3 794.6 411.6 500 706.3 205.4 647.3 146.5Z",
-        "width": 1000
-      },
-      "search": [
-        "back"
-      ]
-    },
-    {
       "uid": "2952263f30b3a5970c7d21a3bd5331fa",
       "css": "camera",
       "code": 59398,
@@ -704,6 +690,34 @@
       },
       "search": [
         "sports_kettlebell"
+      ]
+    },
+    {
+      "uid": "1f8829f6873213c5449cf34b737ac851",
+      "css": "back",
+      "code": 59397,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M647.3 146.5L293.8 500 647.3 853.5 706.3 794.6 411.6 500 706.3 205.4 647.3 146.5Z",
+        "width": 1000
+      },
+      "search": [
+        "back"
+      ]
+    },
+    {
+      "uid": "fe043d3cc31f769eeef6d566b353c2bb",
+      "css": "arrow_right",
+      "code": 59428,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M500 654.7L750.4 404.3 691.5 345.3 499.8 537 308.5 345.3 249.5 404.3 500 654.7Z",
+        "width": 1000
+      },
+      "search": [
+        "chevron_right"
       ]
     }
   ]

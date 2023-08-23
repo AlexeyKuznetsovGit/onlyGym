@@ -57,7 +57,7 @@ class VolumeDiagram extends StatelessWidget {
           child: Text(
             weekDay,
             style:
-                TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400, height: (12 / 22).h, color: PjColors.neonBlue),
+                TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400, height: (12 / 22), color: PjColors.neonBlue),
           ),
         ),
       ],

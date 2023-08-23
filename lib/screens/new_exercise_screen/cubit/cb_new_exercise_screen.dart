@@ -29,7 +29,7 @@ class CbNewExerciseScreen extends Cubit<StNewExerciseScreen> {
 
   Future<void> createNewExercise({
     required String name,
-    String? description,
+    required String description,
     required int typeExercise,
     required List<int> groupsList,
     required String pathPhoto,
@@ -41,6 +41,7 @@ class CbNewExerciseScreen extends Cubit<StNewExerciseScreen> {
       log(groupsList.toString(), name:"groupsList");
       await (getIt<ExerciseRepository>().createNewExercise(
           name: name,
+          description: description,
           typeExercise: typeExercise,
           groupsList: groupsList,
           namePhoto: namePhoto,

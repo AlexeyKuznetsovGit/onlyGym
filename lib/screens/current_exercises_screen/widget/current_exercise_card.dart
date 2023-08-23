@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:onlygym/models/exercise_model.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
+import 'package:onlygym/project_utils/pj_utils.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 
 class CurrentExerciseCard extends StatefulWidget {
-  const CurrentExerciseCard({Key? key, required this.title, required this.type, required this.callback})
+  const CurrentExerciseCard(
+      {Key? key, required this.title, required this.type, required this.callback, required this.value})
       : super(key: key);
   final String title;
   final String type;
   final Function callback;
+  final ValuesModel value;
 
   @override
   State<CurrentExerciseCard> createState() => _CurrentExerciseCardState();
 }
 
 class _CurrentExerciseCardState extends State<CurrentExerciseCard> {
-
   late bool isTouch;
 
   @override
@@ -45,19 +48,26 @@ class _CurrentExerciseCardState extends State<CurrentExerciseCard> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(20.r),
-              child: Image.asset(
-                "assets/images/exercise.png",
-                width: 334.w,
-                height: 180.h,
-                fit: BoxFit.cover,
-              ),
+              child: widget.value.photos == null
+                  ? Image.asset(
+                      "assets/images/exercise.png",
+                      width: 334.w,
+                      height: 180.h,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.network(
+                      "${PjUtils.imageUrl}${widget.value.photos![0].url}",
+                      width: 334.w,
+                      height: 180.h,
+                      fit: BoxFit.cover,
+                    ),
             ),
             Container(
               width: 334.w,
               height: 180.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.r),
-                color: isTouch ? Color.fromRGBO(46, 44, 47, 0.3): Color.fromRGBO(0, 0, 0, 0.5),
+                color: isTouch ? Color.fromRGBO(46, 44, 47, 0.3) : Color.fromRGBO(0, 0, 0, 0.5),
               ),
             ),
             Padding(
@@ -81,8 +91,7 @@ class _CurrentExerciseCardState extends State<CurrentExerciseCard> {
                     borderRadius: BorderRadius.circular(30.r),
                   ),
                   child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 12.h, horizontal: 10.w),
+                    padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 10.w),
                     child: PjText(
                       widget.type,
                       style: PjTextStyle.tiny,

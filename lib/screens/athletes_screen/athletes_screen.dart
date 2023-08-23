@@ -41,6 +41,7 @@ class _AthletesScreenState extends State<AthletesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: PjColors.white,
       appBar: PjAppBar(title: 'Атлеты',
           leading:  widget.isChoiceAthlete ? (){
           Navigator.pop(context);

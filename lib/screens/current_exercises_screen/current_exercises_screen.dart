@@ -56,6 +56,7 @@ class _CurrentExercisesScreenState extends State<CurrentExercisesScreen> {
         });
       },
       child: Scaffold(
+        backgroundColor: PjColors.white,
         appBar: PjAppBar(
           searchTitle: searchExercises
               ? PjTextField(
@@ -162,9 +163,15 @@ class _CurrentExercisesScreenState extends State<CurrentExercisesScreen> {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 28.w),
-                  child: ExerciseCard(value: widget.exercise.groups![group].values![index],callback: () {
-                    print("Гена пидор");
-                  }),
+                  child: ExerciseCard(
+                      value: widget.exercise.groups![group].values![index],
+                      callback: () {
+                        context.router.push(SelectedExerciseRoute(
+                          groupName:  widget.exercise.groups![group].name!,
+                            value: widget.exercise.groups![group].values![index],
+                            exerciseTypeName: widget.exercise.name!));
+                        print("Гена пидор");
+                      }),
                 );
               },
               separatorBuilder: (BuildContext context, int index) {

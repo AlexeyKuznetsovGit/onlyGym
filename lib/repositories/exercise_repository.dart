@@ -26,7 +26,7 @@ class ExerciseRepository {
 
   Future<void> createNewExercise(
       {required String name,
-      String? description,
+      required String description,
       required int typeExercise,
       required List<int> groupsList,
       required String pathPhoto,
@@ -41,7 +41,7 @@ class ExerciseRepository {
     }
     var formData = FormData.fromMap({
       'name': name,
-      'description': description ?? 'описание',
+      'description': description,
       'type_exercise': typeExercise,
       'groups': groups,
       'photos': fromAssets
