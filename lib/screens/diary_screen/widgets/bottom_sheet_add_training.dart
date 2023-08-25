@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:onlygym/models/user_model.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_filled_button.dart';
@@ -19,10 +22,15 @@ class BottomSheetAddTraining extends StatefulWidget {
   final double height;
   final bool isNewTraining;
   final CbDiaryScreen cubit;
-  final int? athleteId;
+  final bool selectedAthlete;
 
   const BottomSheetAddTraining(
-      {Key? key, required this.title, this.athleteId, required this.cubit, required this.height, this.isNewTraining = true})
+      {Key? key,
+      required this.title,
+      this.selectedAthlete = false,
+      required this.cubit,
+      required this.height,
+      this.isNewTraining = true})
       : super(key: key);
 
   @override
@@ -30,7 +38,8 @@ class BottomSheetAddTraining extends StatefulWidget {
 }
 
 class _BottomSheetAddTrainingState extends State<BottomSheetAddTraining> {
-  MaterialStatesController buttonCtrl = MaterialStatesController();
+  MaterialStatesController myTrainingButtonCtrl = MaterialStatesController();
+  MaterialStatesController notMyTrainingButtonCtrl = MaterialStatesController();
 
   final _formKey = GlobalKey<FormState>();
   TextEditingController controller = TextEditingController();
@@ -68,7 +77,7 @@ class _BottomSheetAddTrainingState extends State<BottomSheetAddTraining> {
                     GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onTap: () {
-                          Navigator.pop(context);
+                          context.router.pop();
                         },
                         child: Icon(
                           CustomIcons.cross,
@@ -118,41 +127,38 @@ class _BottomSheetAddTrainingState extends State<BottomSheetAddTraining> {
                   },
                   text: 'Моя тренировка',
                   icon: CustomIcons.my_training,
-                  controller: buttonCtrl,
+                  controller: myTrainingButtonCtrl,
                 ),
                 SizedBox(
                   height: 20.h,
                 ),
                 PjLongButton(
-                  onPressed: () async {
-                 dynamic res = await context.router.push(AthletesRoute(isChoiceAthlete: true));
-                    if (res != null){
-                      print(res);
-                      showModalBottomSheet(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20.r),
-                            topRight: Radius.circular(20.r),
-                          ),
+                  onPressed: () {
+                    /*UserModel? selectedAthlete = await context.router.push<UserModel>(AthletesRoute(isChoiceAthlete: true));*/
+                    showModalBottomSheet(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.r),
+                          topRight: Radius.circular(20.r),
                         ),
-                        isScrollControlled: true,
-                        barrierColor: PjColors.black.withOpacity(0.5),
-                        context: context,
-                        builder: (ctx) {
-                          return BottomSheetAddTraining(
-                            athleteId: res,
-                            cubit: widget.cubit,
-                            isNewTraining: false,
-                            height: 270.h,
-                            title: 'Настройка тренировки',
-                          );
-                        },
-                      );
-                    }
+                      ),
+                      isScrollControlled: true,
+                      barrierColor: PjColors.black.withOpacity(0.5),
+                      context: context,
+                      builder: (ctx) {
+                        return BottomSheetAddTraining(
+                          selectedAthlete: true,
+                          cubit: widget.cubit,
+                          isNewTraining: false,
+                          height: 270.h,
+                          title: 'Настройка тренировки',
+                        );
+                      },
+                    );
                   },
                   text: 'Чужая тренировка',
                   icon: CustomIcons.notmy_training,
-                  controller: buttonCtrl,
+                  controller: notMyTrainingButtonCtrl,
                 ),
               ] else ...[
                 Form(
@@ -176,12 +182,23 @@ class _BottomSheetAddTrainingState extends State<BottomSheetAddTraining> {
                   height: 20.h,
                 ),
                 PjFilledButton(
-                    text: "Применить изменения",
-                    onPressed: () {
+                    text: widget.selectedAthlete ? "Выбор атлета" : "Применить изменения",
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        context.router.pop();
-                         widget.cubit.addTraining(
-                             widget.athleteId, DateFormat("yyyy-MM-dd").format(widget.cubit.currentDate), '${controller.text}:00');
+                        Navigator.of(context,rootNavigator: true).pop();
+                        Navigator.of(context,rootNavigator: true).pop();
+                        if (widget.selectedAthlete) {
+                          widget.cubit.trainingTime = '${controller.text}:00';
+                          UserModel? selectedAthlete =
+                              await context.router.push<UserModel>(AthletesRoute(isChoiceAthlete: true));
+                          if (selectedAthlete != null) {
+                            widget.cubit.addTraining(selectedAthlete,
+                                DateFormat("yyyy-MM-dd").format(widget.cubit.currentDate), '${controller.text}:00');
+                          }
+                        } else {
+                          widget.cubit.addTraining(
+                              null, DateFormat("yyyy-MM-dd").format(widget.cubit.currentDate), '${controller.text}:00');
+                        }
                       } else {
                         setState(() {
                           isPressed = true;

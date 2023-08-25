@@ -22,6 +22,7 @@ mixin _$StDiaryScreen {
     required TResult Function(int? error, String? message) error,
     required TResult Function(TrainingModel training) loaded,
     required TResult Function() init,
+    required TResult Function(TrainingModel training) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,6 +31,7 @@ mixin _$StDiaryScreen {
     TResult? Function(int? error, String? message)? error,
     TResult? Function(TrainingModel training)? loaded,
     TResult? Function()? init,
+    TResult? Function(TrainingModel training)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +40,7 @@ mixin _$StDiaryScreen {
     TResult Function(int? error, String? message)? error,
     TResult Function(TrainingModel training)? loaded,
     TResult Function()? init,
+    TResult Function(TrainingModel training)? success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +50,7 @@ mixin _$StDiaryScreen {
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Init value) init,
+    required TResult Function(_Success value) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +59,7 @@ mixin _$StDiaryScreen {
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Init value)? init,
+    TResult? Function(_Success value)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +68,7 @@ mixin _$StDiaryScreen {
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Init value)? init,
+    TResult Function(_Success value)? success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -127,6 +133,7 @@ class _$_Loading implements _Loading {
     required TResult Function(int? error, String? message) error,
     required TResult Function(TrainingModel training) loaded,
     required TResult Function() init,
+    required TResult Function(TrainingModel training) success,
   }) {
     return loading();
   }
@@ -138,6 +145,7 @@ class _$_Loading implements _Loading {
     TResult? Function(int? error, String? message)? error,
     TResult? Function(TrainingModel training)? loaded,
     TResult? Function()? init,
+    TResult? Function(TrainingModel training)? success,
   }) {
     return loading?.call();
   }
@@ -149,6 +157,7 @@ class _$_Loading implements _Loading {
     TResult Function(int? error, String? message)? error,
     TResult Function(TrainingModel training)? loaded,
     TResult Function()? init,
+    TResult Function(TrainingModel training)? success,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -164,6 +173,7 @@ class _$_Loading implements _Loading {
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Init value) init,
+    required TResult Function(_Success value) success,
   }) {
     return loading(this);
   }
@@ -175,6 +185,7 @@ class _$_Loading implements _Loading {
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Init value)? init,
+    TResult? Function(_Success value)? success,
   }) {
     return loading?.call(this);
   }
@@ -186,6 +197,7 @@ class _$_Loading implements _Loading {
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Init value)? init,
+    TResult Function(_Success value)? success,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -273,6 +285,7 @@ class _$_Error implements _Error {
     required TResult Function(int? error, String? message) error,
     required TResult Function(TrainingModel training) loaded,
     required TResult Function() init,
+    required TResult Function(TrainingModel training) success,
   }) {
     return error(this.error, message);
   }
@@ -284,6 +297,7 @@ class _$_Error implements _Error {
     TResult? Function(int? error, String? message)? error,
     TResult? Function(TrainingModel training)? loaded,
     TResult? Function()? init,
+    TResult? Function(TrainingModel training)? success,
   }) {
     return error?.call(this.error, message);
   }
@@ -295,6 +309,7 @@ class _$_Error implements _Error {
     TResult Function(int? error, String? message)? error,
     TResult Function(TrainingModel training)? loaded,
     TResult Function()? init,
+    TResult Function(TrainingModel training)? success,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -310,6 +325,7 @@ class _$_Error implements _Error {
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Init value) init,
+    required TResult Function(_Success value) success,
   }) {
     return error(this);
   }
@@ -321,6 +337,7 @@ class _$_Error implements _Error {
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Init value)? init,
+    TResult? Function(_Success value)? success,
   }) {
     return error?.call(this);
   }
@@ -332,6 +349,7 @@ class _$_Error implements _Error {
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Init value)? init,
+    TResult Function(_Success value)? success,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -418,6 +436,7 @@ class _$_Loaded implements _Loaded {
     required TResult Function(int? error, String? message) error,
     required TResult Function(TrainingModel training) loaded,
     required TResult Function() init,
+    required TResult Function(TrainingModel training) success,
   }) {
     return loaded(training);
   }
@@ -429,6 +448,7 @@ class _$_Loaded implements _Loaded {
     TResult? Function(int? error, String? message)? error,
     TResult? Function(TrainingModel training)? loaded,
     TResult? Function()? init,
+    TResult? Function(TrainingModel training)? success,
   }) {
     return loaded?.call(training);
   }
@@ -440,6 +460,7 @@ class _$_Loaded implements _Loaded {
     TResult Function(int? error, String? message)? error,
     TResult Function(TrainingModel training)? loaded,
     TResult Function()? init,
+    TResult Function(TrainingModel training)? success,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -455,6 +476,7 @@ class _$_Loaded implements _Loaded {
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Init value) init,
+    required TResult Function(_Success value) success,
   }) {
     return loaded(this);
   }
@@ -466,6 +488,7 @@ class _$_Loaded implements _Loaded {
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Init value)? init,
+    TResult? Function(_Success value)? success,
   }) {
     return loaded?.call(this);
   }
@@ -477,6 +500,7 @@ class _$_Loaded implements _Loaded {
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Init value)? init,
+    TResult Function(_Success value)? success,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -535,6 +559,7 @@ class _$_Init implements _Init {
     required TResult Function(int? error, String? message) error,
     required TResult Function(TrainingModel training) loaded,
     required TResult Function() init,
+    required TResult Function(TrainingModel training) success,
   }) {
     return init();
   }
@@ -546,6 +571,7 @@ class _$_Init implements _Init {
     TResult? Function(int? error, String? message)? error,
     TResult? Function(TrainingModel training)? loaded,
     TResult? Function()? init,
+    TResult? Function(TrainingModel training)? success,
   }) {
     return init?.call();
   }
@@ -557,6 +583,7 @@ class _$_Init implements _Init {
     TResult Function(int? error, String? message)? error,
     TResult Function(TrainingModel training)? loaded,
     TResult Function()? init,
+    TResult Function(TrainingModel training)? success,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -572,6 +599,7 @@ class _$_Init implements _Init {
     required TResult Function(_Error value) error,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Init value) init,
+    required TResult Function(_Success value) success,
   }) {
     return init(this);
   }
@@ -583,6 +611,7 @@ class _$_Init implements _Init {
     TResult? Function(_Error value)? error,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Init value)? init,
+    TResult? Function(_Success value)? success,
   }) {
     return init?.call(this);
   }
@@ -594,6 +623,7 @@ class _$_Init implements _Init {
     TResult Function(_Error value)? error,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Init value)? init,
+    TResult Function(_Success value)? success,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -605,4 +635,155 @@ class _$_Init implements _Init {
 
 abstract class _Init implements StDiaryScreen {
   const factory _Init() = _$_Init;
+}
+
+/// @nodoc
+abstract class _$$_SuccessCopyWith<$Res> {
+  factory _$$_SuccessCopyWith(
+          _$_Success value, $Res Function(_$_Success) then) =
+      __$$_SuccessCopyWithImpl<$Res>;
+  @useResult
+  $Res call({TrainingModel training});
+}
+
+/// @nodoc
+class __$$_SuccessCopyWithImpl<$Res>
+    extends _$StDiaryScreenCopyWithImpl<$Res, _$_Success>
+    implements _$$_SuccessCopyWith<$Res> {
+  __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? training = null,
+  }) {
+    return _then(_$_Success(
+      null == training
+          ? _value.training
+          : training // ignore: cast_nullable_to_non_nullable
+              as TrainingModel,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Success implements _Success {
+  const _$_Success(this.training);
+
+  @override
+  final TrainingModel training;
+
+  @override
+  String toString() {
+    return 'StDiaryScreen.success(training: $training)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Success &&
+            (identical(other.training, training) ||
+                other.training == training));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, training);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
+      __$$_SuccessCopyWithImpl<_$_Success>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function(int? error, String? message) error,
+    required TResult Function(TrainingModel training) loaded,
+    required TResult Function() init,
+    required TResult Function(TrainingModel training) success,
+  }) {
+    return success(training);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loading,
+    TResult? Function(int? error, String? message)? error,
+    TResult? Function(TrainingModel training)? loaded,
+    TResult? Function()? init,
+    TResult? Function(TrainingModel training)? success,
+  }) {
+    return success?.call(training);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(int? error, String? message)? error,
+    TResult Function(TrainingModel training)? loaded,
+    TResult Function()? init,
+    TResult Function(TrainingModel training)? success,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success(training);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Init value) init,
+    required TResult Function(_Success value) success,
+  }) {
+    return success(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Init value)? init,
+    TResult? Function(_Success value)? success,
+  }) {
+    return success?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Init value)? init,
+    TResult Function(_Success value)? success,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Success implements StDiaryScreen {
+  const factory _Success(final TrainingModel training) = _$_Success;
+
+  TrainingModel get training;
+  @JsonKey(ignore: true)
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -21,8 +21,10 @@ class SelectedExerciseScreen extends StatefulWidget implements AutoRouteWrapper 
   final ValuesModel value;
   final String exerciseTypeName;
   final String groupName; // Пока так, надо делать запрос на конкретное упражнение
+  final bool myExercise;
 
-  const SelectedExerciseScreen({Key? key, required this.value, required this.exerciseTypeName, required this.groupName})
+  const SelectedExerciseScreen(
+      {Key? key, required this.value, required this.exerciseTypeName, required this.groupName, this.myExercise = true})
       : super(key: key);
 
   @override
@@ -220,12 +222,13 @@ class _SelectedExerciseScreenState extends State<SelectedExerciseScreen> {
             SizedBox(
               height: 20.h,
             ),
-            ...List.generate(
-              2,
-              (index) => RoundField(
-                date: '14 апреля 2023',
+            if (!widget.myExercise)
+              ...List.generate(
+                2,
+                (index) => RoundField(
+                  date: '14 апреля 2023',
+                ),
               ),
-            ),
           ],
         ),
       ),

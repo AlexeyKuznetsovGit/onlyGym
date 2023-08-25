@@ -54,6 +54,7 @@ class _ExerciseListState extends State<ExerciseList> {
         ),
         Flexible(
           child: ListView.separated(
+            physics: ClampingScrollPhysics(),
             itemCount: widget.exercises[widget.trainType].groups![group].values!.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {

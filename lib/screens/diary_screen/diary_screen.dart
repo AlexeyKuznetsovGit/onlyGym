@@ -44,9 +44,13 @@ class _DiaryScreenState extends State<DiaryScreen> {
         listener: (context, state) {
           state.maybeWhen(
               orElse: () {},
+              success: (training) {
+
+                context.read<CbDiaryScreen>().emit(StDiaryScreen.loaded(training));
+              },
               loaded: (_) {
                 if (loading) {
-                  Navigator.pop(context);
+                  context.router.pop();
                   loading = false;
                 }
               },

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +16,7 @@ import 'calendar_item.dart';
 
 class Calendar extends StatefulWidget {
   final List<String> dateList;
+
   const Calendar({Key? key, required this.dateList}) : super(key: key);
 
   @override
@@ -23,7 +25,7 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   //Отвечает за выбранный день
- // DateTime currentDate = DateTime.now();
+  // DateTime currentDate = DateTime.now();
 
   DateTime dateTineNow = DateTime.now();
 
@@ -88,8 +90,9 @@ class _CalendarState extends State<Calendar> {
                 children: [
                   GestureDetector(
                     behavior: HitTestBehavior.translucent,
-                    onTap: () {
+                    onTap: ()  {
                       showModalBottomSheet(
+                        useRootNavigator: true,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20.r),
@@ -141,14 +144,12 @@ class _CalendarState extends State<Calendar> {
                       date: days[index],
                       selectedDate: context.read<CbDiaryScreen>().currentDate,
                       onItemTap: () {
-
                         onTapItem(index);
                       })),
             )),
         SizedBox(
           height: 20.h,
         ),
-
       ],
     );
   }
@@ -157,9 +158,7 @@ class _CalendarState extends State<Calendar> {
   int getCurrentIndex(DateTime current) {
     int findedIndex = 0;
     for (int i = 0; i < days.length; i++) {
-      if (current.year == days[i].year &&
-          current.day == days[i].day &&
-          current.month == days[i].month) {
+      if (current.year == days[i].year && current.day == days[i].day && current.month == days[i].month) {
         findedIndex = i;
         break;
       }
@@ -172,20 +171,23 @@ class _CalendarState extends State<Calendar> {
   void onTapItem(int index) {
     setState(() {
       context.read<CbDiaryScreen>().currentDate = days[index];
-      if(context.read<CbDiaryScreen>().currentDate.day == dateTineNow.day &&context.read<CbDiaryScreen>().currentDate.month == dateTineNow.month &&context.read<CbDiaryScreen>().currentDate.year == dateTineNow.year){
+      if (context.read<CbDiaryScreen>().currentDate.day == dateTineNow.day &&
+          context.read<CbDiaryScreen>().currentDate.month == dateTineNow.month &&
+          context.read<CbDiaryScreen>().currentDate.year == dateTineNow.year) {
         label = 'Сегодня';
       } else {
         label = DateFormat("d MMMM yyyy", 'ru').format(context.read<CbDiaryScreen>().currentDate);
       }
-      context.read<CbDiaryScreen>().getData(DateFormat("yyyy-MM-dd").format(context.read<CbDiaryScreen>().currentDate), true);
+      context
+          .read<CbDiaryScreen>()
+          .getData(DateFormat("yyyy-MM-dd").format(context.read<CbDiaryScreen>().currentDate), true);
     });
   }
 
   //Генерация списка дней
   List<DateTime> generateDays() {
     DateTime currentTime = DateTime.now();
-    DateTime old =
-        DateTime(currentTime.year - 1, currentTime.month, currentTime.day);
+    DateTime old = DateTime(currentTime.year - 1, currentTime.month, currentTime.day);
     List<DateTime> localDays = [];
     localDays.add(old);
     for (int i = 1; i < 365 * 2; i++) {

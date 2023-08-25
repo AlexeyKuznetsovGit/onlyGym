@@ -6,4 +6,5 @@ abstract class StDiaryScreen with _$StDiaryScreen {
   const factory StDiaryScreen.error(int? error, String? message) = _Error;
   const factory StDiaryScreen.loaded(TrainingModel training) = _Loaded;
   const factory StDiaryScreen.init() = _Init;
+  const factory StDiaryScreen.success(TrainingModel training) = _Success;
 }

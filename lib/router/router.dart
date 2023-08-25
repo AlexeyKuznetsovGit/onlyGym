@@ -39,22 +39,46 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: MyTargetRoute.page),
         AutoRoute(page: CreateNewAthleteRoute.page),
         AutoRoute(page: IdConfirmationRoute.page),
-        AutoRoute(page: MainRoute.page, initial: Api.tokenIsNotEmpty, children: [
-          AutoRoute(page: DiaryRoute.page, maintainState: false),
-          AutoRoute(
-            page: ExercisesRoute.page,
-            maintainState: false,
-          ),
-          AutoRoute(page: AthletesRoute.page, maintainState: false),
-          AutoRoute(page: ProfileRoute.page, initial: true)
+        AutoRoute(path: '/', page: MainRoute.page, initial: Api.tokenIsNotEmpty, children: [
+          AutoRoute(page: DiaryTab.page,maintainState: false,children: [
+            AutoRoute(page: DiaryRoute.page, initial: true),
+            AutoRoute(page: AthletesRoute.page),
+            AutoRoute(page: TrainingRoute.page),
+          ]),
+          AutoRoute(page: ExercisesTab.page, children: [
+            AutoRoute(page: ExercisesRoute.page, initial: true),
+            AutoRoute(page: CurrentExercisesRoute.page),
+            AutoRoute(page: NewExerciseRoute.page, maintainState: false),
+            AutoRoute(page: SelectedExerciseRoute.page,  maintainState: false),
+          ]),
+          AutoRoute( page: AthletesTab.page, children: [
+            AutoRoute(page: AthletesRoute.page, path: '', maintainState: false),
+            AutoRoute(page: ProfileRoute.page, path: 'athlete-profile',)
+          ]),
+          AutoRoute(path: 'profile', page: ProfileTab.page, initial: true, children: [
+            AutoRoute(page: ProfileRoute.page, path: '',),
+            AutoRoute(page: ProfileImageRoute.page, path: 'profile-image', maintainState: false),
+          ])
         ]),
-        AutoRoute(page: ProfileRoute.page),
-        AutoRoute(page: TrainingRoute.page),
-        AutoRoute(page: AthletesRoute.page, maintainState: false),
-        AutoRoute(
-          page: CurrentExercisesRoute.page,
-        ),
-        AutoRoute(page: NewExerciseRoute.page, maintainState: false),
-        AutoRoute(page: SelectedExerciseRoute.page, maintainState: false),
       ];
+}
+
+@RoutePage(name: 'ProfileTab')
+class ProfileTabPage extends AutoRouter {
+  const ProfileTabPage({super.key});
+}
+
+@RoutePage(name: 'AthletesTab')
+class AthletesTabPage extends AutoRouter {
+  const AthletesTabPage({super.key});
+}
+
+@RoutePage(name: 'ExercisesTab')
+class ExercisesTabPage extends AutoRouter {
+  const ExercisesTabPage({super.key});
+}
+
+@RoutePage(name: 'DiaryTab')
+class DiaryTabPage extends AutoRouter {
+  const DiaryTabPage({super.key});
 }

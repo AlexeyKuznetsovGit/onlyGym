@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ import 'package:onlygym/project_widgets/pj_text_field.dart';
 import 'package:onlygym/router/router.dart';
 import 'package:onlygym/screens/exercises_screen/widgets/button_exercise_list.dart';
 import 'package:onlygym/screens/exercises_screen/widgets/exercise_card.dart';
+import '../../project_widgets/pj_search_app_bar.dart';
 import 'cubit/cb_current_exercises_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,7 +60,70 @@ class _CurrentExercisesScreenState extends State<CurrentExercisesScreen> {
       },
       child: Scaffold(
         backgroundColor: PjColors.white,
-        appBar: PjAppBar(
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(42.h),
+            child: searchExercises
+                ? PjSearchAppBar(
+                    clearSearchField: () {
+                      setState(() {
+                        if (controller.text.isEmpty) {
+                          setState(() {
+                            searchExercises = false;
+                          });
+                        } else {
+                          controller.clear();
+                        }
+                      });
+                    },
+                    controller: controller,
+                    onChanged: (v) {
+                      setState(() {});
+                    })
+                : PjAppBar(
+                    title: widget.exercise.name!,
+                    actions: [
+                      GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () async {
+                          bool? res =
+                              await context.router.push<bool>(NewExerciseRoute(typeExercise: widget.exercise.id!));
+                          if (res != null && res) {
+                            widget.exercise = await context
+                                .read<CbCurrentExercisesScreen>()
+                                .getData(widget.exercise, widget.exercise.id!);
+                          }
+                        },
+                        child: Icon(
+                          CustomIcons.plus,
+                          size: 24.w,
+                          color: PjColors.black,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () {
+                          setState(() {
+                            searchExercises = !searchExercises;
+                          });
+                        },
+                        child: Icon(
+                          CustomIcons.search,
+                          size: 24.w,
+                          color: PjColors.black,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 16.w,
+                      ),
+                    ],
+                    leading: () {
+                      context.router.pop();
+                    },
+                  )),
+        /*PjAppBar(
           searchTitle: searchExercises
               ? PjTextField(
                   title: 'Поиск...',
@@ -113,7 +179,7 @@ class _CurrentExercisesScreenState extends State<CurrentExercisesScreen> {
               : () {
                   context.router.pop();
                 },
-        ),
+        ),*/
         body: BlocConsumer<CbCurrentExercisesScreen, StCurrentExercisesScreen>(
           listener: (context, state) =>
               state.whenOrNull(error: (code, message) => showAlertDialog(context, message ?? '')),
@@ -128,7 +194,8 @@ class _CurrentExercisesScreenState extends State<CurrentExercisesScreen> {
   }
 
   Widget _buildBodyContent(BuildContext context) {
-    //фильтр сделаем как узнаю модель
+    List<ValuesModel> filtered =
+        widget.exercise.groups![group].values!.where((element) => element.name!.contains(controller.text)).toList();
     return Padding(
       padding: EdgeInsets.only(top: 20.h),
       child: Column(
@@ -158,17 +225,17 @@ class _CurrentExercisesScreenState extends State<CurrentExercisesScreen> {
           ),
           Flexible(
             child: ListView.separated(
-              itemCount: widget.exercise.groups![group].values!.length,
+              itemCount: filtered.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 28.w),
                   child: ExerciseCard(
-                      value: widget.exercise.groups![group].values![index],
+                      value: filtered[index],
                       callback: () {
                         context.router.push(SelectedExerciseRoute(
-                          groupName:  widget.exercise.groups![group].name!,
-                            value: widget.exercise.groups![group].values![index],
+                            groupName: widget.exercise.groups![group].name!,
+                            value: filtered[index],
                             exerciseTypeName: widget.exercise.name!));
                         print("Гена пидор");
                       }),

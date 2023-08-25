@@ -2,10 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:onlygym/models/user_model.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
-import 'package:onlygym/project_utils/pj_icons.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_widgets/error_dialog.dart';
 import 'package:onlygym/project_widgets/pj_appbar.dart';
@@ -18,9 +16,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'widgets/bottom_sheet_add_athelet.dart';
 
-@RoutePage()
+@RoutePage<UserModel>()
 class AthletesScreen extends StatefulWidget implements AutoRouteWrapper {
   final bool isChoiceAthlete;
+
   const AthletesScreen({Key? key, this.isChoiceAthlete = false}) : super(key: key);
 
   @override
@@ -42,49 +41,53 @@ class _AthletesScreenState extends State<AthletesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: PjColors.white,
-      appBar: PjAppBar(title: 'Атлеты',
-          leading:  widget.isChoiceAthlete ? (){
-          Navigator.pop(context);
-          } : null,
-          actions: !widget.isChoiceAthlete ? [
-        GestureDetector(
-          onTap: () {
-            showModalBottomSheet(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.r),
-                  topRight: Radius.circular(20.r),
-                ),
-              ),
-              isScrollControlled: true,
-              barrierColor: PjColors.black.withOpacity(0.5),
-              context: context,
-              builder: (ctx) {
-                CbAthletesScreen cubit = BlocProvider.of<CbAthletesScreen>(context);
-                return BottomSheetAddAthelet(
-                  cubit: cubit,
-                  height: 270.h,
-                  title: 'Атлеты',
-                );
-              },
-            );
-          },
-          behavior: HitTestBehavior.translucent,
-          child: Padding(
-            padding: EdgeInsets.only(right: 16.w),
-            child: Icon(
-              CustomIcons.plus,
-              color: Colors.black,
-            ),
-          ),
-        ),
-      ] : null),
+      appBar: PjAppBar(
+          title: 'Атлеты',
+          leading: widget.isChoiceAthlete
+              ? () {
+                  Navigator.pop(context);
+                }
+              : null,
+          actions: !widget.isChoiceAthlete
+              ? [
+                  GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20.r),
+                            topRight: Radius.circular(20.r),
+                          ),
+                        ),
+                        isScrollControlled: true,
+                        barrierColor: PjColors.black.withOpacity(0.5),
+                        context: context,
+                        builder: (ctx) {
+                          CbAthletesScreen cubit = BlocProvider.of<CbAthletesScreen>(context);
+                          return BottomSheetAddAthelet(
+                            cubit: cubit,
+                            height: 270.h,
+                            title: 'Атлеты',
+                          );
+                        },
+                      );
+                    },
+                    behavior: HitTestBehavior.translucent,
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 16.w),
+                      child: Icon(
+                        CustomIcons.plus,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ]
+              : null),
       body: BlocConsumer<CbAthletesScreen, StAthletesScreen>(
-        listener: (context, state) =>
-            state.whenOrNull(error: (code, message) => showAlertDialog(context, message ?? '', true, () {
-              context.read<CbAthletesScreen>().emit(StAthletesScreen.loaded(
-                   context.read<CbAthletesScreen>().list));
-            })),
+        listener: (context, state) => state.whenOrNull(
+            error: (code, message) => showAlertDialog(context, message ?? '', true, () {
+                  context.read<CbAthletesScreen>().emit(StAthletesScreen.loaded(context.read<CbAthletesScreen>().list));
+                })),
         builder: (context, state) => state.maybeWhen(
           orElse: () => Container(),
           loading: () => const PjLoader(),
@@ -123,7 +126,9 @@ class _AthletesScreenState extends State<AthletesScreen> {
               itemBuilder: (context, index) => AvatarCard(
                 isChoiceAthlete: widget.isChoiceAthlete,
                 callback: () {
-                 widget.isChoiceAthlete ? Navigator.pop(context, filtered[index].id) : context.router.push(ProfileRoute(athleteId: filtered[index].id));
+                  widget.isChoiceAthlete
+                      ? /*Navigator.of(context,rootNavigator: true).pop(filtered[index].id)*/context.router.pop<UserModel>(filtered[index])
+                      : context.router.push(ProfileRoute(athleteId: filtered[index].id));
                 },
                 user: filtered[index],
               ),

@@ -36,7 +36,7 @@ class CbNewExerciseScreen extends Cubit<StNewExerciseScreen> {
     required String namePhoto,
   }) async {
     try {
-      emit(StNewExerciseScreen.loading());
+     // emit(StNewExerciseScreen.loading());
       log(typeExercise.toString(), name:"type");
       log(groupsList.toString(), name:"groupsList");
       await (getIt<ExerciseRepository>().createNewExercise(

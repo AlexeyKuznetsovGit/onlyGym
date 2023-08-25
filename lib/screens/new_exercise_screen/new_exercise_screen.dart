@@ -61,7 +61,7 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
               error: (code, message) => showAlertDialog(context, message ?? '', true),
               loading: () => showLoader(context),
               successful: () {
-                Navigator.pop(context);
+                context.read<CbNewExerciseScreen>().emit(StNewExerciseScreen.init());
                 context.router.pop<bool>(true);
               }),
           builder: (context, state) => state.maybeWhen(
@@ -135,6 +135,9 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
             height: 20.h,
           ),
           PjTextField(
+            onChanged: (v) {
+              setState(() {});
+            },
             title: 'Описание упражнения',
             type: PjTextFieldStyle.text,
             controller: controllerDescription,
@@ -171,19 +174,22 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
           ),
           PjFilledButton(
               buttonColor:
-                  controllerTitle.text.isNotEmpty && selectedGroups.isNotEmpty && controllerDescription.text.isNotEmpty ? PjColors.neonBlue : PjColors.white,
+                  controllerTitle.text.isNotEmpty && selectedGroups.isNotEmpty && controllerDescription.text.isNotEmpty
+                      ? PjColors.neonBlue
+                      : PjColors.white,
               text: 'Добавить упражнение',
-              onPressed: selectedGroups.isNotEmpty && controllerTitle.text.isNotEmpty && controllerDescription.text.isNotEmpty
-                  ? () {
-                      context.read<CbNewExerciseScreen>().createNewExercise(
-                          name: controllerTitle.text,
-                          description: controllerDescription.text,
-                          typeExercise: widget.typeExercise,
-                          groupsList: selectedGroups,
-                          namePhoto: pathToPhoto.split('/').last,
-                          pathPhoto: pathToPhoto);
-                    }
-                  : () {})
+              onPressed:
+                  selectedGroups.isNotEmpty && controllerTitle.text.isNotEmpty && controllerDescription.text.isNotEmpty
+                      ? () {
+                          context.read<CbNewExerciseScreen>().createNewExercise(
+                              name: controllerTitle.text,
+                              description: controllerDescription.text,
+                              typeExercise: widget.typeExercise,
+                              groupsList: selectedGroups,
+                              namePhoto: pathToPhoto.split('/').last,
+                              pathPhoto: pathToPhoto);
+                        }
+                      : () {})
         ],
       ),
     );

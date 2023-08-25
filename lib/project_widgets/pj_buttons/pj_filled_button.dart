@@ -44,7 +44,6 @@ class PjFilledButton extends StatelessWidget {
                 fontFamily: "PtRoot",
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w700,
-                height: 16 / 22,
                 color: buttonColor == PjColors.neonBlue ? PjColors.white : PjColors.black),
           ) /*PjText(
           text,

@@ -1,14 +1,15 @@
 import 'package:eticon_api/eticon_api.dart';
 import 'package:onlygym/main.dart';
 import 'package:onlygym/models/training_model.dart';
+import 'package:onlygym/models/user_model.dart';
 
 class TrainingRepository {
-  Future<void> addTraining(int? athleteId, String date,String time) async {
-    Map<String, dynamic> body = athleteId != null
+  Future<void> addTraining(UserModel? selectedAthlete, String date, String time) async {
+    Map<String, dynamic> body = selectedAthlete != null
         ? {
-            "athlete_id": athleteId,
+            "athlete_id": selectedAthlete.id,
             "training_datetime": "$date $time",
-            "name": "Моя тренировка",
+            "name": "${selectedAthlete.lastName} ${selectedAthlete.firstName}",
             "comment": "string",
             "type_id": 1
           }
