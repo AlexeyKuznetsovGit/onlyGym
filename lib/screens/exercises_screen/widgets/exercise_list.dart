@@ -9,8 +9,10 @@ import 'package:onlygym/screens/exercises_screen/widgets/exercise_card.dart';
 class ExerciseList extends StatefulWidget {
   final List<ExerciseModel> exercises;
   final int trainType;
+  final bool isChoice;
 
-  const ExerciseList({Key? key, required this.exercises, required this.trainType}) : super(key: key);
+  const ExerciseList({Key? key, required this.exercises, required this.trainType, required this.isChoice})
+      : super(key: key);
 
   @override
   State<ExerciseList> createState() => _ExerciseListState();
@@ -60,17 +62,22 @@ class _ExerciseListState extends State<ExerciseList> {
             itemBuilder: (context, index) {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 28.w),
-                child: ExerciseCard(
-                    value: widget.exercises[widget.trainType].groups![group].values![index],
-                    callback: () {
-                      context.router.push(
-                        SelectedExerciseRoute(
-                            value: widget.exercises[widget.trainType].groups![group].values![index],
-                            exerciseTypeName: widget.exercises[widget.trainType].name!,
-                            groupName: widget.exercises[widget.trainType].groups![group].name!),
-                      );
-                      print("Гена пидор");
-                    }),
+                child: widget.isChoice
+                    ? ExerciseCard.chekbox(
+                        callback: () {},
+                        value: widget.exercises[widget.trainType].groups![group].values![index],
+                      )
+                    : ExerciseCard(
+                        value: widget.exercises[widget.trainType].groups![group].values![index],
+                        callback: () {
+                          context.router.push(
+                            SelectedExerciseRoute(
+                              value: widget.exercises[widget.trainType].groups![group].values![index],
+                              exerciseTypeName: widget.exercises[widget.trainType].name!,
+                            ),
+                          );
+                          print("Гена пидор");
+                        }),
               );
             },
             separatorBuilder: (BuildContext context, int index) {

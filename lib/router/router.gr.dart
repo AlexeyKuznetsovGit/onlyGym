@@ -64,9 +64,15 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     ExercisesRoute.name: (routeData) {
+      final args = routeData.argsAs<ExercisesRouteArgs>(
+          orElse: () => const ExercisesRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const ExercisesScreen()),
+        child: WrappedRoute(
+            child: ExercisesScreen(
+          key: args.key,
+          isChoice: args.isChoice,
+        )),
       );
     },
     RecoverPasswordRoute.name: (routeData) {
@@ -147,6 +153,7 @@ abstract class _$AppRouter extends RootStackRouter {
             child: CurrentExercisesScreen(
           key: args.key,
           exercise: args.exercise,
+          isChoice: args.isChoice,
         )),
       );
     },
@@ -194,7 +201,6 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           value: args.value,
           exerciseTypeName: args.exerciseTypeName,
-          groupName: args.groupName,
           myExercise: args.myExercise,
         )),
       );
@@ -351,16 +357,40 @@ class DiaryRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ExercisesScreen]
-class ExercisesRoute extends PageRouteInfo<void> {
-  const ExercisesRoute({List<PageRouteInfo>? children})
-      : super(
+class ExercisesRoute extends PageRouteInfo<ExercisesRouteArgs> {
+  ExercisesRoute({
+    Key? key,
+    bool isChoice = false,
+    List<PageRouteInfo>? children,
+  }) : super(
           ExercisesRoute.name,
+          args: ExercisesRouteArgs(
+            key: key,
+            isChoice: isChoice,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'ExercisesRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<ExercisesRouteArgs> page =
+      PageInfo<ExercisesRouteArgs>(name);
+}
+
+class ExercisesRouteArgs {
+  const ExercisesRouteArgs({
+    this.key,
+    this.isChoice = false,
+  });
+
+  final Key? key;
+
+  final bool isChoice;
+
+  @override
+  String toString() {
+    return 'ExercisesRouteArgs{key: $key, isChoice: $isChoice}';
+  }
 }
 
 /// generated route for
@@ -572,12 +602,14 @@ class CurrentExercisesRoute extends PageRouteInfo<CurrentExercisesRouteArgs> {
   CurrentExercisesRoute({
     Key? key,
     required ExerciseModel exercise,
+    required bool isChoice,
     List<PageRouteInfo>? children,
   }) : super(
           CurrentExercisesRoute.name,
           args: CurrentExercisesRouteArgs(
             key: key,
             exercise: exercise,
+            isChoice: isChoice,
           ),
           initialChildren: children,
         );
@@ -592,15 +624,18 @@ class CurrentExercisesRouteArgs {
   const CurrentExercisesRouteArgs({
     this.key,
     required this.exercise,
+    required this.isChoice,
   });
 
   final Key? key;
 
   final ExerciseModel exercise;
 
+  final bool isChoice;
+
   @override
   String toString() {
-    return 'CurrentExercisesRouteArgs{key: $key, exercise: $exercise}';
+    return 'CurrentExercisesRouteArgs{key: $key, exercise: $exercise, isChoice: $isChoice}';
   }
 }
 
@@ -705,7 +740,6 @@ class SelectedExerciseRoute extends PageRouteInfo<SelectedExerciseRouteArgs> {
     Key? key,
     required ValuesModel value,
     required String exerciseTypeName,
-    required String groupName,
     bool myExercise = true,
     List<PageRouteInfo>? children,
   }) : super(
@@ -714,7 +748,6 @@ class SelectedExerciseRoute extends PageRouteInfo<SelectedExerciseRouteArgs> {
             key: key,
             value: value,
             exerciseTypeName: exerciseTypeName,
-            groupName: groupName,
             myExercise: myExercise,
           ),
           initialChildren: children,
@@ -731,7 +764,6 @@ class SelectedExerciseRouteArgs {
     this.key,
     required this.value,
     required this.exerciseTypeName,
-    required this.groupName,
     this.myExercise = true,
   });
 
@@ -741,12 +773,10 @@ class SelectedExerciseRouteArgs {
 
   final String exerciseTypeName;
 
-  final String groupName;
-
   final bool myExercise;
 
   @override
   String toString() {
-    return 'SelectedExerciseRouteArgs{key: $key, value: $value, exerciseTypeName: $exerciseTypeName, groupName: $groupName, myExercise: $myExercise}';
+    return 'SelectedExerciseRouteArgs{key: $key, value: $value, exerciseTypeName: $exerciseTypeName, myExercise: $myExercise}';
   }
 }

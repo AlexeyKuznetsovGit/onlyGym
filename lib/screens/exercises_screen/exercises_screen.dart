@@ -14,7 +14,8 @@ import 'package:onlygym/screens/exercises_screen/widgets/exercise_list.dart';
 
 @RoutePage()
 class ExercisesScreen extends StatefulWidget implements AutoRouteWrapper {
-  const ExercisesScreen({Key? key}) : super(key: key);
+  final bool isChoice;
+  const ExercisesScreen({Key? key, this.isChoice = false}) : super(key: key);
   @override
   State<ExercisesScreen> createState() => _ExercisesScreenState();
 
@@ -60,12 +61,12 @@ class _ExercisesScreenState extends State<ExercisesScreen> {
     return Column(
       children: [
         SizedBox(height: 20.h,),
-        Carousel(exercises: BlocProvider.of<CbExercisesScreen>(context).exercise, callback: (int i){
+        Carousel(isChoice: widget.isChoice,exercises: BlocProvider.of<CbExercisesScreen>(context).exercise, callback: (int i){
           setState(() {
             trainType = i;
           });
         },),
-        Expanded(child: ExerciseList(exercises: BlocProvider.of<CbExercisesScreen>(context).exercise, trainType: trainType)),
+        Expanded(child: ExerciseList(exercises: BlocProvider.of<CbExercisesScreen>(context).exercise, trainType: trainType, isChoice: widget.isChoice,)),
       ],
     );
   }

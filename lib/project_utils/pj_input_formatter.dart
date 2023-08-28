@@ -6,8 +6,7 @@ class DateTextFormatter extends TextInputFormatter {
   static const _maxChars = 8;
 
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     var text = _format(newValue.text, '.');
     return newValue.copyWith(text: text, selection: updateCursorPosition(text));
   }
@@ -35,8 +34,7 @@ class TimeTextFormatter extends TextInputFormatter {
   static const _maxChars = 4;
 
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     var text = _format(newValue.text, ':');
     return newValue.copyWith(text: text, selection: updateCursorPosition(text));
   }
@@ -63,9 +61,9 @@ class TimeTextFormatter extends TextInputFormatter {
 class DecimalInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue,
-      TextEditingValue newValue,
-      ) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     // Фильтруем символы, которые не являются допустимыми цифрами или точкой
     String filteredValue = newValue.text.replaceAll(RegExp(r'[^\d.]'), '');
 

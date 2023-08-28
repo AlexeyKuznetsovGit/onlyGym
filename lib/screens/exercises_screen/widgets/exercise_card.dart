@@ -13,7 +13,7 @@ class ExerciseCard extends StatefulWidget {
     type = _ExerciseCardType.base;
   }
 
-  ExerciseCard.chekbox({Key? key, required this.callback}) : super(key: key) {
+  ExerciseCard.chekbox({Key? key, required this.callback, this.value}) : super(key: key) {
     type = _ExerciseCardType.checkbox;
   }
 
@@ -54,6 +54,12 @@ class _ExerciseCardState extends State<ExerciseCard> {
       //   widget.callback();
       // },
       onTap: () {
+        setState(() {
+          if (widget.type == _ExerciseCardType.checkbox) {
+            isCheck = !isCheck;
+          }
+        });
+
         widget.callback();
       },
       child: Container(

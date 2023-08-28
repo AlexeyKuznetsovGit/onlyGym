@@ -12,8 +12,9 @@ import 'package:onlygym/screens/exercises_screen/widgets/type_exercises_card.dar
 class Carousel extends StatefulWidget {
   final List<ExerciseModel> exercises;
   final Function callback;
+  final bool isChoice;
 
-  Carousel({Key? key, required this.exercises, required this.callback}) : super(key: key);
+  Carousel({Key? key, required this.exercises, required this.callback, required this.isChoice}) : super(key: key);
 
   @override
   State<Carousel> createState() => _CarouselState();
@@ -42,7 +43,7 @@ class _CarouselState extends State<Carousel> {
             for (ExerciseModel elem in widget.exercises)
               GestureDetector(
                 onTap: () async {
-                  await context.router.push(CurrentExercisesRoute(exercise: elem));
+                  await context.router.push(CurrentExercisesRoute(exercise: elem, isChoice: widget.isChoice));
                   context.read<CbExercisesScreen>().getData(loading: true);
                 },
                 child: TypeExercisesCard(callback: () {}, model: elem),

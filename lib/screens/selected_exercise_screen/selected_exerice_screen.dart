@@ -20,11 +20,10 @@ import 'package:onlygym/screens/selected_exercise_screen/widget/round_field.dart
 class SelectedExerciseScreen extends StatefulWidget implements AutoRouteWrapper {
   final ValuesModel value;
   final String exerciseTypeName;
-  final String groupName; // Пока так, надо делать запрос на конкретное упражнение
   final bool myExercise;
 
   const SelectedExerciseScreen(
-      {Key? key, required this.value, required this.exerciseTypeName, required this.groupName, this.myExercise = true})
+      {Key? key, required this.value, required this.exerciseTypeName, this.myExercise = true})
       : super(key: key);
 
   @override
@@ -44,6 +43,7 @@ class _SelectedExerciseScreenState extends State<SelectedExerciseScreen> {
   int max = 0;
   List<String> weeks = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
   bool readMore = true;
+  List<String> groupNames = ['Бицепс', 'Трицепс']; // Пока так, надо делать запрос на конкретное упражнение
 
   @override
   void initState() {
@@ -129,14 +129,14 @@ class _SelectedExerciseScreenState extends State<SelectedExerciseScreen> {
             SizedBox(
               height: 42.h,
               child: ListView.builder(
-                itemCount: 1,
+                itemCount: groupNames.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return ButtonExerciseList(
                     isActive: true,
                     index: index,
                     callback: () {},
-                    text: widget.groupName,
+                    text: groupNames[index],
                   );
                 },
               ),

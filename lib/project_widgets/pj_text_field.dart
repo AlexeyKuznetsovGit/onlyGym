@@ -8,20 +8,20 @@ import 'package:onlygym/project_utils/pj_input_formatter.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:regexed_validator/regexed_validator.dart';
 
-enum PjTextFieldStyle { password, email, date, text, number, params, time }
+enum PjTextFieldStyle { password, email, date, text, number, params, time, minutes }
 
 class PjTextField extends StatefulWidget {
-  const PjTextField({
-    Key? key,
-    required this.title,
-    this.onChanged,
-    required this.type,
-    this.repeatPassword = '',
-    required this.controller,
-    this.suffixText,
-    this.checkCode,
-    this.maxLines = 1
-  }) : super(key: key);
+  const PjTextField(
+      {Key? key,
+      required this.title,
+      this.onChanged,
+      required this.type,
+      this.repeatPassword = '',
+      required this.controller,
+      this.suffixText,
+      this.checkCode,
+      this.maxLines = 1})
+      : super(key: key);
 
   final PjTextFieldStyle type;
   final int? checkCode;
@@ -44,19 +44,17 @@ class _PjTextFieldState extends State<PjTextField> {
     return SizedBox(
       width: 334.w,
       child: TextFormField(
-        textCapitalization: widget.type == PjTextFieldStyle.text
-            ? TextCapitalization.sentences
-            : TextCapitalization.none,
+        textCapitalization:
+            widget.type == PjTextFieldStyle.text ? TextCapitalization.sentences : TextCapitalization.none,
         onChanged: widget.onChanged,
-       maxLines: widget.maxLines,
-       // maxLength: 40, //Если вводить больше символов, то появляется отступ который на половину перекрывает текст
+        maxLines: widget.maxLines,
+        // maxLength: 40, //Если вводить больше символов, то появляется отступ который на половину перекрывает текст
         autovalidateMode: AutovalidateMode.disabled,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return '';
           }
-          if (widget.type == PjTextFieldStyle.email &&
-              !GetUtils.isEmail(value)) {
+          if (widget.type == PjTextFieldStyle.email && !GetUtils.isEmail(value)) {
             return '';
           }
           if (widget.type == PjTextFieldStyle.password &&
@@ -64,9 +62,7 @@ class _PjTextFieldState extends State<PjTextField> {
               (value.length < 6 || value != widget.repeatPassword)) {
             return '';
           }
-          if (widget.type == PjTextFieldStyle.password &&
-              widget.repeatPassword.isEmpty &&
-              value.length < 6) {
+          if (widget.type == PjTextFieldStyle.password && widget.repeatPassword.isEmpty && value.length < 6) {
             return '';
           }
           if (widget.type == PjTextFieldStyle.date && !_validateDate(value)) {
@@ -75,13 +71,14 @@ class _PjTextFieldState extends State<PjTextField> {
           if (widget.type == PjTextFieldStyle.time && !_validateTime(value)) {
             return '';
           }
-          if (widget.type == PjTextFieldStyle.params &&
-              (value == '0' || value == '0.0' || value.endsWith('.'))) {
+          if (widget.type == PjTextFieldStyle.params && (value == '0' || value == '0.0' || value.endsWith('.'))) {
+            return '';
+          }
+          if (widget.type == PjTextFieldStyle.minutes && !_validateTimeMinute(value)) {
             return '';
           }
           if (widget.type == PjTextFieldStyle.number &&
-              (widget.checkCode != null &&
-                  widget.checkCode != int.parse(widget.controller.text))) {
+              (widget.checkCode != null && widget.checkCode != int.parse(widget.controller.text))) {
             return '';
           }
         },
@@ -95,50 +92,35 @@ class _PjTextFieldState extends State<PjTextField> {
                     DecimalInputFormatter(),
                     //FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                   ]
-                : widget.type == PjTextFieldStyle.time
+                : widget.type == PjTextFieldStyle.time || widget.type == PjTextFieldStyle.minutes
                     ? [
                         TimeTextFormatter(),
                         //FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                       ]
                     : null,
         keyboardType: getTextInputType(widget.type),
-        style: TextStyle(
-            fontFamily: "PtRoot",
-            fontSize: 14.h,
-            fontWeight: FontWeight.w500,
-            color: PjColors.black),
+        style: TextStyle(fontFamily: "PtRoot", fontSize: 14.h, fontWeight: FontWeight.w500, color: PjColors.black),
         decoration: InputDecoration(
           alignLabelWithHint: true,
           suffixText: widget.suffixText,
-          suffixStyle: TextStyle(
-              fontFamily: "PtRoot",
-              fontSize: 14.h,
-              fontWeight: FontWeight.w500,
-              color: PjColors.black),
+          suffixStyle:
+              TextStyle(fontFamily: "PtRoot", fontSize: 14.h, fontWeight: FontWeight.w500, color: PjColors.black),
           errorStyle: TextStyle(height: 0, color: Colors.transparent),
           isCollapsed: true,
           labelText: widget.title,
           floatingLabelBehavior: FloatingLabelBehavior.never,
           isDense: true,
-          labelStyle: TextStyle(
-              fontFamily: "PtRoot",
-              fontSize: 14.h,
-              fontWeight: FontWeight.w500,
-              color: PjColors.gray),
-          focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.r),
-              borderSide: BorderSide(color: Colors.red)),
-          errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.r),
-              borderSide: BorderSide(color: Colors.red)),
+          labelStyle:
+              TextStyle(fontFamily: "PtRoot", fontSize: 14.h, fontWeight: FontWeight.w500, color: PjColors.gray),
+          focusedErrorBorder:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(30.r), borderSide: BorderSide(color: Colors.red)),
+          errorBorder:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(30.r), borderSide: BorderSide(color: Colors.red)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.r),
-              borderSide: BorderSide(color: PjColors.ultraLightBlue)),
+              borderRadius: BorderRadius.circular(30.r), borderSide: BorderSide(color: PjColors.ultraLightBlue)),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.r),
-              borderSide: BorderSide(color: PjColors.ultraLightBlue)),
-          contentPadding:
-              EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
+              borderRadius: BorderRadius.circular(30.r), borderSide: BorderSide(color: PjColors.ultraLightBlue)),
+          contentPadding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
           suffixIcon: widget.type == PjTextFieldStyle.password
               ? GestureDetector(
                   onTap: () {
@@ -162,6 +144,8 @@ class _PjTextFieldState extends State<PjTextField> {
 
   TextInputType getTextInputType(PjTextFieldStyle type) {
     switch (type) {
+      case PjTextFieldStyle.minutes:
+        return TextInputType.number;
       case PjTextFieldStyle.number:
         return TextInputType.number;
       case PjTextFieldStyle.email:
@@ -176,11 +160,12 @@ class _PjTextFieldState extends State<PjTextField> {
         return TextInputType.text;
     }
   }
+
   bool _validateTime(String input) {
     if (validator.time(input)) {
       return true;
     } else {
-     return false;
+      return false;
     }
   }
 
@@ -197,6 +182,21 @@ class _PjTextFieldState extends State<PjTextField> {
       return false; //Некорректный формат даты
     }
   }*/
+
+  bool _validateTimeMinute(String input) {
+    List<String> parts = input.split(':');
+    if (parts.length != 2) {
+      return false;
+    }
+    int minutes = int.parse(parts[0]);
+    int seconds = int.parse(parts[1]);
+    if (minutes > 59 || seconds > 59) {
+      // Тут сами решайте
+      return false;
+    }
+    return true; // Валидация успешна
+  }
+
   bool _validateDate(String date) {
     DateFormat _dateFormat = DateFormat("dd.MM.yyyy");
     try {

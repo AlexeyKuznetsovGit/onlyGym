@@ -44,6 +44,8 @@ class AppRouter extends _$AppRouter {
             AutoRoute(page: DiaryRoute.page, initial: true),
             AutoRoute(page: AthletesRoute.page),
             AutoRoute(page: TrainingRoute.page),
+            AutoRoute(page: ExercisesRoute.page),
+            AutoRoute(page: CurrentExercisesRoute.page),
           ]),
           AutoRoute(page: ExercisesTab.page, children: [
             AutoRoute(page: ExercisesRoute.page, initial: true),

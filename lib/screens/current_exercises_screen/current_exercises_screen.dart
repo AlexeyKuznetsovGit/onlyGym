@@ -22,8 +22,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 @RoutePage()
 class CurrentExercisesScreen extends StatefulWidget implements AutoRouteWrapper {
   ExerciseModel exercise;
+  final bool isChoice;
 
-  CurrentExercisesScreen({Key? key, required this.exercise}) : super(key: key);
+  CurrentExercisesScreen({Key? key, required this.exercise, required this.isChoice}) : super(key: key);
 
   @override
   Widget wrappedRoute(BuildContext context) {
@@ -82,23 +83,25 @@ class _CurrentExercisesScreenState extends State<CurrentExercisesScreen> {
                 : PjAppBar(
                     title: widget.exercise.name!,
                     actions: [
-                      GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: () async {
-                          bool? res =
-                              await context.router.push<bool>(NewExerciseRoute(typeExercise: widget.exercise.id!));
-                          if (res != null && res) {
-                            widget.exercise = await context
-                                .read<CbCurrentExercisesScreen>()
-                                .getData(widget.exercise, widget.exercise.id!);
-                          }
-                        },
-                        child: Icon(
-                          CustomIcons.plus,
-                          size: 24.w,
-                          color: PjColors.black,
+                      if (!widget.isChoice) ...[
+                        GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: () async {
+                            bool? res =
+                                await context.router.push<bool>(NewExerciseRoute(typeExercise: widget.exercise.id!));
+                            if (res != null && res) {
+                              widget.exercise = await context
+                                  .read<CbCurrentExercisesScreen>()
+                                  .getData(widget.exercise, widget.exercise.id!);
+                            }
+                          },
+                          child: Icon(
+                            CustomIcons.plus,
+                            size: 24.w,
+                            color: PjColors.black,
+                          ),
                         ),
-                      ),
+                      ],
                       SizedBox(
                         width: 20.w,
                       ),
@@ -230,15 +233,18 @@ class _CurrentExercisesScreenState extends State<CurrentExercisesScreen> {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 28.w),
-                  child: ExerciseCard(
-                      value: filtered[index],
-                      callback: () {
-                        context.router.push(SelectedExerciseRoute(
-                            groupName: widget.exercise.groups![group].name!,
-                            value: filtered[index],
-                            exerciseTypeName: widget.exercise.name!));
-                        print("Гена пидор");
-                      }),
+                  child: widget.isChoice
+                      ? ExerciseCard.chekbox(
+                          callback: () {},
+                          value: filtered[index],
+                        )
+                      : ExerciseCard(
+                          value: filtered[index],
+                          callback: () {
+                            context.router.push(
+                                SelectedExerciseRoute(value: filtered[index], exerciseTypeName: widget.exercise.name!));
+                            print("Гена пидор");
+                          }),
                 );
               },
               separatorBuilder: (BuildContext context, int index) {
