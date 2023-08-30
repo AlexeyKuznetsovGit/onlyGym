@@ -2,20 +2,15 @@ import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
-import 'package:onlygym/models/user_model.dart';
 import 'package:onlygym/project_utils/pj_colors.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:onlygym/project_widgets/pj_buttons/pj_filled_button.dart';
-import 'package:onlygym/project_widgets/pj_buttons/pj_long_button.dart';
 import 'package:onlygym/project_widgets/pj_text.dart';
 import 'package:onlygym/project_widgets/pj_text_field.dart';
 import 'package:onlygym/router/router.dart';
-import 'package:onlygym/screens/athletes_screen/cubit/cb_athletes_screen.dart';
-import 'package:onlygym/screens/diary_screen/cubit/cb_diary_screen.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+
+import '../../../project_widgets/pj_custom_picker.dart';
 
 class BottomSheetOpenTimer extends StatefulWidget {
   final double height;
@@ -39,7 +34,6 @@ class _BottomSheetOpenTimerState extends State<BottomSheetOpenTimer> {
   TextEditingController controllerCount = TextEditingController();
   TextEditingController controllerTimeRelax = TextEditingController();
   TextEditingController controllerTimeRound = TextEditingController();
-  TextEditingController controllerTimeToStart = TextEditingController();
 
   bool isPressed = false;
 
@@ -102,21 +96,112 @@ class _BottomSheetOpenTimerState extends State<BottomSheetOpenTimer> {
                 SizedBox(
                   height: 20.h,
                 ),
-                PjTextField(title: 'Количество раундов', type: PjTextFieldStyle.number, controller: controllerCount),
+                GestureDetector(
+                  onTap: () async {
+                    String? res = await showModalBottomSheet(
+                      useRootNavigator: true,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.r),
+                          topRight: Radius.circular(20.r),
+                        ),
+                      ),
+                      isScrollControlled: true,
+                      barrierColor: PjColors.black.withOpacity(0.5),
+                      context: context,
+                      builder: (ctx) {
+                        return PjCustomPicker(
+                          isTime: false,
+                        );
+                      },
+                    );
+                    if (res != null) {
+                      setState(() {
+                        controllerCount.text = res;
+                      });
+                    }
+                  },
+                  child: PjTextField(
+                    title: 'Количество раундов',
+                    type: PjTextFieldStyle.number,
+                    controller: controllerCount,
+                    enabled: false,
+                  ),
+                ),
+                if (widget.isCardio) ...[
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      String? res = await showModalBottomSheet(
+                        useRootNavigator: true,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20.r),
+                            topRight: Radius.circular(20.r),
+                          ),
+                        ),
+                        isScrollControlled: true,
+                        barrierColor: PjColors.black.withOpacity(0.5),
+                        context: context,
+                        builder: (ctx) {
+                          return PjCustomPicker(
+                            isTime: true,
+                          );
+                        },
+                      );
+                      if (res != null) {
+                        setState(() {
+                          controllerTimeRound.text = res;
+                        });
+                      }
+                    },
+                    child: PjTextField(
+                      title: 'Время раунда',
+                      type: PjTextFieldStyle.number,
+                      enabled: false,
+                      controller: controllerTimeRound,
+                    ),
+                  ),
+                ],
                 SizedBox(
                   height: 20.h,
                 ),
-                PjTextField(title: 'Время отдыха', type: PjTextFieldStyle.minutes, controller: controllerTimeRelax),
-                if (isPressed && _formKey.currentState != null && !_formKey.currentState!.validate()) ...[
-                  if (controllerTimeRelax.text.isNotEmpty) ...[
-                    Padding(
-                      padding: EdgeInsets.only(top: 10.h),
-                      child: Text(
-                        'Нельзя вводить больше 60 минут',
-                        style: TextStyle(color: Colors.red),
+                GestureDetector(
+                  onTap: () async {
+                    String? res = await showModalBottomSheet(
+                      useRootNavigator: true,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.r),
+                          topRight: Radius.circular(20.r),
+                        ),
                       ),
-                    ),
-                  ] else if (controllerTimeRelax.text.isEmpty || controllerCount.text.isEmpty) ...[
+                      isScrollControlled: true,
+                      barrierColor: PjColors.black.withOpacity(0.5),
+                      context: context,
+                      builder: (ctx) {
+                        return PjCustomPicker(
+                          isTime: true,
+                        );
+                      },
+                    );
+                    if (res != null) {
+                      setState(() {
+                        controllerTimeRelax.text = res;
+                      });
+                    }
+                  },
+                  child: PjTextField(
+                    title: 'Время отдыха',
+                    type: PjTextFieldStyle.number,
+                    enabled: false,
+                    controller: controllerTimeRelax,
+                  ),
+                ),
+                if (isPressed && _formKey.currentState != null && !_formKey.currentState!.validate()) ...[
+                  if (controllerTimeRelax.text.isEmpty || controllerCount.text.isEmpty) ...[
                     Padding(
                       padding: EdgeInsets.only(top: 10.h),
                       child: Text(
@@ -130,9 +215,14 @@ class _BottomSheetOpenTimerState extends State<BottomSheetOpenTimer> {
                   height: 20.h,
                 ),
                 PjFilledButton(
+                    buttonColor: controllerTimeRelax.text.isNotEmpty && controllerCount.text.isNotEmpty
+                        ? PjColors.neonBlue
+                        : PjColors.white,
                     text: 'Открыть таймер',
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        context.router.push<bool>(TimerRoute());
                       } else {
                         setState(() {
                           isPressed = true;

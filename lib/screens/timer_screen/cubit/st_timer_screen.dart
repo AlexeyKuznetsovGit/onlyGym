@@ -1,18 +1,9 @@
-abstract class StTimerScreen{}
+part of 'cb_timer_screen.dart';
 
-class StTimerScreenInit extends StTimerScreen{}
-
-class StTimerScreenLoaded extends StTimerScreen{}
-
-class StTimerScreenLoading extends StTimerScreen{}
-
-class StTimerScreenNoAuthError extends StTimerScreen{}
-
-class StTimerScreenNoInternetError extends StTimerScreen {}
-
-class StTimerScreenError extends StTimerScreen{
-  final int? error;
-  final String? message;
-  StTimerScreenError({this.error,this.message});
+@freezed
+abstract class StTimerScreen with _$StTimerScreen {
+  const factory StTimerScreen.loading() = _Loading;
+  const factory StTimerScreen.error(int? error, String? message) = _Error;
+  const factory StTimerScreen.loaded() = _Loaded;
+  const factory StTimerScreen.init() = _Init;
 }
-    

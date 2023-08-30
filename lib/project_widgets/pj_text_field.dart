@@ -8,7 +8,15 @@ import 'package:onlygym/project_utils/pj_input_formatter.dart';
 import 'package:onlygym/project_utils/pj_icons_n.dart';
 import 'package:regexed_validator/regexed_validator.dart';
 
-enum PjTextFieldStyle { password, email, date, text, number, params, time, minutes }
+enum PjTextFieldStyle {
+  password,
+  email,
+  date,
+  text,
+  number,
+  params,
+  time,
+}
 
 class PjTextField extends StatefulWidget {
   const PjTextField(
@@ -20,6 +28,7 @@ class PjTextField extends StatefulWidget {
       required this.controller,
       this.suffixText,
       this.checkCode,
+      this.enabled = true,
       this.maxLines = 1})
       : super(key: key);
 
@@ -31,6 +40,7 @@ class PjTextField extends StatefulWidget {
   final TextEditingController controller;
   final String? suffixText;
   final int? maxLines;
+  final bool enabled;
 
   @override
   State<PjTextField> createState() => _PjTextFieldState();
@@ -44,6 +54,7 @@ class _PjTextFieldState extends State<PjTextField> {
     return SizedBox(
       width: 334.w,
       child: TextFormField(
+        enabled: widget.enabled,
         textCapitalization:
             widget.type == PjTextFieldStyle.text ? TextCapitalization.sentences : TextCapitalization.none,
         onChanged: widget.onChanged,
@@ -74,9 +85,6 @@ class _PjTextFieldState extends State<PjTextField> {
           if (widget.type == PjTextFieldStyle.params && (value == '0' || value == '0.0' || value.endsWith('.'))) {
             return '';
           }
-          if (widget.type == PjTextFieldStyle.minutes && !_validateTimeMinute(value)) {
-            return '';
-          }
           if (widget.type == PjTextFieldStyle.number &&
               (widget.checkCode != null && widget.checkCode != int.parse(widget.controller.text))) {
             return '';
@@ -92,7 +100,7 @@ class _PjTextFieldState extends State<PjTextField> {
                     DecimalInputFormatter(),
                     //FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                   ]
-                : widget.type == PjTextFieldStyle.time || widget.type == PjTextFieldStyle.minutes
+                : widget.type == PjTextFieldStyle.time
                     ? [
                         TimeTextFormatter(),
                         //FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
@@ -112,6 +120,8 @@ class _PjTextFieldState extends State<PjTextField> {
           isDense: true,
           labelStyle:
               TextStyle(fontFamily: "PtRoot", fontSize: 14.h, fontWeight: FontWeight.w500, color: PjColors.gray),
+          disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.r), borderSide: BorderSide(color: PjColors.ultraLightBlue)),
           focusedErrorBorder:
               OutlineInputBorder(borderRadius: BorderRadius.circular(30.r), borderSide: BorderSide(color: Colors.red)),
           errorBorder:
@@ -144,8 +154,6 @@ class _PjTextFieldState extends State<PjTextField> {
 
   TextInputType getTextInputType(PjTextFieldStyle type) {
     switch (type) {
-      case PjTextFieldStyle.minutes:
-        return TextInputType.number;
       case PjTextFieldStyle.number:
         return TextInputType.number;
       case PjTextFieldStyle.email:
@@ -167,34 +175,6 @@ class _PjTextFieldState extends State<PjTextField> {
     } else {
       return false;
     }
-  }
-
-  /*bool _validateDate(String date) {
-    DateFormat _dateFormat = DateFormat("dd.MM.yyyy");
-    try {
-      DateTime parsedDate = _dateFormat.parseStrict(date);
-      if (parsedDate.isBefore(DateTime.now())) {
-        return true; // Дата в прошлом или настоящем - допустимая дата рождения
-      } else {
-        return false; //Дата рождения должна быть в прошлом
-      }
-    } catch (e) {
-      return false; //Некорректный формат даты
-    }
-  }*/
-
-  bool _validateTimeMinute(String input) {
-    List<String> parts = input.split(':');
-    if (parts.length != 2) {
-      return false;
-    }
-    int minutes = int.parse(parts[0]);
-    int seconds = int.parse(parts[1]);
-    if (minutes > 59 || seconds > 59) {
-      // Тут сами решайте
-      return false;
-    }
-    return true; // Валидация успешна
   }
 
   bool _validateDate(String date) {
