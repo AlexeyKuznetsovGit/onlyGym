@@ -26,11 +26,7 @@ void showAlertDialog(BuildContext context, String message, [bool back = false, F
       callback();
     }
   });
-  /*Get.dialog(
-      DialogError(
-        message: message,
-      ),
-      barrierDismissible: true);*/
+
 }
 /*
 class DialogError extends StatelessWidget {
